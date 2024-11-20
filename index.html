@@ -11,7 +11,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/stylesheet.min.scss" rel="stylesheet" />
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,72 +19,81 @@
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
+            
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container px-5">
-                    <a class="navbar-brand" href="index.html">Juegos Terva</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                            <!--li class="nav-item"><a class="nav-link" href="about.html">Nosotros</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="blog-home.html">Blog Home</a></li>
-                                    <li><a class="dropdown-item" href="blog-post.html">Blog Post</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                    <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
-                                    <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
-                                </ul>
-                            </li-->
-                        </ul>
-                    </div>
+            
+           <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+            <div class="container px-5">
+                <a class="navbar-brand" href="index.html">Juegos Terva</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- items del menú -->
+                        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <!-- cv -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">Acerca de mi</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                <li><a class="dropdown-item" href="sobremi.html">¿Quién soy?</a></li>
+                                <li><a class="dropdown-item" href="sobremi.html#educacion">Formación Académica</a></li>
+                                <li><a class="dropdown-item" href="sobremi.html#experiencia">Experiencia Laboral</a></li>
+                                <li><a class="dropdown-item" href="sobremi.html#cursos">Cursos y Talleres</a></li>
+                                <li><a class="dropdown-item" href="sobremi.html#formacion">Formación Continua</a></li>
+                                <li><a class="dropdown-item" href="sobremi.html#reconocimientos">Reconocimientos</a></li>
+                            </ul>
+                        </li>
+        <!-- otros -->
+                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                    </ul>
                 </div>
-            </nav>
+            </div>
+        </nav>
+
+
+
             <!-- Header-->
             <header class="bg-dark py-5">
                 <div class="container px-5">
                     <div class="row gx-5 align-items-center justify-content-center">
                         <div class="col-lg-8 col-xl-7 col-xxl-6">
                             <div class="my-5 text-center text-xl-start">
-                                <h1 class="display-5 fw-bolder text-white mb-2">¡Encuentra la palabra escondida!</h1>
-                                <p class="lead fw-normal text-white-50 mb-4">¡Funciona sin internet! ¡Usa tu ingenio para encontrar la palabra escondida!</p>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                <h1 class="display-5 fw-bolder text-secondary mb-2">Juegos Terva</h1>
+                                <p class="lead fw-normal text-light mb-4">Desarrollo de aplicaciones interactivas y sitios web</p>
+           <!--                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                     <a class="btn btn-primary btn-lg px-4 me-sm-3" href="https://forms.gle/MMzotSwQaBbLiZJn9">Pre lanzamiento</a>
-                                    <!-- a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a -->
-                                </div>
+                                </div> -->
                             </div>
                         </div>
-                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="assets\palabron.png" alt="..." /></div>
+                        <div class="col-xl-4 col-xxl-5 d-none d-xl-block text-center">
+                            <img class="img-fluid rounded-3 my-5" src="assets\logo-terva.png" alt="..." />
+                        </div>
                     </div>
                 </div>
             </header>
-            <!-- Features section-->
-            <section class="py-5" id="features">
+
+
+            <!-- Actividades Interactivas -->
+            <section class="bg-oscuro py-5" id="features">
                 <div class="container px-5 my-5">
                     <div class="row gx-5">
-                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">Creamos actividades interactivas para docentes</h2></div>
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <h2 class="fw-bolder text-secondary mb-0">Creamos actividades interactivas para docentes</h2>
+                        </div>
                         <div class="col-lg-8">
                             <div class="row gx-5 row-cols-1 row-cols-md-2">
                                 <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-laptop"></i></div>
-                                    <h2 class="h5">Accesibles desde cualquier plataforma con internet</h2>
-                                    <p class="mb-0">La actividad interactiva permanecerá accesible durante un año, con posibilidad a extender el tiempo de manera ilimitada.</p>
+                                    <div class="badge bg-primary shadow bg-gradient text-white rounded-3 mb-3">  <i class="fs-2 bi bi-laptop"></i>
+                                    </div>
+                                    <h2 class="h5 text-light">Accesibles desde cualquier plataforma con internet</h2>
+                                    <p class="mb-0 text-light">La actividad interactiva permanecerá accesible durante un año, con posibilidad a extender el tiempo de manera ilimitada.</p>
                                 </div>
                                 <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-music-note-beamed"></i></div>
-                                    <h2 class="h5">¡Incluyen música!</h2>
-                                    <p class="mb-0">Nuestros interactivos incluyen música y efectos especiales.</p>
+                                    <div class="badge bg-primary bg-gradient text-white rounded-3 mb-3">
+                                        <i class="fs-2 bi bi-music-note-beamed"></i>
+                                    </div>
+                                    <h2 class="h5 text-light">¡Incluyen música!</h2>
+                                    <p class="mb-0 text-light">Nuestros interactivos incluyen música y efectos especiales.</p>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -93,11 +102,16 @@
 
 
         </main>
+
+
         <!-- Footer-->
         <footer class="bg-dark py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Juegos Terva 2022</div></div>
+                    <div class="col-auto">
+                        <div class="small m-0 text-white">Copyright &copy; Juegos Terva 2024
+                        </div>
+                    </div>
                     <div class="col-auto">
                         <a class="link-light small" href="https://docs.google.com/document/d/e/2PACX-1vT6ECQK3P5bjVRzJfmzlhbEab0QXqX2e_NgfQUcVLEhW0yBbMFlToG0utq5vbAGq4vH0AolF8k8uu3v/pub">Privacy</a>
                         <!--span class="text-white mx-1">&middot;</span>
@@ -108,6 +122,8 @@
                 </div>
             </div>
         </footer>
+
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
