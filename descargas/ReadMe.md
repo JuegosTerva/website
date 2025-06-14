@@ -4,7 +4,7 @@
 Escribe aquí una breve descripción de tu proyecto. ¿De qué trata? ¿Qué hace? ¿Por qué lo elegiste?
 
 Ejemplo:  
-Este es un juego tipo plataformas 2D inspirado en el tutorial de [Nombre del tutorial o serie] del canal de **Clau Dia** en YouTube.
+Este es un juego tipo plataformas 2D inspirado en el tutorial de [Nombre del tutorial o serie] del canal de **Juegos Terva** en YouTube.
 
 ## Objetivo personal
 En este espacio cuéntanos qué quieres lograr con este proyecto.  
