@@ -20,10 +20,10 @@ Juegos Terva es una mini empresa freelance que, desde hace varios años, se dedi
 ## 🚀 ¿Dónde encontrarme?
 
 🌐 Sitio web: [https://www.juegosterva.com](https://www.juegosterva.com)  
-📺 YouTube: *(en construcción / próximamente... o agrega el link si ya lo tienes)*  
+📺 YouTube: *(en construcción)* [JuegosTerva](https://www.youtube.com/@juegosterva)  
 💻 GitHub: [https://github.com/JuegosTerva](https://github.com/JuegosTerva)
 
 ## 🤝 ¿Quieres colaborar o tienes dudas?
 
 Si eres docente, desarrollador, o simplemente te interesa el mundo de los videojuegos educativos, ¡me encantará saber de ti!  
-Puedes escribirme a: **[tu_correo@dominio.com]**
+Puedes escribirme a: **juegosterva@gmail.com**
