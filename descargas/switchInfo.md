@@ -19,7 +19,7 @@ FinSegun
 
 # Estructura
 
-```
+```C#
 switch (expresion)
 {
     case valor1:
