@@ -32,6 +32,7 @@
       border-radius: 3px;
       opacity: 0.6;
       transition: opacity 0.3s;
+      z-index: 2;
     }
 
     .copy-btn:hover {
@@ -44,9 +45,26 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // Obtener el nombre del archivo desde la URL: ?archivo=ejemplo.md
     const params = new URLSearchParams(window.location.search);
     const archivo = params.get("archivo");
+
+    function agregarBotonesCopiar() {
+      const bloques = document.querySelectorAll("pre > code");
+
+      bloques.forEach(bloque => {
+        const pre = bloque.parentElement;
+        const boton = document.createElement("button");
+        boton.className = "copy-btn";
+        boton.textContent = "Copiar";
+        boton.addEventListener("click", () => {
+          navigator.clipboard.writeText(bloque.textContent).then(() => {
+            boton.textContent = "¡Copiado!";
+            setTimeout(() => boton.textContent = "Copiar", 2000);
+          });
+        });
+        pre.appendChild(boton);
+      });
+    }
 
     if (archivo) {
       fetch(archivo)
@@ -55,7 +73,9 @@
           return res.text();
         })
         .then(texto => {
-          document.getElementById("markdown").innerHTML = marked.parse(texto);
+          const html = marked.parse(texto);
+          document.getElementById("markdown").innerHTML = html;
+          agregarBotonesCopiar();
         })
         .catch(error => {
           document.getElementById("markdown").innerHTML = "<p>Error al cargar el archivo Markdown.</p>";
