@@ -44,5 +44,26 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    // Obtener el nombre del archivo desde la URL
-    const params = new URLSearchParams(win
+    // Obtener el nombre del archivo desde la URL: ?archivo=ejemplo.md
+    const params = new URLSearchParams(window.location.search);
+    const archivo = params.get("archivo");
+
+    if (archivo) {
+      fetch(archivo)
+        .then(res => {
+          if (!res.ok) throw new Error("No se pudo cargar el archivo");
+          return res.text();
+        })
+        .then(texto => {
+          document.getElementById("markdown").innerHTML = marked.parse(texto);
+        })
+        .catch(error => {
+          document.getElementById("markdown").innerHTML = "<p>Error al cargar el archivo Markdown.</p>";
+          console.error(error);
+        });
+    } else {
+      document.getElementById("markdown").innerHTML = "<p>No se especificó ningún archivo Markdown.</p>";
+    }
+  </script>
+</body>
+</html>
