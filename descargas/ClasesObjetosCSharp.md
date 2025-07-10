@@ -14,6 +14,8 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ### 💻 Prepara tu proyecto
 
+1. Crea una carpeta para guardar tu proyecto. Recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales.
+
 1. Crea un nuevo proyecto en tu computadora usando `dotnet new console` 
 
 1. Crea un repositorio público en GitHub y pega el enlace en la plataforma. 🧑🏻‍💻 Recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales.
@@ -32,7 +34,7 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ### 📝 Elabora tu pseudocódigo
 
-9. Descarga [la plantilla del pseudocódigo](descargas/pseudocodigoClasesObjetos.md) en tu carpeta.
+9. Descarga [la plantilla del pseudocódigo](pseudocodigoClasesObjetos.md) en tu carpeta.
 
 	> Revisa el [ejemplo del pseudocódigo](https://github.com/JuegosTerva/ProductoNAtural/blob/a4e9a5686954d881f259e7e50e4fc1b7ea54e7a1/pseudocodigo.md), [revisa los enlaces de ayuda](#enlaces).
 
