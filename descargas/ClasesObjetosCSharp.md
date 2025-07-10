@@ -32,7 +32,13 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ### 📝 Elabora tu pseudocódigo
 
-9. 
+9. Descarga [la plantilla del pseudocódigo](descargas/pseudocodigoClasesObjetos.md) en tu carpeta.
+
+	1. Define la clase.  
+
+	> Así también se llamará tu archivo
+
+	2. 
 
 ## 🧪 Resultado Esperado
 
