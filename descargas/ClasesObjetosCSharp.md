@@ -64,7 +64,6 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ## 🧪 Resultado Esperado
 
-## 🧾 Código de referencia
 
 # 🤔 Preguntas para reflexionar
 
@@ -72,3 +71,5 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 # 📌 Enlaces de ayuda{#enlaces}
 
 - Puedes ver un ejemplo de un programa resuelve el problema: *Queremos modelar una producto. Cada producto tiene un nombre, dias de vida y tipo (fruta o vegetal). Debe poder hacer acciones como  mostrar su información.* [Repositorio de Ejemplo](https://github.com/JuegosTerva/ProductoNAtural)
+
+- [CheatSheet de Git (imagen PNG)](GitCheatSheet.png)
