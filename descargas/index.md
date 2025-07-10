@@ -7,4 +7,4 @@
 
 ## 🖼️ Imágenes y recursos
 
-- [CheatSheet de Git (imagen PNG)](descargas/CheatSheatGit.png)
+- [CheatSheet de Git (imagen PNG)](descargas/GitCheatSheet.png)
