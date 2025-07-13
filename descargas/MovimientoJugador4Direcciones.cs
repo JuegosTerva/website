@@ -5,7 +5,7 @@ public class MovimientoJugador : MonoBehaviour
 {
     public float velocidad = 5f;
     Rigidbody2D rb;
-    public Vector2 entrada;
+    public Vector2 entrada; //dirección -> entrada del usuario
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

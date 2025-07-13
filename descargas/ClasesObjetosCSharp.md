@@ -76,15 +76,11 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	1. Define la clase.  
 
-		Así también se llamará tu archivo
+		Recuerda usar las etiquetas de INICIO FIN
 
-		> Recuerda usar las etiquetas de INICIO FIN
+	2. Crea tus variables, ¿qué tipo de variables necesita cada atributo (características)?
 
-		> Ejemplo `Mascotas(ed)` ed es el parámetro que usaré para edad.
-
-		> ¡Ojo! Parámetros son diferentes a variables.
-
-	2. Crea tus variables, ¿qué tipo de variables necesita cada atributo (características) necesitarás?
+	3. C
 
 	[TIPOS DE DATOS]: #
 

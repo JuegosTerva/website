@@ -4,13 +4,21 @@
   <meta charset="UTF-8">
   <title>Visor de Markdown</title>
 
-  <!-- Estilo estilo GitHub -->
+  <!-- Estilo tipo GitHub para el contenido -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-light.min.css">
 
+  <!-- Highlight.js para resaltar código -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: sans-serif;
-      background-color: #f8f9fa; /* <- tu color */
+      background-color: #f8f9fa;
     }
 
     .markdown-body {
@@ -23,6 +31,7 @@
 
     pre {
       position: relative;
+      overflow: auto;
     }
 
     .copy-btn {
@@ -43,20 +52,56 @@
     .copy-btn:hover {
       opacity: 1;
     }
+
+    .nav-bar {
+      text-align: left;
+      padding: 1rem 2rem 0;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .nav-bar a {
+      text-decoration: none;
+      color: #0366d6;
+      font-size: 14px;
+    }
+
+    .nav-bar a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+
+  <div class="nav-bar" id="nav"></div>
   <div id="markdown" class="markdown-body">Cargando contenido...</div>
 
+  <!-- marked.js para parsear Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const archivo = params.get("archivo");
+    const rutaIndice = "descargas/index.md";
+
+    // 💡 Configurar encabezados con IDs limpios para enlaces internos
+    marked.use({
+      renderer: {
+        heading(text, level) {
+          const slug = text.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quita acentos
+            .replace(/[^\w]+/g, "-")                         // Espacios y símbolos → guiones
+            .replace(/^-+|-+$/g, "");                        // Quita guiones extras
+          return `<h${level} id="${slug}">${text}</h${level}>`;
+        }
+      }
+    });
 
     function agregarBotonesCopiar() {
       const bloques = document.querySelectorAll("pre > code");
 
       bloques.forEach(bloque => {
+        hljs.highlightElement(bloque);
+
         const pre = bloque.parentElement;
         const boton = document.createElement("button");
         boton.className = "copy-btn";
@@ -71,6 +116,13 @@
       });
     }
 
+    function mostrarEnlaceVolver() {
+      if (archivo && archivo !== rutaIndice) {
+        const nav = document.getElementById("nav");
+        nav.innerHTML = `<a href="visor.html?archivo=${rutaIndice}">⬅️ Volver al índice</a>`;
+      }
+    }
+
     if (archivo) {
       fetch(archivo)
         .then(res => {
@@ -79,8 +131,19 @@
         })
         .then(texto => {
           const html = marked.parse(texto);
-          document.getElementById("markdown").innerHTML = html;
+          const contenedor = document.getElementById("markdown");
+          contenedor.innerHTML = html;
+
+          // 🔗 Ajustar enlaces internos (a .md) para que sigan usando el visor
+          contenedor.querySelectorAll("a").forEach(enlace => {
+            const href = enlace.getAttribute("href");
+            if (href && href.endsWith(".md") && !href.startsWith("http") && !href.startsWith("#")) {
+              enlace.setAttribute("href", `visor.html?archivo=descargas/${href}`);
+            }
+          });
+
           agregarBotonesCopiar();
+          mostrarEnlaceVolver();
         })
         .catch(error => {
           document.getElementById("markdown").innerHTML = "<p>Error al cargar el archivo Markdown.</p>";
