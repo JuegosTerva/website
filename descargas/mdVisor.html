@@ -141,7 +141,7 @@
           contenedor.querySelectorAll("a").forEach(enlace => {
             const href = enlace.getAttribute("href");
             if (href && href.endsWith(".md") && !href.startsWith("http") && !href.startsWith("#")) {
-              enlace.setAttribute("href", `visor.html?archivo=descargas/${href}`);
+              enlace.setAttribute("href", `visor.html?archivo=${href}`);
             }
           });
 
@@ -149,9 +149,12 @@
           mostrarEnlaceVolver();
         })
         .catch(error => {
-          document.getElementById("markdown").innerHTML = "<p>Error al cargar el archivo Markdown.</p>";
-          console.error(error);
-        });
+          document.getElementById("markdown").innerHTML = `<div style="color: #b00020; background-color: #ffe6e6; padding: 1rem; border-radius: 8px;">
+      <p><strong>Error:</strong> No se pudo cargar el archivo Markdown.</p><p>Si crees que esto es un error, por favor <a href="mailto:juegoterva@gmail.com">escríbeme a juegoterva@gmail.com</a>.</p>
+    </div>
+  `;
+  console.error(error);
+});
     } else {
       document.getElementById("markdown").innerHTML = "<p>No se especificó ningún archivo Markdown.</p>";
     }
