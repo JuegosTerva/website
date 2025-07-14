@@ -87,12 +87,15 @@
     marked.use({
       renderer: {
         heading(text, level) {
-          const slug = text.toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quita acentos
-            .replace(/[^\w]+/g, "-")                         // Espacios y símbolos → guiones
-            .replace(/^-+|-+$/g, "");                        // Quita guiones extras
-          return `<h${level} id="${slug}">${text}</h${level}>`;
+          const safeText = String(text);
+          const slug = safeText.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^\w]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+
+          return `<h${level} id="${slug}">${safeText}</h${level}>`;
         }
+
       }
     });
 
