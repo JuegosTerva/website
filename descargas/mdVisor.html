@@ -82,7 +82,7 @@
     const params = new URLSearchParams(window.location.search);
     const archivo = params.get("archivo");
     const rutaIndice = "descargas/index.md";
-
+/** 
     // 💡 Configurar encabezados con IDs limpios para enlaces internos
     marked.use({
       renderer: {
@@ -97,7 +97,7 @@
         }
 
       }
-    });
+    }); **/
 
     function agregarBotonesCopiar() {
       const bloques = document.querySelectorAll("pre > code");
