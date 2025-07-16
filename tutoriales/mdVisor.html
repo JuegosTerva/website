@@ -141,7 +141,7 @@
           contenedor.querySelectorAll("a").forEach(enlace => {
             const href = enlace.getAttribute("href");
             if (href && href.endsWith(".md") && !href.startsWith("http") && !href.startsWith("#")) {
-              enlace.setAttribute("href", `visor.html?archivo=${href}`);
+              enlace.setAttribute("href", `mdVisor.html?archivo=${href}`);
             }
           });
 

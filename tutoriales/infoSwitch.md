@@ -1,8 +1,12 @@
 # Guía Pseudocódigo
 
-Segun variable Hacer
+```
+Segun variable hacer
+
     Caso valor1:
+
         // instrucciones para valor1
+    
         Salir
 
     Caso valor2:
@@ -16,6 +20,7 @@ Segun variable Hacer
     De Otro Modo:
         // instrucciones si no coincide ningún caso
 FinSegun
+```
 
 # Estructura
 
