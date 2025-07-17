@@ -21,9 +21,9 @@ h1 {
   background-color: #f4f3e7;
   border-radius: 25px;
   color: #20455e;
-  font-family: "Annie Use Your Telescope", cursive;
-  font-weight: 400;
-  font-style: normal;
+  font-family: 'OpenDyslexic', sans-serif;
+  line-height: 1.6;
+  font-size: 1.1rem;
 }
 
 pre {
