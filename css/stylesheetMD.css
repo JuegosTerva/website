@@ -1,58 +1,68 @@
 html {
-      scroll-behavior: smooth;
-    }
+  scroll-behavior: smooth;
+}
 
-    body {
-      font-family: sans-serif;
-      background-color: #f8f9fa;
-    }
+body {
+  font-family: sans-serif;
+}
 
-    .markdown-body {
-      box-sizing: border-box;
-      min-width: 200px;
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem;
-      background-color: #dcc1a7;
-    }
+h1 {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
 
-    pre {
-      position: relative;
-      overflow: auto;
-    }
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #f4f3e7;
+  border-radius: 25px;
+  color: #20455e;
+  font-family: "Annie Use Your Telescope", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 
-    .copy-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #eee;
-      border: none;
-      padding: 4px 8px;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 3px;
-      opacity: 0.6;
-      transition: opacity 0.3s;
-      z-index: 2;
-    }
+pre {
+  position: relative;
+  overflow: auto;
+}
 
-    .copy-btn:hover {
-      opacity: 1;
-    }
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #eee;
+  border: none;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 2;
+}
 
-    .nav-bar {
-      text-align: left;
-      padding: 1rem 2rem 0;
-      max-width: 800px;
-      margin: auto;
-    }
+.copy-btn:hover {
+  opacity: 1;
+}
 
-    .nav-bar a {
-      text-decoration: none;
-      color: #0366d6;
-      font-size: 14px;
-    }
+.nav-bar {
+  text-align: left;
+  padding: 1rem 2rem 0;
+  max-width: 800px;
+  margin: auto;
+}
 
-    .nav-bar a:hover {
-      text-decoration: underline;
-    }
+.nav-bar a {
+  text-decoration: none;
+  color: #0366d6;
+  font-size: 14px;
+}
+
+.nav-bar a:hover {
+  text-decoration: underline;
+}
