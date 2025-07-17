@@ -12,5 +12,5 @@
 
 ## Documentos sobre CSharp
 
-- Clases y Objetos | Mascotas
-- Métodos y parámetros | Extender Mascotas
+- [Clases y Objetos | Mascotas](CSharp/ClasesObjetosCSharp.md)
+- [Métodos y parámetros | Extender Mascotas](expandirMascota.md)
