@@ -1,4 +1,4 @@
-# Parámetros de los métodos
+# Métodos con parámetros
 
 Cuando un método **necesita información para hacer su trabajo**, se la puedes **pasar entre paréntesis**, y esa información se llama **parámetro**.
 
