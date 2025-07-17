@@ -22,6 +22,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Chewy&display=swap" rel="stylesheet">
 
+
+
 </head>
 <body>
 
@@ -30,6 +32,9 @@
 
   <!-- marked.js para parsear Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it-footnote/dist/markdown-it-footnote.min.js"></script>
+
   <script>
     const params = new URLSearchParams(window.location.search);
     const archivo = params.get("archivo");
@@ -85,11 +90,17 @@
           return res.text();
         })
         .then(texto => {
-          const html = marked.parse(texto);
+          const md = window.markdownit({
+            html: true,
+            linkify: true,
+            typographer: true
+          }).use(window.markdownitFootnote);
+
+          const html = md.render(texto);
           const contenedor = document.getElementById("markdown");
           contenedor.innerHTML = html;
 
-          // 🔗 Ajustar enlaces internos (a .md) para que sigan usando el visor
+        // 🔗 Ajustar enlaces internos (a .md) para que sigan usando el visor
           contenedor.querySelectorAll("a").forEach(enlace => {
             const href = enlace.getAttribute("href");
             if (href && href.endsWith(".md") && !href.startsWith("http") && !href.startsWith("#")) {
@@ -100,6 +111,7 @@
           agregarBotonesCopiar();
           mostrarEnlaceVolver();
         })
+
         .catch(error => {
           document.getElementById("markdown").innerHTML = `<div style="color: #b00020; background-color: #ffe6e6; padding: 1rem; border-radius: 8px;">
       <p><strong>Error:</strong> No se pudo cargar el archivo Markdown.</p><p>Si crees que esto es un error, por favor <a href="mailto:juegoterva@gmail.com">escríbeme a juegoterva@gmail.com</a>.</p>
