@@ -38,7 +38,7 @@ Método calcularEdadHumana
 
 3. Usa como base el código de la práctica pasada.
 
-2. Agregar método `setEdad`. [Ejemplo de método con parámetros.](parametrosMetodos.md)
+2. Agregar método `setEdad`. [Ejemplo de método con parámetros.](programacion/parametrosMetodos.md)
 
 3. Explica cómo llamar cada método desde Main y qué esperar de cada uno.
 

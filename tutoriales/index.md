@@ -2,13 +2,13 @@
 
 ## 📄 Documentos sobre programación
 
-- [Guía de estructuras condicionales (switch)](infoSwitch.md)
+- [Guía de estructuras condicionales (switch)](programacion/infoSwitch.md)
 - [Guía de bucles for](infoFor.md)
 - 
 
 ## <i class="bi bi-git"></i> Git
 
-- [CheatSheet de Git (imagen PNG)](GitCheatSheet.png)
+- [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
 
 ## Documentos sobre CSharp
 
