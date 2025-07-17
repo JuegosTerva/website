@@ -38,8 +38,7 @@ Método calcularEdadHumana
 
 3. Usa como base el código de la práctica pasada.
 
-2. Agregar método `setEdad`
-
+2. Agregar método `setEdad`. [Ejemplo de método con parámetros.](parametrosMetodos.md)
 
 3. Explica cómo llamar cada método desde Main y qué esperar de cada uno.
 
@@ -62,16 +61,17 @@ class Program
 
 4. Crear 2 mascotas con diferentes edades y tipos.
 
-5. Llamar todos los métodos.
+5. Llamar todos los métodos. 
 
 6. Cambiar la edad de una mascota usando setEdad.
 
 7. Mostrar la edad humana antes y después del cambio.
 
 8. Responde en la plataforma
-¿Cuál fue la parte más difícil?
 
-¿Qué pasa si no usamos get o set?
+-   ¿Cuál fue la parte más difícil?
 
-¿Para qué sirve retornar algo?
+- ¿Qué pasa si no usamos get o set?
+
+- ¿Para qué sirve retornar algo?
 
