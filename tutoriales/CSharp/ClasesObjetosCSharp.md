@@ -46,7 +46,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Copia el enlace HTTP de tu repositorio.
 	
-	![Es el botón verde que dice <>Code](assetsClasesObjetos/btnCode.png)
+	![Es el botón verde que dice <>Code](../imagenes/btnCode.png)
 
 4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
 

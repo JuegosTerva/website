@@ -17,7 +17,7 @@ Cuando tengo archivos **con nombres diferentes**
 
 ### Paso 1: obten el enlace HTTP de tu git
 
-[imagenCodeGit]: #
+![Es el botón verde que dice <>Code](../imagenes/btnCode.png)
 
 ### Paso 2: Inicializa Git en tu computadora
 

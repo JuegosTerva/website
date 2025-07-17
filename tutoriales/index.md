@@ -1,6 +1,6 @@
 # Documentos de apoyo
 
-## 📄 Documentos sobre programación
+## <i class="bi bi-journal-code"></i> Documentos sobre programación
 
 - [Guía de estructuras condicionales (switch)](programacion/infoSwitch.md)
 - [Guía de bucles for](infoFor.md)
@@ -10,7 +10,7 @@
 
 - [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
 
-## Documentos sobre CSharp
+## <i class="bi bi-filetype-cs"></i> CSharp
 
 - [Clases y Objetos | Mascotas](CSharp/ClasesObjetosCSharp.md)
 - [Métodos y parámetros | Extender Mascotas](expandirMascota.md)
