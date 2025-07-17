@@ -1,11 +1,16 @@
 # Documentos de apoyo
 
-## 📄 Documentos sobre CSharp
+## 📄 Documentos sobre programación
 
 - [Guía de estructuras condicionales (switch)](infoSwitch.md)
-- [Guía de bucles for](mdVisor.html?archivo=descargas/infoFor.md)
+- [Guía de bucles for](infoFor.md)
 - 
 
-## 🖼️ Imágenes y recursos
+## <i class="bi bi-git"></i> Git
 
 - [CheatSheet de Git (imagen PNG)](GitCheatSheet.png)
+
+## Documentos sobre CSharp
+
+- Clases y Objetos | Mascotas
+- Métodos y parámetros | Extender Mascotas

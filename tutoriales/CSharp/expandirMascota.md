@@ -3,9 +3,10 @@
 **Objetivo**: Identificar métodos con parámetros y retorno, y aplicar encapsulamiento.
 Indicaciones:
 
-1. Dibujen juntos un diagrama en el pizarrón o cuaderno:
+## Dibujen un diagrama en el cuaderno:
 
 Mascota
+
 - nombre: string (privado)
 - edad: int (privado)
 - tipo: string (privado)
@@ -15,83 +16,36 @@ Mascota
 + setEdad(int nuevaEdad): void
 + calcularEdadHumana(): int
 
+Puedes seguir el siguiente ejemplo:
+![ejemplo de diagrama de una clase](../imagenes/clasesyobjetos.jpg)
 
-2. En equipos, escriban pseudocódigo de los métodos getEdad, setEdad, calcularEdadHumana.
+1. Sube una captura de pantalla a la plataforma.
 
 
+## Pseudocódigo
+
+2. En parejas o individual, modifiquen su pseudocódigo agregando los métodos getEdad, setEdad, calcularEdadHumana.
 
 Ejemplo:
 
+```
 Método calcularEdadHumana
   edadHumana = edad * 7
   retornar edadHumana
+```
+
+## Programación en C#
+
+3. Usa como base el código de la práctica pasada.
+
+2. Agregar método `setEdad`
 
 
----
+3. Explica cómo llamar cada método desde Main y qué esperar de cada uno.
 
-⏰ Hora 2 – Programación Guiada en C#
+2. Ejemplo en Main 
 
-2.1 – Esqueleto de código (15 min)
-
-Claudia escribe en proyector y ellos copian:
-
-public class Mascota
-{
-    private string nombre;
-    private int edad;
-    private string tipo;
-
-    public Mascota(string nombre, int edad, string tipo)
-    {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.tipo = tipo;
-    }
-
-    public void EmitirSonido()
-    {
-        Console.WriteLine("¡Guau! o ¡Miau!");
-    }
-
-    public void MostrarInfo()
-    {
-        Console.WriteLine($"Nombre: {nombre}, Edad: {edad}, Tipo: {tipo}");
-    }
-}
-
-
----
-
-2.2 – Agregar métodos con parámetros y retorno (20 min)
-
-1. Método setEdad:
-
-public void SetEdad(int nuevaEdad)
-{
-    edad = nuevaEdad;
-}
-
-2. Método getEdad:
-
-public int GetEdad()
-{
-    return edad;
-}
-
-3. Método calcularEdadHumana:
-
-public int CalcularEdadHumana()
-{
-    return edad * 7;
-}
-
-Explica cómo llamar cada método desde Main y qué esperar de cada uno.
-
-
----
-
-2.3 – Ejemplo en Main (10 min)
-
+```c#
 class Program
 {
     static void Main(string[] args)
@@ -104,49 +58,20 @@ class Program
         Console.WriteLine("Nueva edad: " + m.GetEdad());
     }
 }
+```
 
+4. Crear 2 mascotas con diferentes edades y tipos.
 
----
+5. Llamar todos los métodos.
 
-⏰ Hora 3 – Práctica, preguntas y cierre
+6. Cambiar la edad de una mascota usando setEdad.
 
-3.1 – Actividad práctica (30 min)
+7. Mostrar la edad humana antes y después del cambio.
 
-Instrucciones:
-
-Crear 2 mascotas con diferentes edades y tipos.
-
-Llamar todos los métodos.
-
-Cambiar la edad de una mascota usando setEdad.
-
-Mostrar la edad humana antes y después del cambio.
-
-
-
----
-
-3.2 – Reflexión y dudas (15 min)
-
+8. Responde en la plataforma
 ¿Cuál fue la parte más difícil?
 
 ¿Qué pasa si no usamos get o set?
 
 ¿Para qué sirve retornar algo?
-
-
-
----
-
-3.3 – Cierre (15 min)
-
-Reforzar la idea de acceso controlado y reutilización.
-
-Anunciar el siguiente tema: Constructores sobrecargados o Arreglos de objetos
-
-
-
----
-
-¿Te gustaría que prepare también el Kahoot con 6-8 preguntas y un PDF imprimible con la guía de pseudocódigo y el ejercicio final?
 
