@@ -17,7 +17,7 @@ Mascota
 + calcularEdadHumana(): int
 
 Puedes seguir el siguiente ejemplo:
-![ejemplo de diagrama de una clase](../imagenes/clasesyobjetos.jpg)
+![ejemplo de diagrama de una clase](https://www.juegosterva.com/tutoriales/imagenes/clasesyobjetos.jpg)
 
 1. Sube una captura de pantalla a la plataforma.
 
