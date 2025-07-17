@@ -9,8 +9,9 @@
 ## <i class="bi bi-git"></i> Git
 
 - [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
+- [Enlazar repositorio local con repositorio en GitHub](git/gitRepositorioArchivos.md)
 
 ## <i class="bi bi-filetype-cs"></i> CSharp
 
 - [Clases y Objetos | Mascotas](CSharp/ClasesObjetosCSharp.md)
-- [Métodos y parámetros | Extender Mascotas](expandirMascota.md)
+- [Métodos y parámetros | Extender Mascotas](CSharp/expandirMascota.md)

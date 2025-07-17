@@ -11,3 +11,9 @@
 // PASO 6: Crear un objeto de tipo Mascota
 
 	// PASO 7: Usar los métodos del objeto
+
+
+Definir Metodo EmitirSonido()
+    Mostrar nombre + "sonido"
+
+Class Program

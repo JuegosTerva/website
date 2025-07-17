@@ -50,7 +50,9 @@ MostrarEdad("Ana", 22);
 Un método con parámetros se ve así:
 
 ```csharp
-tipoDeRetorno NombreDelMetodo(tipo1 nombre1, tipo2 nombre2, ...)
+tipoDeRetorno NombreDelMetodo(tipo1 nombre1, tipo2 nombre2, ...){
+    
+}
 ```
 
 Ejemplo:
