@@ -1,19 +1,28 @@
-// PASO 1: Definir la clase
+Inicio del programa
 
-	// PASO 2: Atributos (características)
+Definir clase NombreClase
 
-    // PASO 3: Método constructor
+    Atributos privados:
+        - nombreVariable (TIPO)
+        - diasDeVida (entero)
 
-    // PASO 4: Método para emitir sonido
-
-    // PASO 5: Método para mostrar información
-
-// PASO 6: Crear un objeto de tipo Mascota
-
-	// PASO 7: Usar los métodos del objeto
+    Método Constructor NombreClase(PARÁMETROS)
+        Asignar nom a nombre
 
 
-Definir Metodo EmitirSonido()
-    Mostrar nombre + "sonido"
+    Método NombreMetodo()
+        Imprimir "Nombre: " + nombreVariable
 
-Class Program
+Fin clase NombreClase
+
+Definir clase principal Program
+    Método Main()
+        Crear objeto miProducto de tipo NombreClase con valores:
+            - nombre = "Manzana"
+            - diasDeVida = 7
+            - tipo = "fruta"
+
+        Llamar al método NombreMetodo() del objeto miProducto
+Fin clase NombreClase
+
+Fin del programa

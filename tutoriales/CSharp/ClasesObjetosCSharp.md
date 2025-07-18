@@ -46,7 +46,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Copia el enlace HTTP de tu repositorio.
 	
-	![Es el botón verde que dice <>Code](../imagenes/btnCode.png)
+	![Es el botón verde que dice <Code>](imagenes/btnCode.png)
 
 4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
 
@@ -70,7 +70,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 11. Usa el comando `touch pseudocodigo.md` para crear un archivo llamado pseudocodigo tipo Markdown[^3].
 
-11. Abre [la plantilla del pseudocódigo](pseudocodigoClasesObjetos.md).
+11. Abre [la plantilla del pseudocódigo](CSharp/pseudocodigoClasesObjetos.md).
 
 	> Revisa el [ejemplo del pseudocódigo](https://github.com/JuegosTerva/ProductoNAtural/blob/a4e9a5686954d881f259e7e50e4fc1b7ea54e7a1/pseudocodigo.md), revisa [los enlaces de ayuda](#enlaces).
 
