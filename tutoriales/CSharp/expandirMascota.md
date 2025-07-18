@@ -1,9 +1,17 @@
 # Extender la clase Mascota
 
 **Objetivo**: Identificar métodos con parámetros y retorno, y aplicar encapsulamiento.
-Indicaciones:
 
-## Dibujen un diagrama en el cuaderno:
+
+Esta guía te ayudará a resolver la actividad paso a paso.
+
+## 📚 Conceptos clave
+
+1. Clases y Objetos
+
+2. [Métodos con parámetros | Guía](programacion/parametrosMetodos.md)
+
+## Dibuja un diagrama en el cuaderno:
 
 Mascota
 
@@ -13,8 +21,11 @@ Mascota
 + emitirSonido(): void
 + mostrarInfo(): void
 + getEdad(): int
+    obtiene la edad
 + setEdad(int nuevaEdad): void
+    solicitad entrada al usuario
 + calcularEdadHumana(): int
+    multiplica por 7
 
 Puedes seguir el siguiente ejemplo:
 ![ejemplo de diagrama de una clase](https://www.juegosterva.com/tutoriales/imagenes/clasesyobjetos.jpg)

@@ -96,7 +96,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 
 
-# 📌 Enlaces de ayuda{#enlaces}
+## 📌 Enlaces de ayuda
 
 - Puedes ver un ejemplo de un programa resuelve el problema: *Queremos modelar una producto. Cada producto tiene un nombre, dias de vida y tipo (fruta o vegetal). Debe poder hacer acciones como  mostrar su información.* [Repositorio de Ejemplo](https://github.com/JuegosTerva/ProductoNAtural)
 
