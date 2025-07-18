@@ -1,3 +1,15 @@
+# Base del pseudocódigo
+
+## Enlaces de interés
+
+- Métodos con parámetros
+- Práctica de [Clases y Objetos](CSharp/ClasesObjetosCSharp.md)
+
+## Plantilla
+
+Cópiala y pégala, usala para guiarte y crear tu propio pseudocódigo.
+
+```
 Inicio del programa
 
 Definir clase NombreClase
@@ -26,3 +38,4 @@ Definir clase principal Program
 Fin clase NombreClase
 
 Fin del programa
+```

@@ -33,8 +33,8 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 2. Abre la consola en esta carpeta.
 
-> 📌 Nota: <br/>
-> Si estás en Windows usa Git Bash para los comandos.
+	> 📌 Nota: <br/>
+	> Si estás en Windows usa Git Bash para los comandos.
 
 1. Crea un nuevo proyecto en tu computadora usando el comando `dotnet new console` 
 
@@ -50,7 +50,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
 
-	> Reemplaza URL con el enlace que acabas de copiar.
+	> 👀 Reemplaza URL con el enlace que acabas de copiar.
 
 5. Crea un archivo `.gitignore`[^2] usando el comando `touch .gitignore`.
 
@@ -62,7 +62,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 8. Sube tu commit con el comando `git push origin TU-RAMA`
 
-	> Recuerda que en Windows puedes ver el nombre de tu rama entre paréntesis.
+	> 💭 Recuerda que en Windows puedes ver el nombre de tu rama entre paréntesis.
 
 	[Foto de Git Bash]: #
 
@@ -76,11 +76,9 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	1. Define la clase.  
 
-		Recuerda usar las etiquetas de INICIO FIN
+		> 💭 Recuerda usar las etiquetas de `INICIO FIN`
 
 	2. Crea tus variables, ¿qué tipo de variables necesita cada atributo (características)?
-
-	3. C
 
 	[TIPOS DE DATOS]: #
 
