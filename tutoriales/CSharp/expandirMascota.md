@@ -7,9 +7,29 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ## 📚 Conceptos clave
 
+1. [Tipos de datos | Guía](programacion/tiposDatos.md)
+
 1. Clases y Objetos
 
 2. [Métodos con parámetros | Guía](programacion/parametrosMetodos.md)
+
+## 🧠 Guía paso a paso
+
+## Prepara tu proyecto
+
+1. Abre la terminal o el Git Bash dentro de la carpeta de tu proyecto.
+
+	> Recuerda usar el Git Bash para los comandos
+
+2. Usa ˋgit fetchˋ para traer la información nueva del repositorio remoto.
+
+	> A veces los comandos no muestran resultados, eso quiere decir que no hay errores y se pudo correr el comando sin problemas.
+
+3. Usa ˋgit statusˋ para ver el estado actual de tu repositorio.
+
+4. Si no tienes cambios en el repositorio local, y te sugiere que hagas un pull, entonces haz ˋgit pullˋ
+
+5. Si te dice que no hay cambios, continua con el siguiente paso.
 
 ## Dibuja un diagrama en el cuaderno:
 
@@ -21,11 +41,11 @@ Mascota
 + emitirSonido(): void
 + mostrarInfo(): void
 + getEdad(): int
-    obtiene la edad
+   -> obtiene la edad
 + setEdad(int nuevaEdad): void
-    solicitad entrada al usuario
+   -> solicitad entrada al usuario
 + calcularEdadHumana(): int
-    multiplica por 7
+   -> multiplica por 7
 
 Puedes seguir el siguiente ejemplo:
 ![ejemplo de diagrama de una clase](https://www.juegosterva.com/tutoriales/imagenes/clasesyobjetos.jpg)
