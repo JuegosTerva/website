@@ -31,7 +31,8 @@ Resultado:
 
 ## ¿Qué tipos pueden tener los parámetros?
 
-Puedes pasar casi **cualquier tipo de dato**: `int`, `string`, `bool`, `float`, e incluso **objetos**.
+Puedes pasar casi **cualquier [tipo de dato](programacion/tiposDatos.md)**: `int`, `string`, `bool`, `float`, e incluso **objetos**.
+
 
 ```csharp
 void MostrarEdad(string nombre, int edad)
@@ -43,14 +44,14 @@ MostrarEdad("Ana", 22);
 // Salida: Ana tiene 22 años
 ```
 
----
-
-### ¿Cómo se escriben?
+## ¿Cómo se escriben?
 
 Un método con parámetros se ve así:
 
 ```csharp
 tipoDeRetorno NombreDelMetodo(tipo1 nombre1, tipo2 nombre2, ...){
+
+	// bloque de código
     
 }
 ```
