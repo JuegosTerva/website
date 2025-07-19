@@ -56,6 +56,8 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Crea un archivo `.gitignore`[^2] usando el comando `touch .gitignore`.
 
+	![imagen señalando el boton de pegar](imagenes/gitignoreReferencia.png)
+
 9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://gist.github.com/takekazuomi/10955889)
 
 6. Usa el comando `git add .` para respaldar tu proyecto.

@@ -69,7 +69,7 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ## Programación en C#
 
-3. Usa como base el código de la práctica pasada.
+9. Usa como base el código de la práctica pasada.
 
 2. Agregar método `setEdad`. [Ejemplo de método con parámetros.](../programacion/parametrosMetodos.md)
 
@@ -94,19 +94,23 @@ Esta guía te ayudará a resolver la actividad paso a paso.
     }
     ```
 
-4. Crear 2 mascotas con diferentes edades y tipos.
+4. Crea 2 mascotas con diferentes edades y tipos.
 
-5. Llamar todos los métodos. 
+5. Llama todos los métodos. 
 
-6. Cambiar la edad de una mascota usando setEdad.
+    ```csharp
+    HacerJugo("naranja");
+    ```
 
-7. Mostrar la edad humana antes y después del cambio.
+6. Cambia la edad de una mascota usando setEdad.
+
+7. Muestra la edad humana antes y después del cambio.
 
 8. Responde en la plataforma
 
--   ¿Cuál fue la parte más difícil?
+    - ¿Cuál fue la parte más difícil?
 
-- ¿Qué pasa si no usamos get o set?
+    - ¿Qué pasa si no usamos get o set?
 
-- ¿Para qué sirve retornar algo?
+    - ¿Para qué sirve retornar algo?
 
