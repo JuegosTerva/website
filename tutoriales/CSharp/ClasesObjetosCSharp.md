@@ -6,6 +6,8 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ## 📚 Conceptos clave
 
+1. [Tipos de datos | Guía](programacion/tiposDatos.md)
+
 1. Clases y objetos
 
 > 💡 **Sugerencia** <br/>
@@ -74,23 +76,23 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	> Revisa el [ejemplo del pseudocódigo](https://github.com/JuegosTerva/ProductoNAtural/blob/a4e9a5686954d881f259e7e50e4fc1b7ea54e7a1/pseudocodigo.md), revisa [los enlaces de ayuda](#enlaces).
 
-	1. Define la clase.  
+1. Define la clase.  
 
-		> 💭 Recuerda usar las etiquetas de `INICIO FIN`
+	> 💭 Recuerda usar las etiquetas de `INICIO FIN`
 
-	2. Crea tus variables, ¿qué tipo de variables necesita cada atributo (características)?
+2. Crea tus variables, ¿qué tipo de variables necesita cada atributo (características)?
 
 	[TIPOS DE DATOS]: #
 
-	3. Crea tu constructor.
+3. Crea tu constructor.
 
-		> Aquí es donde creas la plantilla.
+	> Aquí es donde creas la plantilla.
 
-		> Recuerda usar las etiquetas de INICIO FIN
+	> Recuerda usar las etiquetas de INICIO FIN
 
 11. Sube tu pseudocódigo a la plataforma. 🧑🏻‍💻
 
-12. Actualiza tu repositorio. Puedes guiarte de los pasos 6 a 8.
+12. Actualiza tu repositorio. Puedes guiarte de los pasos 9 a 11.
 
 ## 🧪 Resultado Esperado
 
