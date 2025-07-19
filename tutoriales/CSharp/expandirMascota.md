@@ -35,22 +35,22 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 6. Dibuja un diagrama en el cuaderno:
 
-Mascota
+    Mascota
 
-- nombre: string (privado)
-- edad: int (privado)
-- tipo: string (privado)
-+ emitirSonido(): void
-+ mostrarInfo(): void
-+ getEdad(): int
-   -> obtiene la edad
-+ setEdad(int nuevaEdad): void
-   -> solicitad entrada al usuario
-+ calcularEdadHumana(): int
-   -> multiplica por 7
+    - nombre: string (privado)
+    - edad: int (privado)
+    - tipo: string (privado)
+    + emitirSonido(): void
+    + mostrarInfo(): void
+    + getEdad(): int
+       -> obtiene la edad
+    + setEdad(int nuevaEdad): void
+       -> solicitad entrada al usuario
+    + calcularEdadHumana(): int
+       -> multiplica por 7
 
-Puedes seguir el siguiente ejemplo:
-![ejemplo de diagrama de una clase](https://www.juegosterva.com/tutoriales/imagenes/clasesyobjetos.jpg)
+    Puedes seguir el siguiente ejemplo:
+    ![ejemplo de diagrama de una clase](https://www.juegosterva.com/tutoriales/imagenes/clasesyobjetos.jpg)
 
 1. Sube una captura de pantalla a la plataforma.
 
@@ -59,13 +59,13 @@ Puedes seguir el siguiente ejemplo:
 
 8. En parejas o individual, modifiquen su pseudocódigo agregando los métodos `getEdad`, `setEdad`, `calcularEdadHumana`.
 
-Ejemplo:
+    Ejemplo:
 
-```
-Método calcularEdadHumana
-  edadHumana = edad * 7
-  retornar edadHumana
-```
+    ```
+    Método calcularEdadHumana
+      edadHumana = edad * 7
+      retornar edadHumana
+    ```
 
 ## Programación en C#
 
