@@ -11,8 +11,6 @@
 
 1. Crea un repositorio público en GitHub, recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales.
 
-3. Pega el enlace del repositorio en la plataforma eStudy. 🧑🏻‍💻 
-
 5. Copia el enlace HTTP de tu repositorio.
 	
 	![Es el botón verde que dice <Code>](imagenes/btnCode.png)
@@ -25,7 +23,7 @@
 
 	![imagen señalando el boton de pegar](imagenes/gitignoreReferencia.png)
 
-9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://gist.github.com/takekazuomi/10955889)
+9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://github.com/github/gitignore/blob/main/Unity.gitignore)
 
 6. Usa el comando `git add .` para respaldar tu proyecto.
 
