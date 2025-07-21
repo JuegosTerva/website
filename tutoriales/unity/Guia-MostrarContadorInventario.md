@@ -1,8 +1,20 @@
 # Guía: Mostrar contadorHuevos con UI Toolkit
 
+## Actualizar el repositorio
+
+1. Abrir la terminal (o el GIT BASH) dentro de tu carpeta.
+
+    > En el nivel donde ves una carpeta llamada `.git` y tienes tu `.gitignore`.
+
+2. Usa el comando `git fetch`
+
+3. Usa el comando `git status`
+
+4. Usa el comando `git pull`
+
 ## Crear un archivo USS (estilos)
 
-1. Crea una carpeta llamada UI.
+5. En tu proyecto de Unity crea una carpeta llamada UI.
 
 
 2. Dentro, haz clic derecho > Create > UI Toolkit > StyleSheet → nómbralo InventarioStyle.uss.
@@ -12,11 +24,11 @@
 
 ```
 #labelHuevos {
-    font-size: 24px;
-    color: white;
-    unity-font-style: bold;
-    margin-left: 10px;
-    margin-top: 10px;
+    font-size: 24px; // cambia el tamaño de la letra
+    color: white; // cambia el color a blanco
+    unity-font-style: bold; // la pone en negritas
+    margin-left: 10px; // margenes a la izquiera
+    margin-top: 10px; // margenes arriba
 }
 ```
 
