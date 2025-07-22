@@ -4,14 +4,16 @@
 
 - [Guía de estructuras condicionales (switch)](programacion/infoSwitch.md)
 - [Guía de bucles for](infoFor.md)
-- 
+- [Tipos de datos](tiposDatos.md)
+- [Métodos con parámetros](parametroMetodos.md)
 
 ## <i class="bi bi-git"></i> Git
 
 - [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
 - [Enlazar repositorio local con repositorio en GitHub](git/gitRepositorioArchivos.md)
+- [Descargar actualizaciones de GitHub](git/actualizarRepositorio.md)
 
-## <i class="bi bi-filetype-cs"></i> CSharp
+## <i class="bi bi-filetype-cs"></i> Prácticas de CSharp
 
 - [Clases y Objetos | Mascotas](CSharp/ClasesObjetosCSharp.md)
 - [Métodos y parámetros | Extender Mascotas](CSharp/expandirMascota.md)
