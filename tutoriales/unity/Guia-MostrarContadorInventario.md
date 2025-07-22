@@ -37,7 +37,7 @@
 1. En la misma carpeta UI, clic derecho > Create > UI Toolkit > UI Document → nómbralo InventarioUI.uxml.
 
 
-![Captura de pantalla del menù para crear el UI Document](unity/assets/MenuUIDocument)
+![Captura de pantalla del menú para crear el UI Document](unity/assets/MenuUIDocument.png)
 
 
 2. Ábrelo y agrega un Label con estos valores:
@@ -51,28 +51,27 @@ Text: Huevos: 0
 
 ## Crear el UIDocument en la escena
 
-1. Crea un GameObject vacío → nómbralo UIManager.
+1. Crea un `GameObject` vacío → nómbralo `UIManager`.
 
-2. Agrégale el componente UIDocument.
+2. Agrégale el componente `UIDocument`.
 
-3. Asigna el InventarioUI.uxml al campo Source Asset.
+3. Asigna el `InventarioUI.uxml` al campo `Source Asset`.
 
 ## Agrega un panel para mostrar el contador
 
 1. En la misma carpeta UI, clic derecho > Create > UI Toolkit > Panel  → nómbralo PanelUI.
 
-
 ## Crear el script ContadorHuevosUI.cs
 
-1. En tu carpeta de scripts, crea el script ContadorHuevosUI.cs 
+1. En tu carpeta de scripts, crea el script `ContadorHuevosUI.cs`. 
 
 2. Importa lo básico de Unity, necesario para usar MonoBehaviour, GameObject, etc.
 
-using UnityEngine;
+    `using UnityEngine;`
 
 3. Importa lo necesario para trabajar con UI Toolkit (el sistema moderno de UI en Unity).
 
-using UnityEngine.UIElements;
+    `using UnityEngine.UIElements;`
 
 4. Crea tus variables
 
