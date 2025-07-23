@@ -28,7 +28,7 @@ En programación, cada dato necesita tener un tipo, para que el programa sepa:
 
 ## Tipos de datos:
 
-> 🎮 Recuerda que est´a enfocado a desarrollo de videojuegos
+> 🎮 Recuerda que está enfocado a desarrollo de videojuegos
 
 |Tipo de dato|¿Qué guarda?|Ejemplo|
 |----|---|---|
@@ -96,9 +96,7 @@ Se usa para nombres de personajes, diálogos, mensajes en pantalla, etc.
 
 ## Vector3 de Unity
 
-- Es un tipo nativo de Unity, muy usado en videojuegos 3D.
-- Esta formado por 3 floats
-- Representa una posición, dirección o escala con tres dimenciones (x, y, z).
+Es un tipo nativo de Unity, muy usado en videojuegos 3D. Esta formado por 3 floats. Puede representar una posición, dirección o escala con tres dimenciones (x, y, z).
 
 **Usos comunes**
 
@@ -111,9 +109,7 @@ Para mover al personaje dentro del juego.
 
 ## Vector2 de Unity
 
-- Es un tipo nativo de Unity, muy usado en videojuegos 2D.
-- Esta formado por 2 floats
-- Similar a Vector3, pero con dos dimensiones (x, y).
+Es un tipo nativo de Unity, muy usado en videojuegos 2D. Esta formado por 2 floats. Es similar a Vector3, pero con dos dimensiones (x, y).
 
 **Usos comunes**
 Para mover un personaje en un juego 2D.
@@ -133,5 +129,7 @@ Puedes manipularlo, activarlo, destruirlo, modificar cualquiera de sus component
 
 **Ejemplo:**
 
-`public GameObject enemigo;
-enemigo.SetActive(false);`
+```c#
+public GameObject enemigo;
+enemigo.SetActive(false);
+```

@@ -99,7 +99,7 @@
 
     `labelHuevos = root.Q<Label>("labelHuevos");`
 
-![Método On Enable](unity/assets/inventario/OnEnable.png)
+    ![Método On Enable](unity/assets/inventario/OnEnable.png)
 
 ## Verifica si el número de huevos cambió.
 
@@ -126,7 +126,7 @@
 
 1. Asigna este script al mismo GameObject donde está el UIDocument (tu UIManager).
 
-![Componente UIDocument del gameobject UIManager](unity/assets/inventario/UIDocument.png)
+    ![Componente UIDocument del gameobject UIManager](unity/assets/inventario/UIDocument.png)
 
 2. Prueba tu juego
 

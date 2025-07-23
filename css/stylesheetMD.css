@@ -99,3 +99,31 @@ pre {
 .markdown-body tr:nth-child(even) {
   background-color: #2a2a2a; /* rayado para mejor lectura */
 }
+
+/* Para pantallas pequeñas (como móviles) */
+@media (max-width: 600px) {
+  body {
+    font-size: 1.25rem; /* Aumenta el tamaño en móviles */
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  pre, code {
+    font-size: 1.1rem;
+  }
+
+  button.copy-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
