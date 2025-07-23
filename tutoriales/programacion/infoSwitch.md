@@ -47,3 +47,5 @@ switch (expresion)
 
 ```
 ## Ejemplos
+
+<!-- tres ejemplos -->

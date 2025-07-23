@@ -77,9 +77,10 @@
     function mostrarEnlaceVolver() {
       if (archivo && archivo !== rutaIndice) {
         const nav = document.getElementById("nav");
-        nav.innerHTML = `<a href="${rutaIndice}">⬅️ Volver al índice</a>`;
+        nav.innerHTML = `<a href="${rutaIndice}"><i class="bi bi-caret-left-square"></i> Volver al índice</a>`;
       }
     }
+
 
     if (archivo) {
       fetch(archivo)
@@ -111,9 +112,14 @@
         })
 
         .catch(error => {
-          document.getElementById("markdown").innerHTML = `<div style="color: #b00020; background-color: #ffe6e6; padding: 1rem; border-radius: 8px;">
-      <p><strong>Error:</strong> No se pudo cargar el archivo Markdown.</p><p>Si crees que esto es un error, por favor <a href="mailto:juegoterva@gmail.com">escríbeme a juegoterva@gmail.com</a>.</p>
-    </div>
+          document.getElementById("markdown").innerHTML = `
+            <div class="markdown-body">
+              <p style="color: #b00020; background-color: #ffe6e6; padding: 1rem; border-radius: 8px;">
+                <strong>Error:</strong> No se pudo cargar el archivo Markdown.
+              </p>
+              <p>Si crees que esto es un error, por favor <a href="mailto:juegoterva@gmail.com">escríbeme a juegoterva@gmail.com</a>.</p>
+              <p>Puedes ver mas tutoriales en <a href="mdVisor.html?archivo=index.md">el índice de contenidos</a>. </p>
+            </div>
   `;
   console.error(error);
 });

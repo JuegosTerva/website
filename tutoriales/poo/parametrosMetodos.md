@@ -28,7 +28,7 @@ HacerJugo("naranja");
 Resultado:
 `Estoy haciendo jugo de naranja`
 
-
+<!-- conceptos -->
 ## ¿Qué tipos pueden tener los parámetros?
 
 Puedes pasar casi **cualquier [tipo de dato](programacion/tiposDatos.md)**: `int`, `string`, `bool`, `float`, e incluso **objetos**.
@@ -44,7 +44,12 @@ MostrarEdad("Ana", 22);
 // Salida: Ana tiene 22 años
 ```
 
+<!-- ¿cómo se usan? -->
 ## ¿Cómo se escriben?
+
+### Pseudocódigo
+
+### En CSharp
 
 Un método con parámetros se ve así:
 
@@ -64,3 +69,6 @@ void Saludar(string nombre)
     Console.WriteLine("Hola, " + nombre);
 }
 ```
+
+<!-- errores comunes -->
+
