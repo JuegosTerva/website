@@ -10,6 +10,7 @@ html {
 
 body {
   font-family: sans-serif;
+  background-color: #158EFF;
 }
 
 h {
@@ -70,4 +71,28 @@ pre {
 
 .nav-bar a:hover {
   text-decoration: underline;
+}
+
+/* tablas */ 
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e1e1e; /* fondo oscuro, ajusta según tu tema */
+  color: white; /* texto claro */
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid #444;
+  padding: 8px;
+}
+
+.markdown-body th {
+  background-color: #2c2c2c; /* un poco más claro que el fondo general */
+  font-weight: bold;
+}
+
+.markdown-body tr:nth-child(even) {
+  background-color: #2a2a2a; /* rayado para mejor lectura */
 }
