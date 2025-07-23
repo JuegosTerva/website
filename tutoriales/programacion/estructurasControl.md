@@ -1,5 +1,7 @@
 # Estructuras de control
 
+*Sigue cada enlace para más información.*
+
 | Estructura | C# / Java                     |  Pseudocódigo             |
 | ---------- | ----------------------------- |  ------------------------ |
 | [`if`](programacion/infoIfElse.md)     | `if (cond) { ... }` |  `SI cond ENTONCES ...`   |

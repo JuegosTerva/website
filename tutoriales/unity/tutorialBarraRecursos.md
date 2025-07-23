@@ -50,7 +50,7 @@
 
 3. Asócialo al archivo InventarioStyle.uss en la sección de estilos (abajo del inspector).
 
-## Crear el UIDocument en la escena
+### Crear el UIDocument en la escena
 
 1. Crea un `GameObject` vacío → nómbralo `UIManager`.
 
@@ -58,11 +58,11 @@
 
 3. Asigna el `InventarioUI.uxml` al campo `Source Asset`.
 
-## Agrega un panel para mostrar el contador
+### Agrega un panel para mostrar el contador
 
 1. En la misma carpeta UI, clic derecho > Create > UI Toolkit > Panel  → nómbralo PanelUI.
 
-## Crear el script InventarioUI.cs
+### Crear el script InventarioUI.cs
 
 1. En tu carpeta de scripts, crea el script `InventarioUI.cs`. 
 
@@ -74,7 +74,7 @@
 
     `using UnityEngine.UIElements;`
 
-## Crea tus variables
+### Crea tus variables
 
 1. Una referencia privada al Label (etiqueta de texto) que vas a modificar.
  
@@ -84,7 +84,7 @@
 
     `private int huevosPrevios = -1;`
 
-## Haz la configuración inicial de la UI:
+### Haz la configuración inicial de la UI:
 
 1. Este método se llama automáticamente cuando el GameObject se activa (o entra en escena).
 
@@ -101,17 +101,17 @@
 
     ![Método On Enable](unity/assets/inventario/OnEnable.png)
 
-## Verifica si el número de huevos cambió.
+### Verifica si el número de huevos cambió.
 
 1. Este método se llama cada cuadro del juego (~60 veces por segundo).
 
     `void Update(){}`
 
-6. Compara si[^2] el valor actual de huevos[^1] es diferenta al último valor mostrado.
+6. Compara si[^2] el valor actual de huevos[^1] es diferente al último valor mostrado.
 
     ```c#
     if (GameManager.instancia.huevos != huevosPrevios){
-        // aquí programa la actualización de la interfaz, paso 6.1.1
+        // aquí programa la actualización de la interfaz, paso siguiente
     }
     ```
 
@@ -122,15 +122,13 @@
     labelHuevos.text = $"Huevos: {huevosPrevios}";
     ```
 
-## Asignar script
+### Asignar script
 
 1. Asigna este script al mismo GameObject donde está el UIDocument (tu UIManager).
 
     ![Componente UIDocument del gameobject UIManager](unity/assets/inventario/UIDocument.png)
 
 2. Prueba tu juego
-
-
 
 [^1]: Una variable pública estática en GameManager, revisa [el ejercicio anterior]().
 [^2]: Puedes revisar la estrucura condicional [`if/else`](programacion/infoIfElse.md).
