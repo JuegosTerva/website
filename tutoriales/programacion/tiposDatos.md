@@ -38,7 +38,7 @@ En programación, cada dato necesita tener un tipo, para que el programa sepa:
 |string|Cadena de caracteres| "Hola", "123"|
 |bool| Valores lógicos| true, false|
 
-## Enteros ˋintˋ
+## Enteros `int`
 
 Representa números enteros sin decimales.
 
@@ -48,25 +48,23 @@ Puedes usarlos para almacenar puntuación, vida, cantidad de enemigos, contador 
 
 **Ejemplo:**
 
-ˋint vida = 100;ˋ
+`int vida = 100;`
 
-ˋint puntos = 250;ˋ
-
-## Números reales ˋfloatˋ
+`int puntos = 250;`
+## Números reales `float`
 
 Representa números reales (con punto decimal).
 
 **Uso común**
 
-Puedes usarlo para posiciones de una dimensiˋon, velocidades, rotaciones, tiempos, etc.
+Puedes usarlo para posiciones de una dimension, velocidades, rotaciones, tiempos, etc.
 
 **Ejemplo:**
 
-ˋfloat velocidad = 5.5f;ˋ
+`float velocidad = 5.5f;`
+`float tiempoRestante = 12.3f;`
 
-ˋfloat tiempoRestante = 12.3f;ˋ
-
-## Booleanos ˋboolˋ
+## Booleanos bool
 
 Solo puede ser true o false.
 
@@ -76,11 +74,11 @@ Sirve para saber si algo está activo/inactivo, vivo/muerto, encendido/apagado, 
 
 **Ejemplo:**
 
-ˋbool estaSaltando = false;ˋ
+`bool estaSaltando = false;`
 
-ˋbool nivelCompletado = true;ˋ
+`bool nivelCompletado = true;`
 
-## Cadenas de texto ˋstringˋ
+## Cadenas de texto `string`
 
 Guarda textos o palabras.
 
@@ -93,7 +91,7 @@ Se usa para nombres de personajes, diálogos, mensajes en pantalla, etc.
  
 `string nombreJugador = "Claudia";`
 
-ˋstring mensaje = "¡Game Over!";ˋ
+`string mensaje = "¡Game Over!";`
 
 
 ## Vector3 de Unity
@@ -108,7 +106,7 @@ Para mover al personaje dentro del juego.
 
 **Ejemplo:**
 
-Vector3 posicion = new Vector3(0f, 5f, 10f);
+`Vector3 posicion = new Vector3(0f, 5f, 10f);`
 
 
 ## Vector2 de Unity
@@ -122,7 +120,7 @@ Para mover un personaje en un juego 2D.
 
 **Ejemplo:**
 
-Vector2 direccion = new Vector2(1f, 0f);
+`Vector2 direccion = new Vector2(1f, 0f);`
 
 
 ## GameObject de Unity
@@ -135,5 +133,5 @@ Puedes manipularlo, activarlo, destruirlo, modificar cualquiera de sus component
 
 **Ejemplo:**
 
-public GameObject enemigo;
-enemigo.SetActive(false);
+`public GameObject enemigo;
+enemigo.SetActive(false);`

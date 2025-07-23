@@ -109,14 +109,18 @@
 
 6. Compara si[^2] el valor actual de huevos[^1] es diferenta al último valor mostrado.
 
-    `if (GameManager.instancia.huevos != huevosPrevios){
+    ```c#
+    if (GameManager.instancia.huevos != huevosPrevios){
         // aquí programa la actualización de la interfaz, paso 6.1.1
-    }`
+    }
+    ```
 
 6. Si cambió, actualiza el texto del Label y guarda el nuevo valor como "último conocido".
 
-    `huevosPrevios = GameManager.instancia.huevos;
-    labelHuevos.text = $"Huevos: {huevosPrevios}";`
+    ```c#
+    huevosPrevios = GameManager.instancia.huevos;
+    labelHuevos.text = $"Huevos: {huevosPrevios}";
+    ```
 
 ## Asignar script
 
