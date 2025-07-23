@@ -1,12 +1,13 @@
-# Guía Pseudocódigo
+# switch
+Elige entre múltiples caminos según el valor de una variable.
+
+## Pseudocódigo
 
 ```
 Segun variable hacer
 
     Caso valor1:
-
         // instrucciones para valor1
-    
         Salir
 
     Caso valor2:
@@ -45,3 +46,4 @@ switch (expresion)
 }
 
 ```
+## Ejemplos
