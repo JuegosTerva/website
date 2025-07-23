@@ -73,8 +73,10 @@
 - [Clases y Objetos | Mascotas](CSharp/ClasesObjetosCSharp.md)
 - [Métodos y parámetros | Extender Mascotas](CSharp/expandirMascota.md)
 
-# Tutoriales Unity
+# Tutoriales
 
-## La granja
+## <i class="bi bi-unity"></i> Unity
 
--[Añadir panel de recursos](unity/tutorialBarraRecursos.md)
+### La granja
+
+- [Añadir panel de recursos](unity/tutorialBarraRecursos.md)

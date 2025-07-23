@@ -1,4 +1,8 @@
-# Tutorial: Mostrar inventario en barra con UI Toolkit
+# Tutorial: Añadir panel de recursos
+
+## 📚 Conceptos clave
+
+- UI Toolkit
 
 ## Actualizar el repositorio
 
@@ -12,40 +16,37 @@
 
 4. Usa el comando `git pull`
 
-## Crear un archivo USS (estilos)
+## 🧠 Guía paso a paso
 
-5. En tu proyecto de Unity crea una carpeta llamada UI.
+### Crear un archivo USS (estilos)
 
+1. En tu proyecto de Unity crea una carpeta llamada UI.
 
 2. Dentro, haz clic derecho > Create > UI Toolkit > StyleSheet → nómbralo InventarioStyle.uss.
 
-
 3. Edita el USS con este contenido:
 
-```
-#labelHuevos {
-    font-size: 24px; /* cambia el tamaño de la letra */
-    color: white; /* cambia el color a blanco */
-    margin-left: 10px; /* margenes a la izquierda */
-    margin-top: 10px; /* margenes arriba */
-}
-```
+    ```
+    #labelHuevos {
+        font-size: 24px; /* cambia el tamaño de la letra */
+        color: white; /* cambia el color a blanco */
+        margin-left: 10px; /* margenes a la izquierda */
+        margin-top: 10px; /* margenes arriba */
+    }
+    ```
 
-
-## Crear un archivo UXML (interfaz visual)
+### Crear un archivo UXML (interfaz visual)
 
 1. En la misma carpeta UI, clic derecho > Create > UI Toolkit > UI Document → nómbralo InventarioUI.uxml.
 
-
-![Captura de pantalla del menú para crear el UI Document](unity/assets/inventario/MenuUIDocument.png)
-
+    ![Captura de pantalla del menú para crear el UI Document](unity/assets/inventario/MenuUIDocument.png)
 
 2. Ábrelo y agrega un Label con estos valores:
 
-```
-Name: labelHuevos
-Text: Huevos: 0
-```
+    ```
+    Name: labelHuevos
+    Text: Huevos: 0
+    ```
 
 3. Asócialo al archivo InventarioStyle.uss en la sección de estilos (abajo del inspector).
 
