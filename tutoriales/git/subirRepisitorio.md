@@ -8,6 +8,9 @@ git add .
 
 Esto agrega todos los archivos modificados (puedes usar `git add archivo.txt` si solo quieres uno).
 
+![git add .](git/assets/gitAdd.png)
+
+
 ---
 
 ## 2. Crea un *commit* (una foto de tus cambios):
