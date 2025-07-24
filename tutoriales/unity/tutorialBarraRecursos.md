@@ -4,7 +4,7 @@
 
 - UI Toolkit
 
-## Actualizar el repositorio
+## 🔄 Actualizar el repositorio
 
 1. Abrir la terminal (o el GIT BASH) dentro de tu carpeta.
 

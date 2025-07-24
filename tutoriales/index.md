@@ -27,14 +27,6 @@
 <!--| - [Constructores y destructores](poo/constructoresDestructores.md) -->
 <!--| - [Modificadores de acceso](poo/modificadoresAcceso.md) -->
 
-
-
-## <i class="bi bi-git"></i> ... sobre Git
-
-- [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
-- [Enlazar repositorio local con repositorio en GitHub](git/gitRepositorioArchivos.md)
-- [Descargar actualizaciones de GitHub](git/actualizarRepositorio.md)
-
 <!--
 
 🎮 Orientado a videojuegos: estructuras comunes
@@ -80,3 +72,10 @@
 ### La granja
 
 - [Añadir panel de recursos](unity/tutorialBarraRecursos.md)
+
+## <i class="bi bi-git"></i> ... sobre Git
+
+- [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
+- [Enlazar repositorio local con repositorio en GitHub](git/gitRepositorioArchivos.md)
+- [Descargar actualizaciones de GitHub](git/actualizarRepositorio.md)
+- [Actualizar la URL de `origin` con un token de GitHub](git/tokenURL.md)

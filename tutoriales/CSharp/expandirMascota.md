@@ -42,8 +42,6 @@ Esta guía te ayudará a resolver la actividad paso a paso.
     - tipo: string (privado)
     + emitirSonido(): void
     + mostrarInfo(): void
-    + getEdad(): int
-       -> obtiene la edad
     + setEdad(int nuevaEdad): void
        -> solicitad entrada al usuario
     + calcularEdadHumana(): int
