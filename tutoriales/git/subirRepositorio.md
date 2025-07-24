@@ -10,9 +10,6 @@ Esto agrega todos los archivos modificados (puedes usar `git add archivo.txt` si
 
 ![git add .](git/assets/gitAdd.png)
 
-
----
-
 ## 2. Crea un *commit* (una foto de tus cambios):
 
 ```bash
@@ -25,7 +22,7 @@ Ejemplo:
 git commit -m "Agregué pantalla de inicio"
 ```
 
----
+![git commit -m](git/assets/gitCommit.png)
 
 ## 3. Sube tus cambios al repositorio remoto en GitHub:
 
@@ -35,7 +32,7 @@ git push origin TU-RAMA
 
 > Reemplaza `TU-RAMA` con el nombre de tu rama (como `master` o `dev` o `main`).
 
----
+![git add .](git/assets/gitPush.png)
 
 ## Si es la primera vez que subes:
 
