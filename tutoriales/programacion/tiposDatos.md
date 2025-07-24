@@ -51,6 +51,7 @@ Puedes usarlos para almacenar puntuación, vida, cantidad de enemigos, contador 
 `int vida = 100;`
 
 `int puntos = 250;`
+
 ## Números reales `float`
 
 Representa números reales (con punto decimal).
@@ -82,7 +83,7 @@ Sirve para saber si algo está activo/inactivo, vivo/muerto, encendido/apagado, 
 
 Guarda textos o palabras.
 
-**Usos m´as com´unes**
+**Usos más comúnes**
 
 Se usa para nombres de personajes, diálogos, mensajes en pantalla, etc.
 

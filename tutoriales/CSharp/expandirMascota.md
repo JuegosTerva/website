@@ -43,7 +43,7 @@ Esta guía te ayudará a resolver la actividad paso a paso.
     + emitirSonido(): void
     + mostrarInfo(): void
     + setEdad(int nuevaEdad): void
-       -> solicitad entrada al usuario
+       -> leer entrada del usuario
     + calcularEdadHumana(): int
        -> multiplica por 7
 
