@@ -48,7 +48,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Copia el enlace HTTP de tu repositorio.
 	
-	![Es el el enlace de Quick Setup](git/assets/quicksetuop.png)
+	![Es el el enlace de Quick Setup](git/assets/quicksetup.png)
 
 4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
 

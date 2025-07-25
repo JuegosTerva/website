@@ -65,6 +65,8 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 6. Usa el comando `git add .` para respaldar tu proyecto.
 
+	![git add .](git/assets/gitAdd.png)
+
 7. Haz un commit usando el comando `git commit -m "TU-MENSAJE"`
 
 8. Sube tu commit con el comando `git push origin TU-RAMA`
@@ -82,9 +84,29 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 	**Por ejemplo:**
 	`energia (int) ← 100`
 
-	> Yo usé seis variables.
+	> Yo usé seis variables.</br>
+	> Con cinco variables ya puedes continuar, si necesitas más, puedes regresar y hacer los cambios que hagan falta.
 
-3. 
+	
+4. ¿Cuál es la estructura que controla el juego?
+
+	* Observa el resultado del programa[^4].
+
+	* ¿Cuáles son las dos estructuras de control que puedes identificar?
+
+	* ¿Necesito repetir algo?
+
+	* ¿Cuántas veces debe repetirse? ¿Un número conocido de veces? ¿Hasta que se cumpla una condición?
+
+	* ¿Debe ejecutarse al menos una vez, aunque la condición no se cumpla?
+
+	> 💡 Necesitarás un booleano para controlar esta estructura, con esto completas tus seis variables.
+
+5. Añade tu menú con un `switch`[^5].
+
+	![Resultado en la consola del menú](CSharp/assets/guerreroAxolotlMenu.png)
+
+7.  
 
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.
@@ -92,3 +114,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 [^2]: Este archivo le dice a Git qué archivos o carpetas **no** debe guardar en el repositorio. Sirve para evitar subir cosas innecesarias, como archivos temporales, configuraciones locales o carpetas que genera el compilador.
 
 [^3]: Es un lenguaje de marcado ligero que te permite escribir texto con formato (como negritas, cursivas, listas, enlaces, etc.) de forma simple y rápida. [Aquí hay un acordeón.](markdown-cheat-sheet.md)
+
+[^4]: Usa las preguntas guía en [estructuras de control](programacion/estructurasControl.md)
+
+[^5]: Revisa los [apuntes digitales sobre `switch`](programacion/infoSwitch.md).
