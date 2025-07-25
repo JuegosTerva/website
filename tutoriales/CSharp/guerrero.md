@@ -19,6 +19,9 @@ La idea es que escribas un programa **estructurado y funcional**, pero también 
 
 ## 📚 Conceptos clave
 
+- [Tipos de datos](programacion/tiposDatos.md)
+- [Estructuras de control](programacion/estructurasControl.md)
+
 ## 🖥️ Requisitos del sistema
 Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
@@ -106,7 +109,9 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	![Resultado en la consola del menú](CSharp/assets/guerreroAxolotlMenu.png)
 
-7.  
+	MOSTRAR "----- MENÚ -----"
+
+7. Crea tu método para mostrar
 
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.

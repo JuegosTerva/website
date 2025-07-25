@@ -10,9 +10,37 @@
 	- [if/else](programacion/infoIfElse.md)
 - [Operadores](programacion/operadoresBasicos.md)
 
+
+<!-- 
+Operador de incremento ++
+Operador de decremento --
+Operadores unarios más y menos
+Operador de multiplicación *
+Operador de división /
+Operador de resto %
+Operador de suma +
+Operador de resta -
+Asignación compuesta
+
+Operador de negación lógico !
+Operador lógico AND &
+Operador IR exclusivo lógico ^
+Operador lógico OR |
+Operador lógico condicional AND &&
+Operador OR lógico condicional ||
+
+Operador de igualdad ==
+Operador de desigualdad !=
+
+Operador menor que <
+Operador mayor que >
+Operador menor o igual que <=
+Operador mayor o igual que >=
+
+-->
+
 ## <i class="bi bi-journal-code"></i> ... sobre programación orientada a objetos
 
-<!-- ohhh algo-->
 <!--| - [Clases y Objetos](poo/clasesObjetos.md) -->
 <!--| - [Atributos y Métodos](poo/atributosMetodos.md) -->
 - Métodos
