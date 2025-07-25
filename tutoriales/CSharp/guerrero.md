@@ -1,6 +1,6 @@
 # Desafío: Guerrero
 
-Vas a crear un programa en consola que simule el entrenamiento de un guerrero.
+Crear un programa en consola que simule el entrenamiento de un guerrero.
 El usuario podrá elegir entre diferentes actividades (como entrenar, pelear o descansar), cada una con efectos distintos en sus estadísticas: fuerza, resistencia, energía y experiencia.
 
 Cada acción debe tener un costo (por ejemplo, gastar energía) y consecuencias (subir stats, perder una pelea, subir de nivel, etc.).
@@ -51,7 +51,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Copia el enlace HTTP de tu repositorio.
 	
-	![Es el el enlace de Quick Setup](git/assets/quicksetuop.png)
+	![Es el enlace de Quick Setup](../git/assets/quicksetup.png)
 
 4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
 
