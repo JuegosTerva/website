@@ -51,7 +51,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Copia el enlace HTTP de tu repositorio.
 	
-	![Es el enlace de Quick Setup](../git/assets/quicksetup.png)
+	![Es el enlace de Quick Setup](git/assets/quicksetup.png)
 
 4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
 
@@ -59,7 +59,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 5. Crea un archivo `.gitignore`[^2] usando el comando `touch .gitignore`.
 
-	![imagen señalando el boton de pegar](imagenes/gitignoreReferencia.png)
+	![imagen señalando el boton de pegar](git/assets/gitignoreReferencia.png)
 
 9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://gist.github.com/takekazuomi/10955889)
 
