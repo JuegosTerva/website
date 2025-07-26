@@ -48,6 +48,8 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 3. Usa el comando `git init` para inicializar git.
 
+	![carpeta de CSharp](git/asset/carpetaCSharp.png)
+
 1. Crea un repositorio público en GitHub en blanco, recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
 
 3. Pega el enlace del repositorio en la plataforma eStudy. 🧑🏻‍💻 
@@ -72,11 +74,13 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 7. Haz un commit usando el comando `git commit -m "TU-MENSAJE"`
 
+	![git commit](git/assets/gitCommit.png)
+
 8. Sube tu commit con el comando `git push origin TU-RAMA`
 
 	> 💭 Recuerda que en Windows puedes ver el nombre de tu rama entre paréntesis.
 
-	[Foto de Git Bash]: #
+	![git push](git/assets/gitPush.png)
 
 ### 📝 Elabora tu pseudocódigo
 
@@ -109,7 +113,9 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	![Resultado en la consola del menú](CSharp/assets/guerreroAxolotlMenu.png)
 
-	MOSTRAR "----- MENÚ -----"
+	Para la primer línea yo usé
+
+	`MOSTRAR "----- MENÚ -----"`
 
 7. Crea tu método para mostrar
 
