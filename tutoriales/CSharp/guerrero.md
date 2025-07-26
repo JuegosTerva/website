@@ -1,5 +1,9 @@
 # Desafío: Guerrero
 
+> <i class="bi bi-exclamation-triangle-fill" style="color: #FF6600;"></i>
+ Esta guía se encuentra en proceso de construcción. La última actualización fue realizada el 26 de julio, con mejoras en la creación de carpetas.
+
+
 Crear un programa en consola que simule el entrenamiento de un guerrero.
 El usuario podrá elegir entre diferentes actividades (como entrenar, pelear o descansar), cada una con efectos distintos en sus estadísticas: fuerza, resistencia, energía y experiencia.
 
@@ -33,22 +37,36 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 2. Editor de código
 	Te recomiendo usar Sublime Text por su ligereza y facilidad de uso. Puedes descargarlo aquí:
 	https://www.sublimetext.com
+	
 ## 🧠 Guía paso a paso
+
+ 
 
 ### 💻 Prepara tu proyecto
 
-1. Crea una carpeta para guardar tu proyecto. Recuerda no usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales.
-
-2. Abre la consola en esta carpeta.
+1. Abre la consola en la carpeta raíz, donde guardas tus proyectos.
 
 	> 📌 Nota: <br/>
-	> Si estás en Windows usa Git Bash para los comandos.
+	> Si estás en Windows usa Git Bash.
+
+	![carpeta donde guardas tus proyectos](git/assets/preLayout.png)
+
+1. Crea una carpeta para guardar tu proyecto. Usa el comando `mkdir NOMBRE-CARPETA`. Recuerda no usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales.
+
+	![mkdir Guerrero](CSharp/assets/mkdirGuerrero.png)
+
+2. Usa el comando `cd NOMBRE-CARPETA` para entrear a la carpeta
+
+	![cd Guerrero](CSharp/assets/cdGuerrero.png)
 
 1. Crea un nuevo proyecto en tu computadora usando el comando `dotnet new console` 
 
+	![mkdir Guerrero](CSharp/assets/dotnetNewConsole.png)
+
+
 3. Usa el comando `git init` para inicializar git.
 
-	![carpeta de CSharp](git/asset/carpetaCSharp.png)
+	![carpeta de CSharp](CSharp/assets/gitInit.png)
 
 1. Crea un repositorio público en GitHub en blanco, recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
 
