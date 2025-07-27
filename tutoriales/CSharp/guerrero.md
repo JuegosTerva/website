@@ -23,8 +23,12 @@ La idea es que escribas un programa **estructurado y funcional**, pero también 
 
 ## 📚 Conceptos clave
 
+### ... sobre programación
 - [Tipos de datos](programacion/tiposDatos.md)
 - [Estructuras de control](programacion/estructurasControl.md)
+
+### ... sobre C#
+- [Leer o imprimir en la consola](poo/console.md)
 
 ## 🖥️ Requisitos del sistema
 Para trabajar en este proyecto necesitas tener instalado lo siguiente:
@@ -55,18 +59,18 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	![mkdir Guerrero](CSharp/assets/mkdirGuerrero.png)
 
-2. Usa el comando `cd NOMBRE-CARPETA` para entrear a la carpeta
+2. Usa el comando `cd NOMBRE-CARPETA` para entrar a la carpeta
 
 	![cd Guerrero](CSharp/assets/cdGuerrero.png)
 
 1. Crea un nuevo proyecto en tu computadora usando el comando `dotnet new console` 
 
-	![mkdir Guerrero](CSharp/assets/dotnetNewConsole.png)
+	![dotnet new console](CSharp/assets/dotnetNewConsole.png)
 
 
 3. Usa el comando `git init` para inicializar git.
 
-	![carpeta de CSharp](CSharp/assets/gitInit.png)
+	![git init](CSharp/assets/gitInit.png)
 
 1. Crea un repositorio público en GitHub en blanco, recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
 
@@ -131,7 +135,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	![Resultado en la consola del menú](CSharp/assets/guerreroAxolotlMenu.png)
 
-	Para la primer línea yo usé
+	Para la primer línea yo usé[^6]:
 
 	`MOSTRAR "----- MENÚ -----"`
 
@@ -147,3 +151,5 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 [^4]: Usa las preguntas guía en [estructuras de control](programacion/estructurasControl.md)
 
 [^5]: Revisa los [apuntes digitales sobre `switch`](programacion/infoSwitch.md).
+
+[^6]: Revisa los [apuntes digitales sobre la clase `Console`](poo/console.md).

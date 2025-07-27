@@ -55,6 +55,10 @@ Operador mayor o igual que >=
 <!--| - [Constructores y destructores](poo/constructoresDestructores.md) -->
 <!--| - [Modificadores de acceso](poo/modificadoresAcceso.md) -->
 
+## <i class="bi bi-journal-text"></i> ... sobre C#
+
+- [Leer y escribir en consola](poo/console.md)
+
 <!--
 
 🎮 Orientado a videojuegos: estructuras comunes
