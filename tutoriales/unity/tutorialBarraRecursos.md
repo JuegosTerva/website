@@ -4,6 +4,10 @@
 
 - UI Toolkit
 
+## Recursos
+
+- [Sproud Lands UI de CupNooble](https://cupnooble.itch.io/sprout-lands-asset-pack)
+
 ## 🔄 Actualizar el repositorio
 
 1. Abrir la terminal (o el GIT BASH) dentro de tu carpeta.
@@ -17,6 +21,10 @@
 4. Usa el comando `git pull`
 
 ## 🧠 Guía paso a paso
+
+### Prepara tu material
+
+1. Descarga los recursos de Srout Lands
 
 ### Crear un archivo USS (estilos)
 
@@ -41,12 +49,85 @@
 
     ![Captura de pantalla del menú para crear el UI Document](unity/assets/inventario/MenuUIDocument.png)
 
-2. Ábrelo y agrega un Label con estos valores:
+2. Ábrelo y agrega un nuevo `VisualElement` y renombralo `#barra-recursos`
 
-    ```
-    Name: labelHuevos
-    Text: Huevos: 0
-    ```
+    ![Inspector del UI Builder](unity/assets/inventario/nombreElementos.png)
+
+3. En la Hierarchy, selecciona `#barra-recursos`. En la **Library**, arrastra un `VisualElement` al interior de `#barra-recursos`. Dale un nombre: por ejemplo, `#recursoHuevos`.
+
+    ![Hierarchy](unity/assets/inventario/Hierarchy.png)
+
+4. **Haz que ese `VisualElement` sea horizontal**
+
+    * Con `#recursoHuevos` seleccionado:
+
+      * Ve a la derecha al panel de `Inspector`.
+      * En la sección **Flex**, cambia `Flex Direction` a `Row`.
+
+      ![Flex Direction](unity/assets/inventario/flexRow.png)
+
+3. **Agrega un VisualElement para el ícono**
+
+    * Selecciona `#recursoHuevos`.
+    * Arrastra un nuevo `VisualElement` dentro.
+    * Este será tu **contenedor de imagen** (ícono).
+    * Cámbiale el nombre a `#iconoHuevos`.
+    * Ajusta el **tamaño** (en la pestaña *Size*): por ejemplo, `Width: 24px`, `Height: 24px`.
+
+    ![Size](unity/assets/inventario/SizeBackground.png)
+
+
+4. **Ponle imagen de fondo al ícono**
+
+    * En la pestaña derecha, ve a **Background** → `Background Image`.
+    * Si ya tienes un sprite o PNG en tu proyecto, arrástralo desde el *Project* a ese campo.
+    * Si no, agrégalo a `Assets/Resources/UI/` y Unity lo reconocerá.
+
+    ![Background](unity/assets/inventario/BackgroundUIBuilder.png)
+
+#### 5. **Agrega un `Label` para mostrar el número**
+
+* Arrastra un `Label` al lado derecho de `#iconoHuevos`.
+* Cámbiale el texto a algo como `"0"`.
+* Opcional: cámbiale el `name` a `#labelHuevos` si quieres accederlo desde código.
+
+#### 6. **(Opcional) Aplica estilo en USS**
+
+Crea un archivo `.uss` si no tienes uno, y usa algo como:
+
+```css
+#recursoHuevos {
+    align-items: center;
+    padding: 4px;
+    background-color: #ddd;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+#iconoHuevos {
+    width: 24px;
+    height: 24px;
+    background-image: url("ui/huevo.png");
+    background-size: cover;
+    margin-right: 6px;
+}
+
+#labelHuevos {
+    font-size: 14px;
+    color: black;
+}
+```
+
+---
+
+## 🧠 Desde código (si lo necesitas luego)
+
+```csharp
+var labelHuevos = root.Q<Label>("labelHuevos");
+labelHuevos.text = contadorHuevos.ToString();
+```
+
+
 
 3. Asócialo al archivo InventarioStyle.uss en la sección de estilos (abajo del inspector).
 
