@@ -85,7 +85,7 @@
 
 ### Crear un archivo USS (estilos)
 
-2. Dentro, haz clic derecho → Create → UI Toolkit → StyleSheet → nómbralo `InventarioStyle.uss`.
+2. Dentro de UI Builder, haz clic derecho → Create → UI Toolkit → StyleSheet → nómbralo `InventarioStyle.uss`.
 
 3. Edita el USS con este contenido:
 
@@ -165,11 +165,11 @@
     }
     ```
 
-6. Si cambió, actualiza el texto del Label y guarda el nuevo valor como "último conocido".
+6. Si cambió, actualiza el texto del Label y guarda el nuevo valor como "último conocido"[^3].
 
     ```c#
     huevosPrevios = GameManager.instancia.huevos;
-    labelHuevos.text = $"Huevos: {huevosPrevios}";
+    labelHuevos.text = huevosPrevios.ToString();
     ```
 
 ### Asignar script
@@ -182,3 +182,4 @@
 
 [^1]: Una variable pública estática en GameManager, revisa [el ejercicio anterior]().
 [^2]: Puedes revisar la estrucura condicional [`if/else`](programacion/infoIfElse.md).
+[^3]: Usa los apuntes del método [`toString`](poo/toString.md) para convertir el entero a cadena de texto. 
