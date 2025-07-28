@@ -1,10 +1,8 @@
-# 🖥️ Apunte Digital: La clase Console en C\#
+# Apunte Digital: La clase Console en C\#
 
 ## Visión general
 
 Cuando programamos en C#, muchas veces necesitamos mostrar mensajes al usuario o pedirle que escriba algo. Para eso usamos `Console`, una clase que nos permite interactuar con la consola (la ventanita negra donde corre el programa). 
-
----
 
 ## ¿Qué es `Console`?
 

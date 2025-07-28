@@ -6,12 +6,19 @@ El método `.ToString()` convierte un valor numérico (como un `int`, `double`, 
 
 Es muy útil cuando necesitas mostrar números en pantalla, unirlos con otros textos o almacenarlos como texto.
 
----
-
 ## Sintaxis
 
 Se usa así: `variable.ToString()`
 El resultado es una **cadena** con el valor de la variable.
+
+```csharp
+int numero = 123;
+string texto = numero.ToString();
+```
+
+## Ejemplos mostrar una variable `edad`
+
+**Pseudocodigo**
 
 ```markdown
 INICIO
@@ -28,12 +35,7 @@ INICIO
 FIN
 ```
 
-```csharp
-int numero = 123;
-string texto = numero.ToString();
-```
-
-## Ejemplos
+**Código**
 
 ```csharp
 int edad = 25;
@@ -48,7 +50,23 @@ Console.WriteLine("Tienes " + edadTexto + " años.");
 Tienes 25 años.
 ```
 
----
+## Ejemplos mostrar una variable `edad`
+
+**Pseudocódigo**
+
+```markdown
+INICIO
+
+    // Declarar una variable entera llamada edad y asignarle el valor 25
+    puntos (ENTERO) = 100
+
+    // Mostrar en pantalla: "Tienes 25 años."
+    MOSTRAR "Puntos: " + CONVERTIR_A_TEXTO(puntos)
+
+FIN
+```
+
+**Código**
 
 ```csharp
 int puntos = 100;
@@ -61,11 +79,9 @@ Console.WriteLine("Puntos: " + puntos.ToString());
 Puntos: 100
 ```
 
----
+## Casos de uso comunes
 
-### |-- Casos de uso comunes
-
-✅ Mostrar un número en pantalla con `Console.WriteLine` o en una interfaz.
+✅ Mostrar un número en pantalla con `Console.WriteLine`[^1] o en una interfaz.
 
 ✅ Concatenar un número con otros textos (por ejemplo, en un mensaje o un archivo).
 
@@ -73,6 +89,4 @@ Puntos: 100
 
 ✅ En UI de videojuegos o apps, mostrar puntajes, cantidades, niveles, etc.
 
----
-
-¿Te gustaría que lo convierta en un formato para Notion, PDF o presentación?
+[^1]: Puedes reviar la información sobre [Leer y escribir en consola](poo/console.md)

@@ -14,8 +14,8 @@
 |---Métodos con parámetros
 
 |--… sobre C#
-|---Leer y escribir en consola 
-|---Convertir datos a texto con ToString()
+|---Leer y escribir en consola v01.04
+|---Convertir datos a texto con ToString() v01.06
 
 |-Ejercicios guiados
 |--… de CSharp

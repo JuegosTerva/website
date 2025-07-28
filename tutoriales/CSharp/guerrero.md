@@ -139,7 +139,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	`MOSTRAR "----- MENÚ -----"`
 
-7. Crea tu método para mostrar
+7. Crea tu método para mostrar la información
 
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.
