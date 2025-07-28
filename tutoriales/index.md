@@ -58,6 +58,7 @@ Operador mayor o igual que >=
 ## <i class="bi bi-journal-text"></i> ... sobre C#
 
 - [Leer y escribir en consola](poo/console.md)
+- [Convertir datos a texto con `ToString(`)](poo/toString.md)
 
 <!--
 
