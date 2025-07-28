@@ -49,24 +49,29 @@
 
     ![Captura de pantalla del menú para crear el UI Document](unity/assets/inventario/MenuUIDocument.png)
 
-2. Ábrelo y agrega un nuevo `VisualElement` y renombralo `#barra-recursos`
+2. Ábrelo y crea un contenedor para la barra.
+
+    * Agrega un nuevo `VisualElement` y renombralo `#barra-recursos`
 
     ![Inspector del UI Builder](unity/assets/inventario/nombreElementos.png)
+
+    * En la sección **Flex**, cambia `Flex Direction` a `Row`.
 
 3. En la Hierarchy, selecciona `#barra-recursos`. En la **Library**, arrastra un `VisualElement` al interior de `#barra-recursos`. Dale un nombre: por ejemplo, `#recursoHuevos`.
 
     ![Hierarchy](unity/assets/inventario/Hierarchy.png)
 
-4. **Haz que ese `VisualElement` sea horizontal**
+4. Haz que ese `VisualElement` sea horizontal
 
     * Con `#recursoHuevos` seleccionado:
 
       * Ve a la derecha al panel de `Inspector`.
       * En la sección **Flex**, cambia `Flex Direction` a `Row`.
+      * Cambia `Flex Grow` a `Initial`
 
       ![Flex Direction](unity/assets/inventario/flexRow.png)
 
-3. **Agrega un VisualElement para el ícono**
+3. Agrega un VisualElement para el ícono
 
     * Selecciona `#recursoHuevos`.
     * Arrastra un nuevo `VisualElement` dentro.
@@ -77,13 +82,15 @@
     ![Size](unity/assets/inventario/SizeBackground.png)
 
 
-4. **Ponle imagen de fondo al ícono**
+4. Ponle imagen de fondo al ícono
 
     * En la pestaña derecha, ve a **Background** → `Background Image`.
     * Si ya tienes un sprite o PNG en tu proyecto, arrástralo desde el *Project* a ese campo.
     * Si no, agrégalo a `Assets/Resources/UI/` y Unity lo reconocerá.
 
     ![Background](unity/assets/inventario/BackgroundUIBuilder.png)
+
+5. 
 
 #### 5. **Agrega un `Label` para mostrar el número**
 
