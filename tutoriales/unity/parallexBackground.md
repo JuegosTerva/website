@@ -9,9 +9,62 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 - Unity
 - [Pixel Advebture Pack de Florassence](https://florassence.itch.io/pixel-adventure-pack)
 
-## Guía paso a paso
+## 🧠 Guía paso a paso
 
-### Prepara tu proyecto
+
+
+### 💻 Prepara tu proyecto
+
+1. Abre la consola en la carpeta raíz, donde guardas tus proyectos.
+
+        > 📌 Nota: <br/>
+        > Si estás en Windows usa Git Bash.
+
+        ![carpeta donde guardas tus proyectos](git/assets/preLayout.png)
+
+1. Crea una carpeta para guardar tu proyecto. Usa el comando `mkdir NOMBRE-CARPETA`. Recuerda no usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales.
+
+        ![mkdir Guerrero](CSharp/assets/mkdirGuerrero.png)
+
+2. Usa el comando `cd NOMBRE-CARPETA` para entrar a la carpeta
+
+        ![cd Guerrero](CSharp/assets/cdGuerrero.png)
+
+3. Usa el comando `git init` para inicializar git.
+
+        ![git init](CSharp/assets/gitInit.png)
+
+1. Crea un repositorio público en GitHub en blanco, recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
+
+3. Pega el enlace del repositorio en la plataforma eStudy. 🧑🏻‍💻 
+
+5. Copia el enlace HTTP de tu repositorio.
+
+        ![Es el enlace de Quick Setup](git/assets/quicksetup.png)
+
+4. Usa el comando `git remote add origin URL` para enlazarlo con tu repositorio en línea.
+
+        > 👀 Reemplaza URL con el enlace que acabas de copiar.
+
+5. Crea un archivo `.gitignore`[^2] usando el comando `touch .gitignore`.
+
+        ![imagen señalando el boton de pegar](git/assets/gitignoreReferencia.png)
+
+9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://gist.github.com/takekazuomi/10955889)
+
+6. Usa el comando `git add .` para respaldar tu proyecto.
+
+        ![git add .](git/assets/gitAdd.png)
+
+7. Haz un commit usando el comando `git commit -m "TU-MENSAJE"`
+
+        ![git commit](git/assets/gitCommit.png)
+
+8. Sube tu commit con el comando `git push origin TU-RAMA`
+
+        > 💭 Recuerda que en Windows puedes ver el nombre de tu rama entre paréntesis.
+
+        ![git push](git/assets/gitPush.png)
 
 ### Crea tu Player
 
