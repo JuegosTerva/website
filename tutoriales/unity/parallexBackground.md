@@ -50,7 +50,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
         ![imagen señalando el boton de pegar](git/assets/gitignoreReferencia.png)
 
-9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://gist.github.com/takekazuomi/10955889)
+9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://github.com/github/gitignore/blob/main/Unity.gitignore)
 
 6. Usa el comando `git add .` para respaldar tu proyecto.
 
