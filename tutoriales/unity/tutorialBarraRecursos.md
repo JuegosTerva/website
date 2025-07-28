@@ -22,42 +22,29 @@
 
 ## 🧠 Guía paso a paso
 
-### Prepara tu material
+### Prepara tu proyecto
 
 1. Descarga los recursos de Srout Lands
 
-### Crear un archivo USS (estilos)
-
 1. En tu proyecto de Unity crea una carpeta llamada UI.
-
-2. Dentro, haz clic derecho > Create > UI Toolkit > StyleSheet → nómbralo InventarioStyle.uss.
-
-3. Edita el USS con este contenido:
-
-    ```
-    #labelHuevos {
-        font-size: 24px; /* cambia el tamaño de la letra */
-        color: white; /* cambia el color a blanco */
-        margin-left: 10px; /* margenes a la izquierda */
-        margin-top: 10px; /* margenes arriba */
-    }
-    ```
 
 ### Crear un archivo UXML (interfaz visual)
 
-1. En la misma carpeta UI, clic derecho > Create > UI Toolkit > UI Document → nómbralo InventarioUI.uxml.
+1. En la misma carpeta UI, clic derecho → Create → UI Toolkit → UI Document → nómbralo `InventarioUI.uxml`.
 
-    ![Captura de pantalla del menú para crear el UI Document](unity/assets/inventario/MenuUIDocument.png)
+    ![Menú para crear el UI Document](unity/assets/inventario/MenuUIDocument.png)
 
 2. Ábrelo y crea un contenedor para la barra.
 
-    * Agrega un nuevo `VisualElement` y renombralo `#barra-recursos`
+    * Agrega un nuevo `VisualElement` y renombralo `barra-recursos`
 
-    ![Inspector del UI Builder](unity/assets/inventario/nombreElementos.png)
+        ![Inspector del UI Builder](unity/assets/inventario/nombreElementos.png)
 
     * En la sección **Flex**, cambia `Flex Direction` a `Row`.
 
-3. En la Hierarchy, selecciona `#barra-recursos`. En la **Library**, arrastra un `VisualElement` al interior de `#barra-recursos`. Dale un nombre: por ejemplo, `#recursoHuevos`.
+        ![Flex Direction](unity/assets/inventario/flexRow.png)
+
+3. En la **Hierarchy**, selecciona `#barra-recursos`. En la **Library**, arrastra un `VisualElement` al interior de `#barra-recursos`. Dale un nombre: por ejemplo, `#recursoHuevos`.
 
     ![Hierarchy](unity/assets/inventario/Hierarchy.png)
 
@@ -69,7 +56,7 @@
       * En la sección **Flex**, cambia `Flex Direction` a `Row`.
       * Cambia `Flex Grow` a `Initial`
 
-      ![Flex Direction](unity/assets/inventario/flexRow.png)
+      
 
 3. Agrega un VisualElement para el ícono
 
@@ -88,53 +75,28 @@
     * Si ya tienes un sprite o PNG en tu proyecto, arrástralo desde el *Project* a ese campo.
     * Si no, agrégalo a `Assets/Resources/UI/` y Unity lo reconocerá.
 
-    ![Background](unity/assets/inventario/BackgroundUIBuilder.png)
+        ![Background](unity/assets/inventario/BackgroundUIBuilder.png)
 
-5. 
+5. Agrega un `Label` para mostrar el número
 
-#### 5. **Agrega un `Label` para mostrar el número**
+    * Arrastra un `Label` al lado derecho de `#iconoHuevos`.
+    * Cámbiale el texto a algo como `"0"`.
+    * Opcional: cámbiale el `name` a `#labelHuevos` si quieres accederlo desde código.
 
-* Arrastra un `Label` al lado derecho de `#iconoHuevos`.
-* Cámbiale el texto a algo como `"0"`.
-* Opcional: cámbiale el `name` a `#labelHuevos` si quieres accederlo desde código.
+### Crear un archivo USS (estilos)
 
-#### 6. **(Opcional) Aplica estilo en USS**
+2. Dentro, haz clic derecho → Create → UI Toolkit → StyleSheet → nómbralo `InventarioStyle.uss`.
 
-Crea un archivo `.uss` si no tienes uno, y usa algo como:
+3. Edita el USS con este contenido:
 
-```css
-#recursoHuevos {
-    align-items: center;
-    padding: 4px;
-    background-color: #ddd;
-    border-radius: 8px;
-    margin-right: 10px;
-}
-
-#iconoHuevos {
-    width: 24px;
-    height: 24px;
-    background-image: url("ui/huevo.png");
-    background-size: cover;
-    margin-right: 6px;
-}
-
-#labelHuevos {
-    font-size: 14px;
-    color: black;
-}
-```
-
----
-
-## 🧠 Desde código (si lo necesitas luego)
-
-```csharp
-var labelHuevos = root.Q<Label>("labelHuevos");
-labelHuevos.text = contadorHuevos.ToString();
-```
-
-
+    ```css
+    .numeros {
+        font-size: 24px; /* cambia el tamaño de la letra */
+        color: white; /* cambia el color a blanco */
+        margin-left: 10px; /* margenes a la izquierda */
+        margin-top: 10px; /* margenes arriba */
+    }
+    ```
 
 3. Asócialo al archivo InventarioStyle.uss en la sección de estilos (abajo del inspector).
 
