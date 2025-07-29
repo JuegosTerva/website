@@ -7,26 +7,22 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 ## Requisitos Previos
 
 - Unity
-- [Pixel Advebture Pack de Florassence](https://florassence.itch.io/pixel-adventure-pack)
+- [Pixel Adventure Pack de Florassence](https://florassence.itch.io/pixel-adventure-pack)
 
 ## 🧠 Guía paso a paso
 
 ### 💻 Prepara tu proyecto
 
-1. Abre la consola en la carpeta raíz, donde guardas tus proyectos.
+1. Crea un proyecto 2D en Unity. Recuerda no usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales.
 
-> 📌 Nota: <br/>
-> Si estás en Windows usa Git Bash.
+![Crear proyecto 2D](unity/assets/crearProyecto2D.png)
 
-![carpeta donde guardas tus proyectos](git/assets/preLayout.png)
+1. Abre la consola en la carpeta, donde ves la carpeta `Assets`.
 
-1. Crea una carpeta para guardar tu proyecto. Usa el comando `mkdir NOMBRE-CARPETA`. Recuerda no usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales.
+        > 📌 Nota: <br/>
+        > Si estás en Windows usa Git Bash.
 
-![mkdir Guerrero](CSharp/assets/mkdirGuerrero.png)
-
-2. Usa el comando `cd NOMBRE-CARPETA` para entrar a la carpeta
-
-![cd Guerrero](CSharp/assets/cdGuerrero.png)
+![carpeta donde ves `Assets`](git/assets/carpetaUnity.png)
 
 3. Usa el comando `git init` para inicializar git.
 
@@ -44,11 +40,11 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 > 👀 Reemplaza URL con el enlace que acabas de copiar.
 
-5. Crea un archivo `.gitignore`[^2] usando el comando `touch .gitignore`.
+5. usando el comando `touch .gitignore`, crea un archivo `.gitignore`[^2].
 
 ![imagen señalando el boton de pegar](git/assets/gitignoreReferencia.png)
 
-9. Abre el archivo, puedes usar el Block de Notas, y pega el contenido de [este gitignore](https://github.com/github/gitignore/blob/main/Unity.gitignore)
+9. Abre el archivo y pega el contenido de [este gitignore](https://github.com/github/gitignore/blob/main/Unity.gitignore)
 
 6. Usa el comando `git add .` para respaldar tu proyecto.
 
