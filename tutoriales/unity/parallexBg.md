@@ -19,8 +19,8 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 1. Abre la consola en la carpeta, donde ves la carpeta `Assets`.
 
-        > 📌 Nota: <br/>
-        > Si estás en Windows usa Git Bash.
+    > 📌 Nota: <br/>
+    > Si estás en Windows usa Git Bash.
 
 ![carpeta donde ves `Assets`](git/assets/carpetaUnity.png)
 
@@ -48,7 +48,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 6. Usa el comando `git add .` para respaldar tu proyecto.
 
-![git add .](git/assets/gitAdd.png)
+    ![git add .](git/assets/gitAdd.png)
 
 7. Haz un commit usando el comando `git commit -m "TU-MENSAJE"`
 

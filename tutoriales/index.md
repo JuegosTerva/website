@@ -106,6 +106,10 @@ Operador mayor o igual que >=
 
 - [Añadir panel de recursos](unity/tutorialBarraRecursos.md)
 
+### Parallex Background
+
+- [Pixel adventure - horizontal](unity/parrallexBg.md)
+
 ## <i class="bi bi-git"></i> ... sobre Git
 
 - [CheatSheet de Git (imagen PNG)](../descargas/GitCheatSheet.png)
