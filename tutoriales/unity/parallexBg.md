@@ -28,9 +28,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
     ![git init](git/assets/gitInit.png)
 
-1. Crea un repositorio público en GitHub en blanco, recuerda no usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
-
-3. Pega el enlace del repositorio en la plataforma eStudy. 🧑🏻‍💻 
+1. Crea un repositorio público en GitHub en blanco, recuerda **no** usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
 
 5. Copia el enlace HTTP de tu repositorio.
 

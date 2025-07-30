@@ -25,7 +25,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 	Te recomiendo usar Sublime Text por su ligereza y facilidad de uso. Puedes descargarlo aquí:
 	https://www.sublimetext.com
 
-
+	b	
 
 ## 🧠 Guía paso a paso
 
