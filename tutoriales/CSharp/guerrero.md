@@ -3,6 +3,7 @@
 > <i class="bi bi-exclamation-triangle-fill" style="color: #FF6600;"></i>
  Esta guía se encuentra en proceso de construcción. La última actualización fue realizada el 26 de julio, con mejoras en la creación de carpetas.
 
+## Objetivo
 
 Crear un programa en consola que simule el entrenamiento de un guerrero.
 El usuario podrá elegir entre diferentes actividades (como entrenar, pelear o descansar), cada una con efectos distintos en sus estadísticas: fuerza, resistencia, energía y experiencia.
