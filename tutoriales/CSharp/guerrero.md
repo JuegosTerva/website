@@ -142,6 +142,15 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 7. Crea tu método para mostrar la información
 
+  **Diseña tu juego.**
+8. ¿Cuál será el costo para ganar fuerza? ¿Cuánta fuerza ganará? ¿Ganará experiencia también? Anota todos los detalles
+
+9. ¿Cuál será el costo para entrenar resistencia? ¿Cuánta resistencia ganará? ¿Ganará experiencia también? Anota todos los detalles
+
+10. ¿Cómo avanzará de nivel?
+
+11. ¿Cuántas horas de sueño requiere para recuperar su energía?
+
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.
 
