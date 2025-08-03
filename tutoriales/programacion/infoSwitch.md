@@ -21,6 +21,7 @@ SEGUN variable HACER
 
     DE OTRO MODO:
         // instrucciones si no coincide ningún caso
+        SALIR
 FIN SEGUN
 ```
 
@@ -65,10 +66,13 @@ LEER b
 SEGUN opcion HACER
     CASO 1:
         MOSTRAR "Resultado: " + (a + b)
+        SALIR
     CASO 2:
         MOSTRAR "Resultado: " + (a - b)
+        SALIR
     DE OTRO MODO:
         MOSTRAR "Opción inválida"
+        SALIR
 FIN SEGUN
 ```
 
@@ -110,8 +114,12 @@ LEER c
 SEGUN (a + b == c) HACER
     CASO true:
         MOSTRAR "Correcto"
+        SALIR
+
     CASO false:
         MOSTRAR "Incorrecto"
+        SALIR
+
 FIN SEGUN
 ```
 
@@ -145,12 +153,20 @@ LEER color
 SEGUN color HACER
     CASO "rojo":
         MOSTRAR "Elegiste pasión"
+        SALIR
+
     CASO "azul":
         MOSTRAR "Elegiste calma"
+        SALIR
+
     CASO "verde":
         MOSTRAR "Elegiste naturaleza"
+        SALIR
+
     DE OTRO MODO:
         MOSTRAR "Color no reconocido"
+        SALIR
+        
 FIN SEGUN
 ```
 
