@@ -5,23 +5,23 @@ Elige entre múltiples caminos según el valor de una variable.
 ## Pseudocódigo
 
 ```
-Segun variable hacer
+SEGUN variable HACER
 
-    Caso valor1:
+    CASO valor1:
         // instrucciones para valor1
-        Salir
+        SALIR
 
-    Caso valor2:
+    CASO valor2:
         // instrucciones para valor2
-        Salir
+        SALIR
 
-    Caso valor3:
+    CASO valor3:
         // instrucciones para valor3
         Salir
 
-    De Otro Modo:
+    DE OTRO MODO:
         // instrucciones si no coincide ningún caso
-FinSegun
+FIN SEGUN
 ```
 
 # Estructura
@@ -57,18 +57,19 @@ switch (expresion)
 **Pseudocódigo:**
 
 ```
-Mostrar "Elige una operación: 1) Suma 2) Resta"
-Leer opcion
-Leer a
-Leer b
+MOSTRAR "Elige una operación: 1) Suma 2) Resta"
+LEER opcion
+LEER a
+LEER b
 
-switch(opcion)
-    caso 1:
-        Mostrar "Resultado: " + (a + b)
-    caso 2:
-        Mostrar "Resultado: " + (a - b)
-    default:
-        Mostrar "Opción inválida"
+SEGUN opcion HACER
+    CASO 1:
+        MOSTRAR "Resultado: " + (a + b)
+    CASO 2:
+        MOSTRAR "Resultado: " + (a - b)
+    DE OTRO MODO:
+        MOSTRAR "Opción inválida"
+FIN SEGUN
 ```
 
 **C#:**
@@ -102,15 +103,16 @@ switch (opcion)
 **Pseudocódigo:**
 
 ```
-Leer a
-Leer b
-Leer c
+LEER a
+LEER b
+LEER c
 
-switch(a + b == c)
-    caso verdadero:
-        Mostrar "Correcto"
-    caso falso:
-        Mostrar "Incorrecto"
+SEGUN (a + b == c) HACER
+    CASO true:
+        MOSTRAR "Correcto"
+    CASO false:
+        MOSTRAR "Incorrecto"
+FIN SEGUN
 ```
 
 **C#:**
@@ -138,16 +140,18 @@ switch (a + b == c)
 **Pseudocódigo:**
 
 ```
-Leer color
-switch(color)
-    caso "rojo":
-        Mostrar "Elegiste pasión"
-    caso "azul":
-        Mostrar "Elegiste calma"
-    caso "verde":
-        Mostrar "Elegiste naturaleza"
-    default:
-        Mostrar "Color no reconocido"
+LEER color
+
+SEGUN color HACER
+    CASO "rojo":
+        MOSTRAR "Elegiste pasión"
+    CASO "azul":
+        MOSTRAR "Elegiste calma"
+    CASO "verde":
+        MOSTRAR "Elegiste naturaleza"
+    DE OTRO MODO:
+        MOSTRAR "Color no reconocido"
+FIN SEGUN
 ```
 
 **C#:**
