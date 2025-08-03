@@ -1,7 +1,7 @@
 # Desafío: Guerrero
 
 > <i class="bi bi-exclamation-triangle-fill" style="color: #FF6600;"></i>
- Esta guía se encuentra en proceso de construcción. La última actualización fue realizada el 26 de julio, con mejoras en la creación de carpetas.
+ Esta guía se encuentra en proceso de construcción. La última actualización fue realizada el 3 de agosto.
 
 ## Objetivo
 
@@ -105,6 +105,18 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	![git push](git/assets/gitPush.png)
 
+### 💭 Diseña tu juego.
+
+1. ¿Cuál será el costo para ganar fuerza? ¿Cuánta fuerza ganará? ¿Ganará experiencia también? Anota todos los detalles
+
+	> Por ejemplo <br> Gana 6 de fuerza por hora
+
+9. ¿Cuál será el costo para entrenar resistencia? ¿Cuánta resistencia ganará? ¿Ganará experiencia también? Anota todos los detalles
+
+10. ¿Cómo avanzará de nivel?
+
+11. ¿Cuántas horas de sueño requiere para recuperar su energía?
+
 ### 📝 Elabora tu pseudocódigo
 
 1. Usa el comando `touch pseudocodigo.md` para crear un archivo llamado pseudocodigo tipo Markdown[^3].
@@ -112,7 +124,19 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 2. Analiza el problema y declara tus variables.
 
 	**Por ejemplo:**
-	`energia (int) ← 100`
+	
+	```plaintext
+	INICIAR programa GuerreroAxolotl
+
+		DEFINIR fuerza COMO ENTERO
+		DEFINIR continuar COMO BOOLEANO = VERDADERO
+
+		//---Menú
+
+	FINALIZAR programa
+
+	//-----Métodos
+	```
 
 	> Yo usé seis variables.</br>
 	> Con cinco variables ya puedes continuar, si necesitas más, puedes regresar y hacer los cambios que hagan falta.
@@ -136,20 +160,81 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 	![Resultado en la consola del menú](CSharp/assets/guerreroAxolotlMenu.png)
 
-	Para la primer línea yo usé[^6]:
+	Para la primera línea yo usé[^6]:
 
-	`MOSTRAR "----- MENÚ -----"`
+	```plaintext
+	//----Menú
+	MOSTRAR "----- MENÚ -----"
+	```
 
 7. Crea tu método para mostrar la información
 
-  **Diseña tu juego.**
-8. ¿Cuál será el costo para ganar fuerza? ¿Cuánta fuerza ganará? ¿Ganará experiencia también? Anota todos los detalles
+ 	```plaintext
+ 	//------Métodos
+ 	METODO MostrarInfo()
+ 		//---Aquí va todo lo que quieres que haga el método
+ 	```
 
-9. ¿Cuál será el costo para entrenar resistencia? ¿Cuánta resistencia ganará? ¿Ganará experiencia también? Anota todos los detalles
+	#### Método para entrenar fuerza
 
-10. ¿Cómo avanzará de nivel?
+	Este es un ejemplo de cómo diseñar un método que permita al personaje entrenar fuerza. Cada hora de entrenamiento tiene un efecto específico en sus estadísticas:
 
-11. ¿Cuántas horas de sueño requiere para recuperar su energía?
+	- +6 puntos de fuerza por hora
+
+	- -5 puntos de energía por hora
+
+	- +1 punto de experiencia por cada hora
+
+	- +5 puntos extra de experiencia al finalizar
+
+	Para que puedas escribir tu propio método siguiendo esta lógica, te propongo esta guía paso a paso:
+
+6. Declara las variables necesarias
+  
+	Define únicamente las variables locales que necesitarás dentro del método.
+
+	Por ejemplo:
+
+   ```plaintext
+   DEFINIR maxHoras COMO ENTERO = energia / 5
+   ```
+
+2. Solicita la información del usuario
+   Pide al jugador cuántas horas desea entrenar, considerando un límite máximo.
+   Puedes mostrar un mensaje como:
+
+   ```plaintext
+   "¿Cuántas horas vas a entrenar? Máximo permitido: " + maxHoras
+   ```
+
+3. Verifica que la opción sea válida
+   Asegúrate de que el jugador no elija más horas de las que su energía permite.
+   Aquí puedes usar una estructura condicional[^4] para validar la entrada.
+
+4. Elige la estructura de control adecuada.
+   
+   Piensa: ¿cómo puedes repetir el efecto del entrenamiento por cada hora?
+   Usa una estructura de repetición (`PARA` o `MIENTRAS`) para aplicar los efectos del entrenamiento múltiples veces.
+
+5. Muestra retroalimentación al jugador.
+
+   Al terminar, muestra los cambios en sus estadísticas: cuánta fuerza ganó, cuánta energía perdió, y cuánta experiencia obtuvo.
+
+6. Llama a otros métodos necesarios.
+
+   Por ejemplo, puedes subir de nivel y mostrar el estado del personaje:
+
+   ```plaintext
+   LLAMAR SumarNivel()
+   LLAMAR MostrarInfo()
+   ```
+	#### Ahora tú: Diseña tus propios métodos
+
+7. Crea tu método `EntrenarResistencia()`
+
+	Aplica la misma estructura y decide qué atributos vas a modificar. ¿Cuánta resistencia se gana por hora? ¿Cuánta energía o agua se pierde? ¿Qué tanto aumenta la experiencia?
+
+9. Crea tu método `PelearEnemigo()`
 
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.
