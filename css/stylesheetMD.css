@@ -108,7 +108,7 @@ pre {
 
   .markdown-body {
     background-color: #FEFBEA;
-    font-size: 3rem; /* Aumenta el tamaño en móviles */
+    font-size: 1rem; /* Aumenta el tamaño en móviles */
   }
 
   h1 {
