@@ -108,7 +108,7 @@ Operador mayor o igual que >=
 
 ### Parallex Background
 
-- [Pixel adventure - horizontal](unity/parrallexBg.md)
+- [Pixel adventure - horizontal](unity/parallexBg.md)
 
 ## <i class="bi bi-git"></i> ... sobre Git
 

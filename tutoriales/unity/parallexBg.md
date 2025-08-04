@@ -11,7 +11,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 ## 🧠 Guía paso a paso
 
-### 💻 Prepara tu proyecto
+### 💻 Prepara tu repositorio
 
 1. Crea un proyecto 2D en Unity. Recuerda no usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales.
 
@@ -28,7 +28,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
     ![git init](git/assets/gitInit.png)
 
-1. Crea un repositorio público en GitHub en blanco, recuerda **no** usar espacios o símbolos en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
+1. Crea un repositorio público en GitHub en blanco, recuerda **no** usar espacios o símbolos[^1] en el nombre. Usa letras, los números son opcionales. **NO** crees un ReadMe o un gitignore, eso lo haremos más adelante.
 
 5. Copia el enlace HTTP de tu repositorio.
 
@@ -40,7 +40,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 5. usando el comando `touch .gitignore`, crea un archivo `.gitignore`[^2].
 
-![imagen señalando el boton de pegar](git/assets/gitignoreReferencia.png)
+    ![imagen señalando el boton de pegar](git/assets/gitignoreReferencia.png)
 
 9. Abre el archivo y pega el contenido de [este gitignore](https://github.com/github/gitignore/blob/main/Unity.gitignore)
 
@@ -50,57 +50,141 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 7. Haz un commit usando el comando `git commit -m "TU-MENSAJE"`
 
-![git commit](git/assets/gitCommit.png)
+    ![git commit](git/assets/gitCommit.png)
 
 8. Sube tu commit con el comando `git push origin TU-RAMA`
 
-> 💭 Recuerda que en Windows puedes ver el nombre de tu rama entre paréntesis.
+    > 💭 Recuerda que en Windows puedes ver el nombre de tu rama entre paréntesis.
 
-![git push](git/assets/gitPush.png)
+    ![git push](git/assets/gitPush.png)
+
+### 📂 Prepara tu proyecto
+
+1. Crea carpetas para tus `Sprites`, `Background`, `Scripts`.
+
+2. Elimina el InputPlayer.
+
+    ![Input Player](unity/assets/parallelBg/InputIcon.md)
+
+3. Importa las imágenes necesarias. 
+
+    ![Proyecto](unity/assets/parallelBg/assets.md)
 
 ### Crea tu Player
+
+1. Crea un `Empty Object` y nombralo `Player`
+
+2. Añade los componentes: `Rigidbody 2D`, `Sprite Renderer`, `Capsule Collider 2D`, `PlayerInput`
+
+    ![Componentes Player](unity/assets/parallelBg/componentesPlayer.md)
+
+3. Crea el script `MovimientoPlayer.cs`
 
 ### Prepara tus capas
 
 1. Prepara tus capas de fondo
 
-1. Crea un GameObject vacío y nómbralo ParallaxManager
+1. Crea un `GameObject` vacío y nómbralo `ParallaxManager`
 
-2. Arrastra tus imágenes de fondo a la escena como hijos del ParallaxManager
+2. Arrastra tus imágenes de fondo a la escena como hijos del `ParallaxManager`
 
 3. Asegúrate de que estén ordenadas por profundidad, del fondo al frente:
 
-Cielo (más atrás, menor movimiento)
+    - Cielo (más atrás, menor movimiento)
 
-Montañas
+    - Montañas
 
-Árboles (más cerca, mayor movimiento)
+    - Árboles (más cerca, mayor movimiento)
 
-4. Ajusta el Sorting Layer o Order in Layer para que se vean correctamente.
+4. Ajusta el Sorting Layer para que se vean correctamente.
 
-### Crea el script ParallaxEfecto.cs
+### Script ParallaxEfecto.cs
 
-```c#
-using UnityEngine;
+1. En la carpeta de scripts crea uno llamado `ParallexEfecto.cs`
 
-public class ParallaxEfecto : MonoBehaviour
-{
-    public Transform camara;              // Cámara principal
-    public float velocidadParallax = 0.5f; // Cuánto se mueve esta capa
-    private Vector3 posicionInicial;
+    #### Variables
 
-    void Start()
-    {
-        posicionInicial = transform.position;
-    }
+2. Define `camara` como un  `Transform` que se usará como referencia para el efecto parallax. Se asigna desde el editor de Unity.
+ 
+    ```csharp
+    public Transform cam;
+    ```
 
-    void Update()
-    {
-        float distancia = camara.position.x * velocidadParallax;
-        transform.position = new Vector3(posicionInicial.x + distancia, posicionInicial.y, posicionInicial.z);
-    }
-}
-```
+2. Define `parallaxFactor` como `float` para saber qué tanto se mueve este fondo comparado con la cámara. 
+
+    * Valores:
+
+      * `0` → fondo fijo
+      * `0.5` → efecto parallax típico
+      * `1` → fondo se mueve igual que la cámara
+
+    ```csharp
+    public float parallaxFactor;
+    ```
+ 
+3. Define `inicioX` como `float` para guardar la posición `x` **original** del objeto al iniciar el juego.
+
+    ```csharp
+    private float inicioX;
+    ```
+
+4. Define `anchoSprite` como `float` para guardar el **ancho** del sprite para saber cuándo hay que hacerlo infinito.
+
+    ```csharp
+    private float spriteWidth;
+    ```
+
+    #### Método `Start()`
+
+1. Guarda la posición `x` actual del objeto donde se encuentra en script en `inicioX`.
+
+    ```csharp
+    inicioX = transform.position.x;
+    ```
+
+2. Obten el ancho total del sprite (en Unity el `bounds.size.x`) para saber cuánto mide en pantalla.
+
+    ```csharp
+        anchoSprite = GetComponent<SpriteRenderer>().bounds.size.x;
+    ```
+
+    #### Método `Update()`
+
+3. El efecto parallax depende del movimiento de la cámara en tiempo real, por eso en cada frame se calcula cuánto se ha movido la cámara.
+
+    Define `temp` como `float`. Si el `parallaxFactor` es `1` (el fondo se mueve igual que la cámara), `temp = 0`. Si el `parallaxFactor` es `0.5`, entonces `temp` acumula la diferencia.
+
+    ```csharp
+    float temp = (cam.position.x * (1 - parallaxFactor));
+    ```
+
+4. Calcula la distancia de cuánto se ha movido la cámara.
+
+    Define `dist` como `float` y almacena el desplazamiento horizontal que debe tener este fondo, proporcional al movimiento de la cámara.
+
+    ```csharp
+    float dist = (cam.position.x * parallaxFactor);
+    ```
+
+5. Mueve el fondo horizontalmente.
+    
+    El fondo no sigue directamente a la cámara: se mueve por `dist`.
+    Crea un nuevo vector de 3 dimensiones.
+
+    ```csharp
+    transform.position = new Vector3(inicioX + dist, transform.position.y, transform.position.z);
+    ```
+
+6. Programa el scroll infinito.
+
+    Si `temp` se aleja mucho hacia la derecha, significa que la cámara "ya se fue", entonces adelantamos `inicioX` para colocar este fondo **más adelante**, como si fuera otro. Sino si `temp` se aleja a la izquierda, hacemos lo contrario.
+
+    Así el fondo **se repite infinitamente** sin necesidad de instanciar nuevos objetos.
+
+    ```csharp
+    if (temp > inicioX + spriteWidth) inicioX += spriteWidth;
+    else if (temp < inicioX - spriteWidth) inicioX -= spriteWidth;
+    ```
 
 ### Asigna el script a tus capas
 
