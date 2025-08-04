@@ -102,7 +102,12 @@ pre {
 
 /* Para pantallas pequeñas (como móviles) */
 @media (max-width: 600px) {
+  body{
+    background-color: #fff7ed;
+  }
+  
   .markdown-body {
+    background-color: #FEFBEA;
     font-size: 3rem; /* Aumenta el tamaño en móviles */
   }
 
