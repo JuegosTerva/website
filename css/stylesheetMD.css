@@ -103,12 +103,12 @@ pre {
 /* Para pantallas pequeñas (como móviles) */
 @media (max-width: 600px) {
   body{
-    background-color: #fff7ed;
+    background-color: #158EFF;
   }
-  
+
   .markdown-body {
     background-color: #FEFBEA;
-    font-size: 3rem; /* Aumenta el tamaño en móviles */
+    font-size: 5rem; /* Aumenta el tamaño en móviles */
   }
 
   h1 {
