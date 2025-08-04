@@ -102,8 +102,8 @@ pre {
 
 /* Para pantallas pequeñas (como móviles) */
 @media (max-width: 600px) {
-  body {
-    font-size: 1.25rem; /* Aumenta el tamaño en móviles */
+  .markdown-body {
+    font-size: 3rem; /* Aumenta el tamaño en móviles */
   }
 
   h1 {
