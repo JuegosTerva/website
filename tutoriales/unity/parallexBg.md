@@ -107,10 +107,10 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 2. Define `camara` como un  `Transform` que se usará como referencia para el efecto parallax. Se asigna desde el editor de Unity.
  
     ```csharp
-    public Transform cam;
+    public Transform camara;
     ```
 
-2. Define `parallaxFactor` como `float` para saber qué tanto se mueve este fondo comparado con la cámara. 
+2. Define `factor` como `float` para saber qué tanto se mueve este fondo comparado con la cámara. 
 
     * Valores:
 
@@ -119,7 +119,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
       * `1` → fondo se mueve igual que la cámara
 
     ```csharp
-    public float parallaxFactor;
+    public float factor;
     ```
  
 3. Define `inicioX` como `float` para guardar la posición `x` **original** del objeto al iniciar el juego.
@@ -131,7 +131,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 4. Define `anchoSprite` como `float` para guardar el **ancho** del sprite para saber cuándo hay que hacerlo infinito.
 
     ```csharp
-    private float spriteWidth;
+    private float anchoSprite;
     ```
 
     #### Método `Start()`
@@ -152,10 +152,10 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 3. El efecto parallax depende del movimiento de la cámara en tiempo real, por eso en cada frame se calcula cuánto se ha movido la cámara.
 
-    Define `temp` como `float`. Si el `parallaxFactor` es `1` (el fondo se mueve igual que la cámara), `temp = 0`. Si el `parallaxFactor` es `0.5`, entonces `temp` acumula la diferencia.
+    Define `temp` como `float`. Si el `factor` es `1` (el fondo se mueve igual que la cámara), `temp = 0`. Si el `factor` es `0.5`, entonces `temp` acumula la diferencia.
 
     ```csharp
-    float temp = (cam.position.x * (1 - parallaxFactor));
+    float temp = (cam.position.x * (1 - factor));
     ```
 
 4. Calcula la distancia de cuánto se ha movido la cámara.
@@ -163,7 +163,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
     Define `dist` como `float` y almacena el desplazamiento horizontal que debe tener este fondo, proporcional al movimiento de la cámara.
 
     ```csharp
-    float dist = (cam.position.x * parallaxFactor);
+    float dist = (cam.position.x * factor);
     ```
 
 5. Mueve el fondo horizontalmente.
@@ -182,8 +182,8 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
     Así el fondo **se repite infinitamente** sin necesidad de instanciar nuevos objetos.
 
     ```csharp
-    if (temp > inicioX + spriteWidth) inicioX += spriteWidth;
-    else if (temp < inicioX - spriteWidth) inicioX -= spriteWidth;
+    if (temp > inicioX + anchoSprite) inicioX += anchoSprite;
+    else if (temp < inicioX - anchoSprite) inicioX -= anchoSprite;
     ```
 
 ### Asigna el script a tus capas
