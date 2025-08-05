@@ -86,7 +86,11 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 1. Crea un `GameObject` vacío y nómbralo `ParallaxManager`
 
-2. Arrastra tus imágenes de fondo a la escena como hijos del `ParallaxManager`
+3. Crea un ˋGameObject Empty Childˋ llamado ˋCieloˋ
+ 
+2. Arrastra *dos copias del mismo sprite* de imágenes de fondo a la escena como hijos.
+
+ Asegúrate de que *no haya espacio entre ellas*
 
 3. Asegúrate de que estén ordenadas por profundidad, del fondo al frente:
 
