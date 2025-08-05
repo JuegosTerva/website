@@ -64,11 +64,11 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 2. Elimina el InputPlayer.
 
-    ![Input Player](unity/assets/parallelBg/InputIcon.md)
+    ![Input Player](unity/assets/parallexBg/InputIcon.md)
 
 3. Importa las imágenes necesarias. 
 
-    ![Proyecto](unity/assets/parallelBg/assets.md)
+    ![Proyecto](unity/assets/parallexBg/assets.md)
 
 ### Crea tu Player
 
@@ -76,7 +76,7 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 2. Añade los componentes: `Rigidbody 2D`, `Sprite Renderer`, `Capsule Collider 2D`, `PlayerInput`
 
-    ![Componentes Player](unity/assets/parallelBg/componentesPlayer.md)
+    ![Componentes Player](unity/assets/parallexBg/componentesPlayer.md)
 
 3. Crea el script `MovimientoPlayer.cs`
 
