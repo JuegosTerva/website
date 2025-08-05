@@ -210,11 +210,28 @@ Suelo (si lo deseas): 0.8
 
 > 💡 Entre menor el valor, más lejos parece estar.
 
+#### Método CalcularAncho()
+
+float CalcularAnchoTotal()
+{
+    float ancho = 0f;
+    foreach (Transform hijo in transform)
+    {
+        SpriteRenderer sr = hijo.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            ancho += sr.bounds.size.x;
+        }
+    }
+    return ancho;
+}
+
+
 ### Prueba
 
 Ejecuta la escena y mueve al personaje o la cámara. Verás que los fondos se mueven a distintas velocidades dando el efecto de profundidad.
 
-### Scroll infinito
+
 
 
 
