@@ -1,3 +1,5 @@
+# Fondo con movimiento horizontal
+
 Tutorial paso a paso para implementar un parallax background horizontal en Unity 2D, ideal para plataformas 
 
 # ¿Qué es un Parallax Background?
@@ -6,8 +8,8 @@ Es una técnica visual donde los fondos se mueven más lento que los objetos en 
 
 ## Requisitos Previos
 
-- Unity
 - [Pixel Adventure Pack de Florassence](https://florassence.itch.io/pixel-adventure-pack)
+- Proyecto en Unity 2D con jugador con movimiento horizontal
 
 ## 🧠 Guía paso a paso
 
