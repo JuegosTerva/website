@@ -32,8 +32,9 @@
 |----Animaciones 2D v01.02
 |----Añadir panel de recursos v01.05
 
-|--Pixel Adventure
+|--Pixel Adventure v01.17
 |---Movimiento horizontal v01.16
+|---Parallex background - horizontal
 
 |--… sobre Git
 |---CheatSheet de Git (imagen PNG)

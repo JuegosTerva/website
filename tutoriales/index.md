@@ -109,8 +109,8 @@ Operador mayor o igual que >=
 
 ### Pixel adventure
 
-- [Movimiento horizontal]()
-- [Parallex Background  - horizontal](unity/parallexBg.md)
+- [Movimiento horizontal](unity/PixelAdventure/jugadorHorizontal.md)
+- [Parallex Background  - horizontal](unity/PixelAdventure/parallexBg.md)
 
 ## <i class="bi bi-git"></i> ... sobre Git
 
