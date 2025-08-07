@@ -59,6 +59,7 @@ Operador mayor o igual que >=
 
 - [Leer y escribir en consola](poo/console.md)
 - [Convertir datos a texto con `ToString(`)](poo/toString.md)
+- [Generar números aleatorios con Random](ApuntesDigitales/CSharp/infoRandom.md)
 
 <!--
 
