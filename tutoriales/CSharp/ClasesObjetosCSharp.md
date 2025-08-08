@@ -99,10 +99,11 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 
 
-## 📌 Enlaces de ayuda
+## Para saber más...
 
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).
 - Puedes ver un ejemplo de un programa resuelve el problema: *Queremos modelar una producto. Cada producto tiene un nombre, dias de vida y tipo (fruta o vegetal). Debe poder hacer acciones como  mostrar su información.* [Repositorio de Ejemplo](https://github.com/JuegosTerva/ProductoNAtural)
-
 - [CheatSheet de Git (imagen PNG)](GitCheatSheet.png)
 
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.

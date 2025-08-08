@@ -112,3 +112,7 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
     - ¿Para qué sirve retornar algo?
 
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).

@@ -111,3 +111,7 @@ if(residuo == 0){
 | `Math.Max(a, b)`    | Devuelve el mayor de dos valores                    | `mayor ← MAX(vidas1, vidas2)`   | `int mayor = Math.Max(vidas1, vidas2);`   | Saber qué jugador tiene más vidas.                             |
 | `Math.Min(a, b)`    | Devuelve el menor de dos valores                    | `menor ← MIN(tiempo1, tiempo2)` | `int menor = Math.Min(tiempo1, tiempo2);` | Mostrar quién tardó menos en completar un nivel.               |
 | `Convert.ToInt32()` | Convierte valores (texto, booleano, etc.) a `int`   | `numero ← CONVERTIR("42")`      | `int numero = Convert.ToInt32("42");`     | Leer un valor desde un archivo o entrada de usuario.           |
+
+## Para saber más...
+
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).

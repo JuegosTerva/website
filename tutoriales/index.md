@@ -10,7 +10,7 @@
 	- [while | do while](programacion/infoWhile.md)
 	- [if/else](programacion/infoIfElse.md)
 - [Operadores](programacion/operadoresBasicos.md)
-	-[Operadores Aritméticos](programacion/operadoresAritmeticos.md)
+	- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md)
 
 
 <!-- 

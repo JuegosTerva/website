@@ -136,3 +136,7 @@ Puedes manipularlo, activarlo, destruirlo, modificar cualquiera de sus component
 public GameObject enemigo;
 enemigo.SetActive(false);
 ```
+
+## Para saber más...
+
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).

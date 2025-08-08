@@ -233,6 +233,11 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 9. Crea tu método `PelearEnemigo()`
 
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).
+
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.
 

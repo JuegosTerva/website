@@ -61,6 +61,7 @@ class Program
 ## Para saber más...
 
 - [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).
 
 ## Documentación oficial
 
