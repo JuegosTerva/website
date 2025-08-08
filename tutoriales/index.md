@@ -3,7 +3,7 @@
 ## <i class="bi bi-file-earmark-code"></i> ... sobre lógica de programación
 
 - [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md)
-	-[`Int`](ApuntesDigitales/programacion/tiposDatos/infoInt.md)
+	- [`Int`](ApuntesDigitales/programacion/tiposDatos/infoInt.md)
 - [Estructuras de control](programacion/estructurasControl.md):
 	- [switch](programacion/infoSwitch.md)
 	- [for](programacion/infoFor.md)
