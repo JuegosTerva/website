@@ -40,3 +40,13 @@ Se usa cuando se necesita **variación o azar** en un programa, por ejemplo:
 
 * Cada vez que creas un objeto `Random`, se inicializa con una **semilla** (número base para generar los aleatorios). Si creas muchos `Random` muy rápido (en milisegundos), pueden dar el mismo valor.
 * Por eso, **usa un solo objeto `Random`** cuando necesites varios números aleatorios.
+
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+## Documentación oficial
+
+- [Documentación de C# sobre clase Random](https://learn.microsoft.com/es-es/dotnet/api/system.random?view=net-8.0)
+
+
