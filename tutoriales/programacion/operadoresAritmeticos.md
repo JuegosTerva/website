@@ -122,3 +122,9 @@ else
     Console.WriteLine("Es impar");  // Salida: Es impar
 }
 ```
+
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+<!-- documentación oficial -->

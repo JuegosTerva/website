@@ -4,8 +4,6 @@ En C#, `get; set;` forman parte de algo llamado **propiedades automáticas**, un
 
 En lugar de tener que crear una variable privada con sus métodos `get` y `set`, C# lo hace por ti con una **propiedad automática**.
 
----
-
 ## Analogía: La caja con candado 🔐
 
 Imagina que tienes una caja (objeto) que guarda información (por ejemplo, el **nombre** de una mascota).
@@ -16,7 +14,7 @@ Imagina que tienes una caja (objeto) que guarda información (por ejemplo, el **
 En propiedades automáticas, el candado (la lógica de abrir o cerrar) **ya está hecho por C#**, tú solo dices:
 *"Quiero que esta caja tenga estas llaves (get y/o set)".*
 
-## 📚 Conceptos extras para saber
+## Conceptos extras para saber
 
 1. **Clase:** Molde que define objetos (ej. Mascota).
 2. **Propiedad:** Una forma controlada de exponer datos (con get/set).
@@ -24,7 +22,7 @@ En propiedades automáticas, el candado (la lógica de abrir o cerrar) **ya est�
 4. **Encapsulamiento:** Ocultar los detalles internos y mostrar solo lo necesario.
 5. **Modificadores de acceso:** `public`, `private`, etc., definen qué se puede ver desde fuera.
 
-## 🛠 ¿Cómo se usa?
+## ¿Cómo se usa?
 
 ### Ejemplo 1:
 
@@ -52,8 +50,6 @@ Mascota m = new Mascota();
 m.Nombre = "Firulais";      // set
 Console.WriteLine(m.Nombre); // get
 ```
-
----
 
 ### Ejemplo 2:
 
@@ -121,3 +117,8 @@ p.Edad = 25;                // válido
 p.Edad = -5;                // no se asigna
 Console.WriteLine(p.Edad); // 25
 ```
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+<!-- documentación oficial -->

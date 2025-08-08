@@ -52,6 +52,8 @@ Puedes usarlos para almacenar puntuación, vida, cantidad de enemigos, contador 
 
 `int puntos = 250;`
 
+Más detalles en [`int`](ApuntesDigitales/programacion/tiposDatos/infoInt.md).
+
 ## Números reales `float`
 
 Representa números reales (con punto decimal).

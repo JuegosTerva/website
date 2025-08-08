@@ -1,7 +1,7 @@
 # Desafío: Guerrero
 
 > <i class="bi bi-exclamation-triangle-fill" style="color: #FF6600;"></i>
- Esta guía se encuentra en proceso de construcción. La última actualización fue realizada el 3 de agosto.
+ Esta guía se encuentra en proceso de construcción. La última actualización fue realizada el 8 de agosto.
 
 ## Objetivo
 
@@ -25,7 +25,7 @@ La idea es que escribas un programa **estructurado y funcional**, pero también 
 ## 📚 Conceptos clave
 
 ### ... sobre programación
-- [Tipos de datos](programacion/tiposDatos.md)
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md)
 - [Estructuras de control](programacion/estructurasControl.md)
 
 ### ... sobre C#
@@ -44,8 +44,6 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 	https://www.sublimetext.com
 	
 ## 🧠 Guía paso a paso
-
- 
 
 ### 💻 Prepara tu proyecto
 
@@ -109,9 +107,9 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 1. ¿Cuál será el costo para ganar fuerza? ¿Cuánta fuerza ganará? ¿Ganará experiencia también? Anota todos los detalles
 
-	> Por ejemplo <br> Gana 6 de fuerza por hora
+	> Por ejemplo <br> Gana 6 de fuerza por hora entrenada
 
-9. ¿Cuál será el costo para entrenar resistencia? ¿Cuánta resistencia ganará? ¿Ganará experiencia también? Anota todos los detalles
+9. ¿Cuál será el costo para entrenar resistencia? ¿Cuánta resistencia ganará? ¿Ganará experiencia también? Anota todos los detalles.
 
 10. ¿Cómo avanzará de nivel?
 
@@ -131,17 +129,16 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 		DEFINIR fuerza COMO ENTERO
 		DEFINIR continuar COMO BOOLEANO = VERDADERO
 
-		//---Menú
+		//---Menú----
 
 	FINALIZAR programa
 
-	//-----Métodos
+	//-----Métodos-----
 	```
 
 	> Yo usé seis variables.</br>
 	> Con cinco variables ya puedes continuar, si necesitas más, puedes regresar y hacer los cambios que hagan falta.
 
-	
 4. ¿Cuál es la estructura que controla el juego?
 
 	* Observa el resultado del programa[^4].

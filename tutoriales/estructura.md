@@ -4,7 +4,8 @@
 
 |--… sobre lógica de programación
 
-|---Tipos de datos
+|---Tipos de datos v01.21
+|----Int v01.20
 |---Estructuras de control:
 |----switch
 |----for

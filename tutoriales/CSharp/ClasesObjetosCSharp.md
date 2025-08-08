@@ -6,8 +6,7 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ## 📚 Conceptos clave
 
-1. [Tipos de datos | Guía](programacion/tiposDatos.md)
-
+1. [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md)
 1. Clases y objetos
 
 > 💡 **Sugerencia** <br/>
@@ -25,7 +24,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 	Te recomiendo usar Sublime Text por su ligereza y facilidad de uso. Puedes descargarlo aquí:
 	https://www.sublimetext.com
 
-	b	
+
 
 ## 🧠 Guía paso a paso
 
@@ -84,7 +83,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 
 2. Crea tus variables, ¿qué tipo de variables necesita cada atributo (características)?
 
-	[TIPOS DE DATOS]: #
+	Puedes revisar los apuntes sobre [tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
 
 3. Crea tu constructor.
 

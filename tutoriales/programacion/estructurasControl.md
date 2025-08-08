@@ -56,3 +56,9 @@ Aquí hay una lista de **preguntas clave** que puedes usar al resolver un proble
 ## 🔂 ¿Estoy anidando condiciones o ciclos?
 
 Considera usar estructuras **anidadas** (por ejemplo, un `if` dentro de un `for`, o un `for` dentro de otro `for` para trabajar con tablas o matrices).
+
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+<!-- documentación oficial -->

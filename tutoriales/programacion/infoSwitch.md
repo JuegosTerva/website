@@ -191,3 +191,9 @@ switch (color)
         break;
 }
 ```
+
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+<!-- documentación oficial -->

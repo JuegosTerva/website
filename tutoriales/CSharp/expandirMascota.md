@@ -7,7 +7,7 @@ Esta guía te ayudará a resolver la actividad paso a paso.
 
 ## 📚 Conceptos clave
 
-1. [Tipos de datos | Guía](programacion/tiposDatos.md)
+1. [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md)
 
 1. Clases y Objetos
 

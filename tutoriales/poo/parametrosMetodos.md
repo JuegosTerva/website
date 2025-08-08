@@ -31,7 +31,7 @@ Resultado:
 <!-- conceptos -->
 ## ¿Qué tipos pueden tener los parámetros?
 
-Puedes pasar casi **cualquier [tipo de dato](programacion/tiposDatos.md)**: `int`, `string`, `bool`, `float`, e incluso **objetos**.
+Puedes pasar casi **cualquier [tipo de dato](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md)**: `int`, `string`, `bool`, `float`, e incluso **objetos**.
 
 
 ```csharp
@@ -47,9 +47,9 @@ MostrarEdad("Ana", 22);
 <!-- ¿cómo se usan? -->
 ## ¿Cómo se escriben?
 
-### Pseudocódigo
+**Pseudocódigo**
 
-### En CSharp
+**Código**
 
 Un método con parámetros se ve así:
 
@@ -61,7 +61,7 @@ tipoDeRetorno NombreDelMetodo(tipo1 nombre1, tipo2 nombre2, ...){
 }
 ```
 
-Ejemplo:
+## Ejemplo:
 
 ```csharp
 void Saludar(string nombre)
@@ -72,3 +72,8 @@ void Saludar(string nombre)
 
 <!-- errores comunes -->
 
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+<!-- documentación oficial -->

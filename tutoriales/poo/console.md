@@ -57,6 +57,11 @@ class Program
     }
 }
 ```
-## Lee también
+
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+## Documentación oficial
 
 - [Documentación oficial de Console Clase (System)](https://learn.microsoft.com/es-es/dotnet/api/system.console?view=net-8.0)

@@ -90,3 +90,9 @@ Puntos: 100
 ✅ En UI de videojuegos o apps, mostrar puntajes, cantidades, niveles, etc.
 
 [^1]: Puedes reviar la información sobre [Leer y escribir en consola](poo/console.md)
+
+## Para saber más...
+
+- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
+
+<!-- documentación oficial -->
