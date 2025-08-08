@@ -24,11 +24,10 @@ La idea es que escribas un programa **estructurado y funcional**, pero también 
 
 ## 📚 Conceptos clave
 
-### ... sobre programación
 - [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md)
 - [Estructuras de control](programacion/estructurasControl.md)
-
-### ... sobre C#
+- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md)
+- [Metodos](ApuntesDigitales/poo/metodos/metodosParametros.md)
 - [Leer o imprimir en la consola](poo/console.md)
 
 ## 🖥️ Requisitos del sistema
@@ -165,6 +164,7 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 	```
 
 7. Crea tu método para mostrar la información
+	[¿cómo usar métodos] :
 
  	```plaintext
  	//------Métodos
@@ -232,11 +232,6 @@ Para trabajar en este proyecto necesitas tener instalado lo siguiente:
 	Aplica la misma estructura y decide qué atributos vas a modificar. ¿Cuánta resistencia se gana por hora? ¿Cuánta energía o agua se pierde? ¿Qué tanto aumenta la experiencia?
 
 9. Crea tu método `PelearEnemigo()`
-
-## Para saber más...
-
-- [Tipos de datos](ApuntesDigitales/programacion/tiposDatos/tiposDatos.md).
-- [Operadores Aritméticos](ApuntesDigitales/programacion/operadores/operadoresAritmeticos.md).
 
 <!-- footnotes -->
 [^1]: Por símbolos nos referimos a caracteres especiales como `@`, `#`, `!`, `?`, `%`, etc. Evítalos para que no haya problemas al compilar, guardar o abrir tu proyecto.

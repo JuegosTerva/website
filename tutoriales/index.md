@@ -14,16 +14,6 @@
 
 
 <!-- 
-Operador de incremento ++
-Operador de decremento --
-Operadores unarios más y menos
-Operador de multiplicación *
-Operador de división /
-Operador de resto %
-Operador de suma +
-Operador de resta -
-Asignación compuesta
-
 Operador de negación lógico !
 Operador lógico AND &
 Operador IR exclusivo lógico ^
@@ -46,7 +36,7 @@ Operador mayor o igual que >=
 <!--| - [Clases y Objetos](poo/clasesObjetos.md) -->
 <!--| - [Atributos y Métodos](poo/atributosMetodos.md) -->
 - Métodos
-	- [Métodos con parámetros](poo/parametroMetodos.md)
+	- [Métodos con parámetros](ApuntesDigitales/poo/metodos/metodosParametros.md)
 	<!--| - [Parámetros opcionales](poo/metodosParametrosOpcionales.md) -->
 	<!--| - [Sobrecarga de métodos](poo/metodosParametrosOpcionales.md) -->
 	<!--| - [Paso de objetos como parámetros](poo/metodosParametrosOpcionales.md) -->
