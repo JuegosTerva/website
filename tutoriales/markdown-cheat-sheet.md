@@ -54,6 +54,10 @@ These are the elements outlined in John Gruber’s original design document. All
 
 ### Image
 
+```markdown
+![alt text](https://www.markdownguide.org/assets/images/tux.png)
+```
+
 ![alt text](https://www.markdownguide.org/assets/images/tux.png)
 
 ## Extended Syntax
