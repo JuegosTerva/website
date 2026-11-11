@@ -36,7 +36,7 @@ v01.01	|---Guerrero Axolotl
 
 
 
-		|-Tutoriales
+v01.29	|-Tutoriales
 
 		|--Unity
 
@@ -46,7 +46,7 @@ v01.23	|---Coleccionador de Pociones
 v01.02	|----Animaciones 2D 
 v01.05		|----Añadir panel de recursos 
 
-		|--Pixel Adventure v01.17
+v01.17	|--Pixel Adventure 
 v01.16		|---Movimiento horizontal 
 		|---Parallex background - horizontal
 
@@ -58,3 +58,4 @@ v01.26	|---Descargar actualizaciones de GitHub
 
 		Sitio Web
 v01.27 	|- Sobre mi
+v01.29  |- Aviso de privacidad
