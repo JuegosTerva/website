@@ -14,10 +14,17 @@
             <p>Control local de participantes · MVP fase 2</p>
             <span class="pill">Sistema previsto: Suizo · Varias categorías</span>
             <span class="pill">MotorSuizo 0.2.0 · Torneos por categoría</span>
+            <button
+                type="button"
+                class="settings-button"
+                id="openSettings"
+                aria-haspopup="dialog"
+                aria-controls="settingsModal">⚙</button>
+
             <nav class="main-nav" aria-label="Navegación principal">
                 <a href="#rosterPanel">Padrón</a>
                 <a href="#tournamentPanel">Torneos</a>
-                <a href="#configPanel">Configuración ⚙</a>
+                
             </nav>
         </div>
     </header>
@@ -40,7 +47,7 @@
             <section class="panel">
                 <h2>1. Importar padrón</h2>
                 <div class="field"><label for="file">Archivo CSV</label><input id="file" type="file" accept=".csv"></div>
-                <p class="muted">El archivo debe tener encabezados para ID, nombre y categoría. Al importar, podrás revisar los registros antes de usarlos. Si Excel no carga por falta de internet, guarda una copia como CSV.</p>
+                <p class="muted">El archivo debe tener encabezados para ID, nombre y categoría. Al importar, podrás revisar los registros antes de usarlos.</p>
 <div class="actions"><button class="secondary" id="template">Descargar plantilla CSV</button></div>
 <hr style="border:0;border-top:1px solid #edf0f4;margin:18px 0">
 
@@ -93,6 +100,65 @@
 
 </main>
 
+<!-- VENTANA DE CONFIGURACIÓN -->
+<div
+  class="settings-overlay"
+  id="settingsModal"
+  hidden>
+
+  <section
+    class="settings-window"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settingsTitle">
+
+    <div class="settings-header">
+      <h2 id="settingsTitle">⚙ Ajustes del torneo</h2>
+      <button
+        type="button"
+        class="settings-close"
+        id="closeSettings"
+        aria-label="Cerrar configuración">
+        ✕
+      </button>
+    </div>
+
+    <nav class="settings-tabs" aria-label="Secciones de configuración">
+      <button type="button" class="settings-tab active" data-settings-tab="general">
+        General
+      </button>
+      <button type="button" class="settings-tab" data-settings-tab="scoring">
+        Puntuación
+      </button>
+      <button type="button" class="settings-tab" data-settings-tab="pairing">
+        Emparejamientos
+      </button>
+      <button type="button" class="settings-tab" data-settings-tab="standings">
+        Clasificación
+      </button>
+      <button type="button" class="settings-tab" data-settings-tab="data">
+        Datos
+      </button>
+    </nav>
+
+    <div class="settings-content" id="settingsContent">
+      <div class="settings-placeholder">
+        <h3>Configuración general</h3>
+        <p>En esta sección estarán las opciones generales del evento.</p>
+      </div>
+    </div>
+
+    <div class="settings-footer">
+      <button type="button" class="secondary" id="cancelSettings">
+        Cerrar
+      </button>
+      <button type="button" class="primary" id="saveSettings">
+        Guardar cambios
+      </button>
+    </div>
+
+  </section>
+</div>
 
 
 
@@ -211,6 +277,15 @@ $('file').addEventListener('change',async e=>{
 /* GESTION DE TORNEOS: almacenamiento independiente del padrón */
 const TOURNAMENT_KEY='gestorAjedrezTorneos_v1';
 let tournamentEvent=null;
+function hayTorneoIniciado(){
+  return Boolean(
+    tournamentEvent?.torneos?.some(t =>
+      t.estado === 'en_curso' ||
+      t.estado === 'finalizado'
+    )
+  );
+}
+
 try{tournamentEvent=JSON.parse(localStorage.getItem(TOURNAMENT_KEY)||'null')}catch(e){tournamentEvent=null}
 
 /* Elimina la preparación de torneos sin tocar el padrón.
@@ -284,8 +359,17 @@ $('createTournaments').addEventListener('click',()=>{
   if(tournamentEvent)throw Error('Ya existe un evento preparado.');
   const cats=categorySummary();
   if(!cats.length)throw Error('No hay categorías en el padrón.');
-  const configBase=MotorSuizo.obtenerConfiguracionPredeterminada().data;
-  const created=MotorSuizo.crearEvento({id:'EV-'+Date.now(),nombre:$('eventName').value.trim()||'Torneo de Ajedrez',fecha:$('eventDate').value||null,sede:$('eventVenue').value.trim(),configuracion:configBase});
+  const configBase = JSON.parse(
+    JSON.stringify(configuracionActual)
+    );
+  const created=MotorSuizo.crearEvento({
+    id:'EV-'+Date.now(),
+    nombre:$('eventName').value.trim()||'Torneo de Ajedrez',
+    fecha:$('eventDate').value||null,
+    sede:$('eventVenue').value.trim(),
+    configuracion:configBase
+    });
+
   if(!created.ok)throw Error(created.errors.map(e=>e.message).join(' '));
   let event=created.data;const omitted=[];
   for(const [category,count] of cats){
@@ -293,7 +377,11 @@ $('createTournaments').addEventListener('click',()=>{
    const input=document.querySelector(`[data-rounds-category="${CSS.escape(category)}"]`);
    const totalRounds=Number(input&&input.value);
    if(!Number.isInteger(totalRounds)||totalRounds<1)throw Error(`Define una cantidad válida de rondas para ${category}.`);
-   const categoryConfig={...configBase,totalRounds};
+   const categoryConfig={...configBase,totalRounds};console.log(
+  'CONFIGURACIÓN DE CATEGORÍA:',
+  category,
+  categoryConfig
+);
    const result=MotorSuizo.crearTorneo({evento:event,categoria:category,participantes:players.filter(p=>p.category===category),configuracion:categoryConfig});
    if(!result.ok)throw Error(result.errors.map(e=>e.message).join(' '));
    event=result.data;
@@ -319,10 +407,265 @@ $('tournamentList').addEventListener('click',e=>{
  tournamentEvent=result.data;saveTournamentEvent();renderTournamentList();
  $('tournamentStatus').textContent='Torneo iniciado. La configuración de esta categoría quedó congelada. Aún no se pueden generar emparejamientos.';
 });
+
+/* VENTANA DE CONFIGURACIÓN */
+const settingsModal = $('settingsModal');
+const settingsContent = $('settingsContent');
+const openSettings = $('openSettings');
+
+function abrirConfiguracion(){
+  settingsModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  $('closeSettings').focus();
+}
+
+function cerrarConfiguracion(){
+  settingsModal.hidden = true;
+  document.body.style.overflow = '';
+  openSettings.focus();
+}
+
+openSettings.addEventListener('click', abrirConfiguracion);
+$('closeSettings').addEventListener('click', cerrarConfiguracion);
+$('cancelSettings').addEventListener('click', cerrarConfiguracion);
+
+settingsModal.addEventListener('click', e => {
+  if(e.target === settingsModal){
+    cerrarConfiguracion();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && !settingsModal.hidden){
+    cerrarConfiguracion();
+  }
+});
+
+/* CONFIGURACIÓN DE PUNTUACIÓN */
+
+const CONFIG_KEY = 'gestorAjedrezConfiguracion_v1';
+
+const configOriginal = MotorSuizo.obtenerConfiguracionPredeterminada().data;
+
+let configuracionActual = JSON.parse(JSON.stringify(configOriginal));
+let configuracionTemporal = JSON.parse(JSON.stringify(configOriginal));
+
+function cargarConfiguracionPreferida(){
+  try{
+    const guardada = JSON.parse(localStorage.getItem(CONFIG_KEY)||'null');
+
+    const resultado = MotorSuizo.normalizarConfiguracion({
+      configuracion: guardada || configOriginal
+    });
+
+    configuracionActual = resultado.ok
+      ? resultado.data
+      : JSON.parse(JSON.stringify(configOriginal));
+
+  }catch(error){
+    configuracionActual = JSON.parse(JSON.stringify(configOriginal));
+  }
+
+  configuracionTemporal = JSON.parse(JSON.stringify(configuracionActual));
+
+  mostrarPestanaConfiguracion(
+    document.querySelector('[data-settings-tab].active')?.dataset.settingsTab || 'general'
+  );
+}
+
+function mostrarPestanaConfiguracion(seccion){
+
+  document.querySelectorAll('[data-settings-tab]').forEach(tab=>{
+    tab.classList.toggle(
+      'active',
+      tab.dataset.settingsTab === seccion
+    );
+  });
+
+  if(seccion === 'scoring'){
+    settingsContent.innerHTML = `
+      <h3>Puntuación del torneo</h3>
+      <p>Define los puntos que recibe cada participante según el resultado.</p>
+
+      <div class="settings-group">
+
+        <div class="settings-field">
+          <label for="pointWin">Victoria jugando</label>
+          <input type="number" id="pointWin" data-point="win" min="0" step="0.5">
+        </div>
+
+        <div class="settings-field">
+          <label for="pointDraw">Empate</label>
+          <input type="number" id="pointDraw" data-point="draw" min="0" step="0.5">
+        </div>
+
+        <div class="settings-field">
+          <label for="pointLoss">Derrota jugando</label>
+          <input type="number" id="pointLoss" data-point="loss" min="0" step="0.5">
+        </div>
+
+        <div class="settings-field">
+          <label for="pointBye">BYE</label>
+          <input type="number" id="pointBye" data-point="bye" min="0" step="0.5">
+        </div>
+
+        <div class="settings-field">
+          <label for="pointForfeitWin">Victoria por incomparecencia</label>
+          <input type="number" id="pointForfeitWin" data-point="forfeitWin" min="0" step="0.5">
+        </div>
+
+        <div class="settings-field">
+          <label for="pointForfeitLoss">Derrota por incomparecencia</label>
+          <input type="number" id="pointForfeitLoss" data-point="forfeitLoss" min="0" step="0.5">
+        </div>
+
+        <div class="settings-field">
+          <label for="pointDoubleForfeit">Doble incomparecencia</label>
+          <input type="number" id="pointDoubleForfeit" data-point="doubleForfeit" min="0" step="0.5">
+        </div>
+
+      </div>
+
+      <p class="settings-note">
+        Estos valores son compartidos por todas las categorías del evento.
+        Los cambios se aplicarán a los eventos nuevos una vez que conectemos
+        esta configuración con la creación del torneo.
+      </p>
+
+      <div class="actions">
+        <button type="button" class="secondary" id="restorePoints">
+          Restaurar valores predeterminados
+        </button>
+      </div>
+
+      <p class="settings-message" id="scoringMessage"></p>
+    `;
+
+    const configuracionBloqueada = hayTorneoIniciado();
+    document.querySelectorAll('[data-point]').forEach(input=>{
+        input.value = configuracionTemporal.points[input.dataset.point];
+        input.disabled = configuracionBloqueada;
+    });
+    $('restorePoints').disabled = configuracionBloqueada;
+    $('saveSettings').disabled = configuracionBloqueada;
+
+    const mensaje = $('scoringMessage');
+
+    if(configuracionBloqueada){
+        mensaje.textContent = '🔒 La configuración está bloqueada porque al menos una categoría ya inició. Puedes consultar las reglas, pero no modificarlas.';
+        mensaje.style.color = '#fbbf24';
+    }else{
+        mensaje.textContent = '';
+    }
+
+    $('restorePoints').addEventListener('click',()=>{
+      configuracionTemporal.points =
+        JSON.parse(JSON.stringify(configOriginal.points));
+
+      mostrarPestanaConfiguracion('scoring');
+    });
+
+  }else{
+
+    const sections = {
+      general: [
+        'Configuración general',
+        'Aquí estarán las opciones generales del evento.'
+      ],
+      pairing: [
+        'Emparejamientos',
+        'Aquí configuraremos las reglas del emparejador simplificado.'
+      ],
+      standings: [
+        'Clasificación',
+        'Aquí estarán los criterios de desempate disponibles.'
+      ],
+      data: [
+        'Datos y respaldos',
+        'Aquí estarán las opciones para respaldar y restaurar torneos.'
+      ]
+    };
+
+    const [title,description] = sections[seccion];
+
+    settingsContent.innerHTML = `
+      <div class="settings-placeholder">
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+    `;
+  }
+}
+
+/* CAMBIAR DE PESTAÑA */
+
+document.querySelectorAll('[data-settings-tab]').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    mostrarPestanaConfiguracion(tab.dataset.settingsTab);
+  });
+});
+
+/* CARGAR CONFIGURACIÓN AL ABRIR */
+
+openSettings.addEventListener('click',cargarConfiguracionPreferida);
+// Cargar preferencias guardadas al iniciar la aplicación
+cargarConfiguracionPreferida();
+
+
+/* CANCELAR CAMBIOS */
+
+$('cancelSettings').addEventListener('click',()=>{
+  configuracionTemporal =
+    JSON.parse(JSON.stringify(configuracionActual));
+
+  cerrarConfiguracion();
+});
+
+/* GUARDAR CONFIGURACIÓN */
+
+$('saveSettings').addEventListener('click',()=>{
+    if(hayTorneoIniciado()){
+        alert('No puedes modificar las reglas porque una categoría de este evento ya comenzó.');
+        return;
+    }
+
+  const inputs = document.querySelectorAll('[data-point]');
+
+  inputs.forEach(input=>{
+    configuracionTemporal.points[input.dataset.point] =
+      Number(input.value);
+  });
+
+  const validacion = MotorSuizo.validarConfiguracionEvento({
+    configuracion: configuracionTemporal
+  });
+
+  if(!validacion.ok){
+    $('scoringMessage').textContent =
+      validacion.errors.map(e=>e.message).join(' ');
+
+    return;
+  }
+
+  try{
+    localStorage.setItem(CONFIG_KEY,JSON.stringify(configuracionTemporal));
+
+    configuracionActual =
+      JSON.parse(JSON.stringify(configuracionTemporal));
+
+    cerrarConfiguracion();
+
+  }catch(error){
+    $('scoringMessage').textContent =
+      'No se pudo guardar la configuración: '+error.message;
+  }
+
+});
+
 renderTournamentList();
 
 if (window.MotorSuizo) {
-  console.info(`MotorSuizo ${MotorSuizo.version} cargado. Emparejador Dutch aún en desarrollo.`);
+  console.info(`MotorSuizo ${MotorSuizo.version} cargado. Emparejador aún en desarrollo.`);
 } else {
   console.error('No se pudo cargar motor_suizo.js. Verifica que esté junto al HTML.');
 }
