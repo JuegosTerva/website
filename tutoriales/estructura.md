@@ -36,7 +36,7 @@ v01.01	|---Guerrero Axolotl
 
 
 
-v01.29	|-Tutoriales
+v01.30	|-Tutoriales
 
 		|--Unity
 
@@ -59,3 +59,4 @@ v01.26	|---Descargar actualizaciones de GitHub
 		Sitio Web
 v01.27 	|- Sobre mi
 v01.29  |- Aviso de privacidad
+gta     |- gestor_torneo_ajedrez

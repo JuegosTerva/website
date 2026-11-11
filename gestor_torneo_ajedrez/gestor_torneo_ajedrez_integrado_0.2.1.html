@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gestor de Torneo de Ajedrez</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="wrap">
+            <h1>♟ Gestor de Torneo de Ajedrez</h1>
+            <p>Control local de participantes · MVP fase 2</p>
+            <span class="pill">Sistema previsto: Suizo · Varias categorías</span>
+            <span class="pill">MotorSuizo 0.2.0 · Torneos por categoría</span>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <a href="#rosterPanel">Padrón</a>
+                <a href="#tournamentPanel">Torneos</a>
+                <a href="#configPanel">Configuración ⚙</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="notice" role="note" aria-label="Aviso sobre el uso del sistema">
+            <strong>Aviso importante sobre el sistema:</strong> esta herramienta fue desarrollada con asistencia de herramientas de inteligencia artificial para apoyar la organización de torneos de ajedrez amateur. No está aprobada, avalada, certificada ni validada oficialmente por la FIDE, federaciones, asociaciones, organismos arbitrales ni otra autoridad ajedrecística. No es un sistema oficial ni sustituye el reglamento aplicable, la revisión de los emparejamientos o el criterio de un árbitro. La persona organizadora debe verificar la información y los resultados antes de utilizarlos.
+        </div>
+
+        <div class="notice"><strong>Estado técnico:</strong> el padrón se conserva por separado. Ahora puedes preparar un torneo independiente por categoría y definir sus propias rondas. Los participantes se copian al torneo al crearlo; los cambios posteriores en el padrón no modifican esa copia. La generación de pareos Dutch y los desempates siguen en desarrollo y no deben utilizarse para dirigir una ronda real.
+        </div>
+
+        <section class="stats">
+            <div class="card"><div class="stat-label">Participantes</div><div class="stat-value" id="total">0</div></div>
+            <div class="card"><div class="stat-label">Categorías</div><div class="stat-value" id="cats">0</div></div>
+            <div class="card"><div class="stat-label">Sin categoría</div><div class="stat-value" id="uncat">0</div></div>
+        </section>
+
+        <div class="layout" id="rosterPanel">
+            <section class="panel">
+                <h2>1. Importar padrón</h2>
+                <div class="field"><label for="file">Archivo CSV</label><input id="file" type="file" accept=".csv"></div>
+                <p class="muted">El archivo debe tener encabezados para ID, nombre y categoría. Al importar, podrás revisar los registros antes de usarlos. Si Excel no carga por falta de internet, guarda una copia como CSV.</p>
+<div class="actions"><button class="secondary" id="template">Descargar plantilla CSV</button></div>
+<hr style="border:0;border-top:1px solid #edf0f4;margin:18px 0">
+
+
+
+<h2>2. Agregar participante</h2>
+<form id="addForm">
+<div class="field"><label for="pid">ID</label><input id="pid" required placeholder="Ej. AJ-001"></div>
+<div class="field"><label for="pname">Nombre completo</label><input id="pname" required placeholder="Nombre y apellidos"></div>
+<div class="field"><label for="pcat">Categoría</label><input id="pcat" required placeholder="Ej. Sub-12"></div>
+<button class="primary" type="submit">Agregar participante</button>
+</form>
+<div class="status" id="status" aria-live="polite"></div>
+<div class="actions"><button class="secondary" id="export">Exportar padrón CSV</button><button class="danger" id="clear">Borrar todos los datos</button></div>
+</section>
+
+
+<section class="panel">
+
+
+<h2>3. Padrón de participantes</h2>
+<div class="toolbar">
+<input id="search" placeholder="Buscar por ID o nombre…">
+<select id="filter"><option value="">Todas las categorías</option></select>
+</div>
+<div class="tablewrap"><table>
+<thead><tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Acciones</th></tr></thead>
+<tbody id="rows"><tr><td colspan="4" class="empty">Importa tu Excel para comenzar.</td></tr></tbody>
+</table></div>
+<footer>Consejo: conserva una copia CSV antes de cerrar el navegador. Esta versión no sincroniza datos con otros dispositivos.</footer>
+</section>
+</div>
+
+
+<section class="panel" id="tournamentPanel" style="margin-top:16px">
+<h2>4. Preparar torneos por categoría</h2>
+<p class="muted">Cada categoría tendrá su propio torneo, participantes, historial y cantidad de rondas. Esta sección guarda los torneos por separado del padrón. Al crear los torneos se toma una copia de los participantes de ese momento.</p>
+<div id="tournamentSetup">
+<div class="field"><label for="eventName">Nombre del evento</label><input id="eventName" placeholder="Ej. Torneo de Ajedrez ASMAC 2026" value="Torneo de Ajedrez"></div>
+<div class="field"><label for="eventDate">Fecha del evento</label><input id="eventDate" type="date"></div>
+<div class="field"><label for="eventVenue">Sede</label><input id="eventVenue" placeholder="Sede del torneo"></div>
+<h3 style="font-size:.92rem;margin:18px 0 8px">Rondas por categoría</h3>
+<div id="categoryRounds"></div>
+<div class="actions"><button class="primary" id="createTournaments">Crear torneos por categoría</button></div>
+</div>
+<div id="tournamentList" hidden></div>
+<div class="status" id="tournamentStatus" aria-live="polite"></div>
+</section>
+
+
+</main>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+
+<!-- Motor independiente: mantener este archivo en la misma carpeta que el HTML. -->
+<script src="./motor_suizo.js"></script>
+<script>
+const KEY='gestorAjedrezMVP_v1';
+let players=[]; /* matriz de jugadores */
+
+/* RECUPERAR DATOS GUARDADOS */
+try{players=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){players=[]}
+
+const $=id=>document.getElementById(id);
+
+const norm=s=>
+    String(s??'') //dato en texto
+        .trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+function save(){localStorage.setItem(KEY,JSON.stringify(players));render();if(typeof tournamentEvent!=='undefined'&&!tournamentEvent)renderCategoryRounds()}
+
+function say(t){$('status').textContent=t}
+
+/* FUNCION RENDER CUENTA PARTICIPANTES ACTUALIZA CATEGORIAS */
+function render(){
+ $('total').textContent=players.length;
+ const categories=[...new Set(players.map(p=>p.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+ $('cats').textContent=categories.length;
+ $('uncat').textContent=players.filter(p=>!p.category).length;
+ const old=$('filter').value;
+ $('filter').innerHTML='<option value="">Todas las categorías</option>'+categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+ $('filter').value=categories.includes(old)?old:'';
+ const q=norm($('search').value),cat=$('filter').value;
+ const list=players.filter(p=>(!cat||p.category===cat)&&(!q||norm(p.id).includes(q)||norm(p.name).includes(q)));
+ $('rows').innerHTML=list.length?list.map(p=>`<tr><td>${esc(p.id)}</td><td>${esc(p.name)}</td><td>${esc(p.category)}</td><td><button class="secondary" data-edit="${esc(p.id)}">Editar</button> <button class="danger" data-del="${esc(p.id)}">Eliminar</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">No hay coincidencias.</td></tr>';
+ if(typeof tournamentEvent==='undefined'||!tournamentEvent)renderCategoryRounds();
+}
+
+/* EVITA CODIGO HTML*/
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+/* AÑADIR JUGADOR */
+function add(p){
+ if(!p.id||!p.name||!p.category)throw Error('Completa ID, nombre y categoría.');
+ if(players.some(x=>norm(x.id)===norm(p.id)))throw Error('El ID '+p.id+' ya existe.');
+ players.push({id:String(p.id).trim(),name:String(p.name).trim(),category:String(p.category).trim()});
+}
+
+
+$('addForm').addEventListener('submit',e=>{
+ e.preventDefault();try{
+  add({id:$('pid').value,name:$('pname').value,category:$('pcat').value});
+  save();e.target.reset();
+  say(tournamentEvent?'Participante agregado al padrón. Los torneos existentes conservan su copia anterior; elimina la preparación de torneos y créala nuevamente para incluirlo.':'Participante agregado.');
+ }catch(err){say(err.message)}
+});
+
+$('search').addEventListener('input',render);$('filter').addEventListener('change',render);
+
+$('rows').addEventListener('click',e=>{
+ const id=e.target.dataset.edit||e.target.dataset.del;if(!id)return;
+ const p=players.find(x=>x.id===id);if(!p)return;
+ if(e.target.dataset.del){if(confirm('¿Eliminar a '+p.name+'?')){players=players.filter(x=>x.id!==id);save();say('Participante eliminado.')}return}
+ const name=prompt('Nombre completo:',p.name);if(name===null)return;
+ const category=prompt('Categoría:',p.category);if(category===null)return;
+ if(!name.trim()||!category.trim()){say('Nombre y categoría no pueden quedar vacíos.');return}
+ p.name=name.trim();p.category=category.trim();save();say('Registro actualizado.');
+});
+
+
+
+function download(name,content,type='text/csv;charset=utf-8;'){
+ const blob=new Blob(['\ufeff'+content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
+}
+
+
+
+$('export').onclick=()=>{const rows=[['ID','Nombre','Categoria'],...players.map(p=>[p.id,p.name,p.category])];download('padron_ajedrez.csv',rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n'))};
+
+$('template').onclick=()=>download('plantilla_padron_ajedrez.csv','ID,Nombre,Categoria\r\nAJ-001,Nombre Apellido,Sub-12\r\n');
+
+$('clear').onclick=()=>{
+ if(confirm('Esto eliminará TODOS los participantes del padrón y TODOS los torneos preparados o iniciados en este navegador. Esta acción no se puede deshacer. ¿Continuar?')){
+  eliminarPreparacionTorneos();
+  players=[];
+  save();
+  say('Se eliminaron el padrón y los datos de todos los torneos.');
+ }
+};
+
+$('file').addEventListener('change',async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{
+  let matrix;
+  if(file.name.toLowerCase().endsWith('.csv')){
+   const text=await file.text();matrix=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(Boolean).map(line=>line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(x=>x.trim().replace(/^"|"$/g,'').replace(/""/g,'"')));
+  }else{
+   if(!window.XLSX)throw Error('No se pudo cargar el lector de Excel. Conéctate a internet o importa un CSV.');
+   const wb=XLSX.read(await file.arrayBuffer(),{type:'array'});matrix=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});
+  }
+  if(matrix.length<2)throw Error('El archivo no contiene filas de participantes.');
+  const headers=matrix[0].map(norm);
+  const find=keys=>headers.findIndex(h=>keys.some(k=>h===k||h.includes(k)));
+  const iId=find(['id','folio','numero','número','clave']),iName=find(['nombre','participante','jugador']),iCat=find(['categoria','categoría','seccion','sección','grupo']);
+  if(iId<0||iName<0||iCat<0)throw Error('No identifiqué las columnas. Usa encabezados ID, Nombre y Categoria.');
+  const incoming=matrix.slice(1).filter(r=>r[iId]!==''&&r[iName]!=='').map(r=>({id:String(r[iId]).trim(),name:String(r[iName]).trim(),category:String(r[iCat]??'').trim()}));
+  const seen=new Set(players.map(p=>norm(p.id)));let added=0,duplicates=0;
+  for(const p of incoming){if(!p.category)continue;if(seen.has(norm(p.id))){duplicates++;continue}seen.add(norm(p.id));players.push(p);added++}
+  save();say(`Importación terminada: ${added} agregados, ${duplicates} ID duplicados omitidos. Registros sin categoría omitidos: ${incoming.filter(p=>!p.category).length}.`+(tournamentEvent?' Los torneos existentes conservan su copia anterior; elimina la preparación y créala nuevamente para incluir los cambios.':''));
+ }catch(err){say(err.message)}finally{e.target.value=''}
+});
+
+
+/* GESTION DE TORNEOS: almacenamiento independiente del padrón */
+const TOURNAMENT_KEY='gestorAjedrezTorneos_v1';
+let tournamentEvent=null;
+try{tournamentEvent=JSON.parse(localStorage.getItem(TOURNAMENT_KEY)||'null')}catch(e){tournamentEvent=null}
+
+/* Elimina la preparación de torneos sin tocar el padrón.
+   Es segura si todavía no existe ningún evento. */
+function eliminarPreparacionTorneos(){
+ const habiaEvento=Boolean(tournamentEvent)||localStorage.getItem(TOURNAMENT_KEY)!==null;
+ localStorage.removeItem(TOURNAMENT_KEY);
+ tournamentEvent=null;
+ renderTournamentList();
+ renderCategoryRounds();
+ return habiaEvento;
+}
+
+function categorySummary(){
+ const map=new Map();
+ players.forEach(p=>{const c=String(p.category||'').trim();if(c)map.set(c,(map.get(c)||0)+1)});
+ return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0],'es'));
+}
+function renderCategoryRounds(){
+ const host=$('categoryRounds');
+ if(!host)return;
+ const cats=categorySummary();
+ if(!cats.length){host.innerHTML='<p class="muted">Primero importa o registra participantes con categoría.</p>';return}
+ host.innerHTML='<div class="tablewrap"><table><thead><tr><th>Categoría</th><th>Participantes</th><th>Rondas sugeridas</th><th>Rondas definitivas</th></tr></thead><tbody>'+cats.map(([cat,count],i)=>{
+   const suggestion=MotorSuizo.sugerirRondas({cantidadParticipantes:count});
+   const rounds=suggestion.ok?suggestion.data.cantidad:'';
+   return `<tr><td>${esc(cat)}</td><td>${count}</td><td>${rounds||'No disponible'}</td><td><input type="number" min="1" step="1" required data-rounds-category="${esc(cat)}" value="${rounds}" ${count<2?'disabled':''} style="max-width:100px"></td></tr>`;
+ }).join('')+'</tbody></table></div><p class="muted">La sugerencia es orientativa. Puedes cambiar las rondas de cada categoría antes de crear sus torneos. Las categorías con menos de 2 participantes no pueden iniciar un torneo suizo.</p>';
+}
+function saveTournamentEvent(){localStorage.setItem(TOURNAMENT_KEY,JSON.stringify(tournamentEvent));}
+
+function renderTournamentList(){
+ const setup=$('tournamentSetup'),list=$('tournamentList');
+
+ if(!tournamentEvent){
+  setup.hidden=false;
+  list.hidden=true;
+  renderCategoryRounds();
+  return;
+ }
+
+ const fecha = tournamentEvent.fecha
+  ? tournamentEvent.fecha.split('-').reverse().join('/')
+  : 'Fecha no definida';
+
+ setup.hidden=true;
+ list.hidden=false;
+
+ list.innerHTML=`<p><strong>${esc(tournamentEvent.nombre)}</strong></p><p class="muted">${esc(fecha)} · ${esc(tournamentEvent.sede||'Sede no definida')}</p>`+
+ '<div class="tablewrap"><table><thead><tr><th>Categoría</th><th>Jugadores</th><th>Rondas</th><th>Estado</th><th>Acción</th></tr></thead><tbody>'+tournamentEvent.torneos.map(t=>{
+   const started=t.estado==='en_curso'||t.estado==='finalizado';
+
+      // Obtener las rondas de la configuración disponible
+   const totalRounds = t.configuracion?.totalRounds
+       ?? tournamentEvent.configuracion?.totalRounds
+       ?? 'Sin definir';
+
+   return `<tr>
+      <td>${esc(t.categoria)}</td>
+      <td>${t.participantes.length}</td>
+      <td>${esc(totalRounds)}</td>
+      <td>${esc(t.estado)}</td>
+      <td>${started?'—':`<button class="primary" data-start-tournament="${esc(t.id)}">Iniciar torneo</button>`}</td>
+   </tr>`;
+ }).join('')+'</tbody></table></div>'+'<p class="muted">Al iniciar cada categoría se congela su configuración. El emparejador Dutch aún no está habilitado, así que iniciar aquí solo prepara el estado del torneo; no genera rondas ni pareos.</p><div class="actions"><button class="danger" id="resetTournamentPreparation">Eliminar torneos y volver a preparar</button></div><p class="muted">Esta acción conserva el padrón. Si agregaste o corregiste participantes después de crear los torneos, elimina esta preparación y créala nuevamente para tomar una copia actualizada.</p>';
+}
+
+
+$('createTournaments').addEventListener('click',()=>{
+ try{
+  if(tournamentEvent)throw Error('Ya existe un evento preparado.');
+  const cats=categorySummary();
+  if(!cats.length)throw Error('No hay categorías en el padrón.');
+  const configBase=MotorSuizo.obtenerConfiguracionPredeterminada().data;
+  const created=MotorSuizo.crearEvento({id:'EV-'+Date.now(),nombre:$('eventName').value.trim()||'Torneo de Ajedrez',fecha:$('eventDate').value||null,sede:$('eventVenue').value.trim(),configuracion:configBase});
+  if(!created.ok)throw Error(created.errors.map(e=>e.message).join(' '));
+  let event=created.data;const omitted=[];
+  for(const [category,count] of cats){
+   if(count<2){omitted.push(category);continue;}
+   const input=document.querySelector(`[data-rounds-category="${CSS.escape(category)}"]`);
+   const totalRounds=Number(input&&input.value);
+   if(!Number.isInteger(totalRounds)||totalRounds<1)throw Error(`Define una cantidad válida de rondas para ${category}.`);
+   const categoryConfig={...configBase,totalRounds};
+   const result=MotorSuizo.crearTorneo({evento:event,categoria:category,participantes:players.filter(p=>p.category===category),configuracion:categoryConfig});
+   if(!result.ok)throw Error(result.errors.map(e=>e.message).join(' '));
+   event=result.data;
+  }
+  if(!event.torneos.length)throw Error('No hay categorías con al menos 2 participantes para crear torneos.');
+  tournamentEvent=event;saveTournamentEvent();renderTournamentList();
+  $('tournamentStatus').textContent=omitted.length?`Torneos creados. Se omitieron categorías con menos de 2 participantes: ${omitted.join(', ')}.`:'Torneos creados correctamente. Cada categoría conserva su propia cantidad de rondas.';
+ }catch(err){$('tournamentStatus').textContent=err.message;}
+});
+$('tournamentList').addEventListener('click',e=>{
+ if(e.target.id==='resetTournamentPreparation'){
+  const started=tournamentEvent?.torneos?.some(t=>t.estado==='en_curso'||t.estado==='finalizado');
+  const warning=started?' Hay torneos iniciados o finalizados y se eliminarán también sus datos e historial.':'';
+  if(confirm('Se eliminarán todos los torneos preparados para poder crearlos nuevamente con el padrón actualizado. El padrón NO se borrará.'+warning+' ¿Continuar?')){
+   const removed=eliminarPreparacionTorneos();
+   $('tournamentStatus').textContent=removed?'Preparación de torneos eliminada. El padrón se conservó; ya puedes volver a crear los torneos.':'No había una preparación de torneos que eliminar.';
+  }
+  return;
+ }
+ const id=e.target.dataset.startTournament;if(!id)return;
+ const result=MotorSuizo.iniciarTorneo({evento:tournamentEvent,torneoId:id});
+ if(!result.ok){$('tournamentStatus').textContent=result.errors.map(x=>x.message).join(' ');return;}
+ tournamentEvent=result.data;saveTournamentEvent();renderTournamentList();
+ $('tournamentStatus').textContent='Torneo iniciado. La configuración de esta categoría quedó congelada. Aún no se pueden generar emparejamientos.';
+});
+renderTournamentList();
+
+if (window.MotorSuizo) {
+  console.info(`MotorSuizo ${MotorSuizo.version} cargado. Emparejador Dutch aún en desarrollo.`);
+} else {
+  console.error('No se pudo cargar motor_suizo.js. Verifica que esté junto al HTML.');
+}
+
+render();
+</script>
+</body></html>
