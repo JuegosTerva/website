@@ -464,8 +464,13 @@
         }));
         if (hadBye || hadFullUnplayedScore) errors.push({ code: 'INELIGIBLE_BYE', message: `El jugador ${b.jugadorId} ya recibió un BYE o puntuación completa sin jugar.` });
         seen.add(b.jugadorId);
-      }
-      const active = torneo.participantes.filter(p => p.estado !== 'retirado' && !(p.estado === 'retiro_programado' && p.retiroEfectivoDesde != null && ronda.numero >= p.retiroEfectivoDesde));
+      }const active = torneo.participantes.filter(p =>
+  (p.ingresoDesdeRonda == null || ronda.numero >= p.ingresoDesdeRonda) &&
+  p.estado !== 'retirado' &&
+  !(p.estado === 'retiro_programado' &&
+    p.retiroEfectivoDesde != null &&
+    ronda.numero >= p.retiroEfectivoDesde)
+);
       const activeIds = new Set(active.map(p => p.playerId));
       for (const id of activeIds) if (!seen.has(id)) errors.push({ code: 'UNPAIRED_ACTIVE_PLAYER', message: `El participante activo ${id} no tiene partida ni BYE.` });
       for (const id of seen) if (!activeIds.has(id)) errors.push({ code: 'INACTIVE_PLAYER_PAIRED', message: `El participante ${id} no debe emparejarse en la ronda ${ronda.numero}.` });
