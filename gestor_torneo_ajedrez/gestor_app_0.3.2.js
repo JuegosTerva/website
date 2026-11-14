@@ -274,7 +274,15 @@ function parseCSV(text) {
     say(`Se exportó la clasificación completa: ${standings.length} participantes de ${t.categoria}.`);
   }
   function fmt(n){return Number(n||0).toFixed(2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1');}
-  function activePlayers(t, roundNo){return t.participantes.filter(p=>p.estado!=='retirado'&&!(p.estado==='retiro_programado'&&p.retiroEfectivoDesde!=null&&roundNo>=p.retiroEfectivoDesde));}
+  function activePlayers(t, roundNo) {
+  return t.participantes.filter(p =>
+    (p.ingresoDesdeRonda == null || roundNo >= p.ingresoDesdeRonda) &&
+    p.estado !== 'retirado' &&
+    !(p.estado === 'retiro_programado' &&
+      p.retiroEfectivoDesde != null &&
+      roundNo >= p.retiroEfectivoDesde)
+  );
+  }
   function scoreMap(t){const rows=M.calcularClasificacion({torneo:t}).data||[];return new Map(rows.map(r=>[r.playerId,Number(r.puntos)||0]));}
   function hasPlayed(t,a,b){return t.rondas.some(r=>r.estado!=='draft'&&r.emparejamientos.some(m=>m.jugado===true&&((m.blancas===a&&m.negras===b)||(m.blancas===b&&m.negras===a))));}
   function chooseColors(t,a,b,roundNo){
@@ -305,6 +313,126 @@ function parseCSV(text) {
     }
     return null;
   }
+  
+function addLateParticipant() {
+  addLateParticipants([{
+    id: $('latePlayerId').value.trim(),
+    name: $('latePlayerName').value.trim()
+  }], 'manual');
+}
+
+function addLateParticipants(records, source = 'manual') {
+  const t = tournament();
+
+  if (!t) return say('Primero selecciona una categoría.');
+
+  if (t.estado === 'finalizado') {
+    return say('Esta categoría ya finalizó. No se pueden agregar participantes.');
+  }
+
+  const clean = (records || [])
+    .map(p => ({
+      id: String(p.id || '').trim(),
+      name: String(p.name || '').trim()
+    }))
+    .filter(p => p.id && p.name);
+
+  if (!clean.length) {
+    return say('No se encontraron registros completos con ID y nombre.');
+  }
+
+  const known = new Set(state.players.map(p => norm(p.id)));
+  const unique = [];
+  let skipped = 0;
+
+  for (const p of clean) {
+    const key = norm(p.id);
+
+    if (known.has(key)) {
+      skipped++;
+      continue;
+    }
+
+    known.add(key);
+    unique.push(p);
+  }
+
+  if (!unique.length) {
+    return say(`No se agregó ningún participante: ${skipped} ID(s) ya existían o estaban duplicados.`);
+  }
+
+  const last = t.rondas[t.rondas.length - 1] || null;
+  const draft = last && last.estado === 'draft' ? last : null;
+  const canReplaceDraft = draft &&
+    draft.emparejamientos.every(m => m.resultado == null);
+
+  const names = unique.length === 1
+    ? unique[0].name
+    : `${unique.length} participantes`;
+
+  if (canReplaceDraft && !confirm(
+    `La ronda ${draft.numero} todavía es un borrador sin resultados. Se volverán a generar sus emparejamientos para incluir ${names}. ¿Continuar?`
+  )) return;
+
+  const nextRound = t.estado === 'configuracion'
+    ? 1
+    : (canReplaceDraft ? draft.numero : t.rondas.length + 1);
+
+  let seed = t.participantes.reduce(
+    (max, p) => Math.max(max, Number(p.numeroEmparejamiento) || 0), 0
+  );
+
+  for (const p of unique) {
+    seed++;
+
+    state.players.push({
+      id: p.id,
+      name: p.name,
+      category: t.categoria
+    });
+
+    t.participantes.push({
+      playerId: p.id,
+      name: p.name,
+      category: t.categoria,
+      numeroEmparejamiento: seed,
+      posicionInicial: seed,
+      estado: 'activo',
+      retiroSolicitado: false,
+      retiroEfectivoDesde: null,
+      motivoRetiro: null,
+      ingresoDesdeRonda: nextRound
+    });
+  }
+
+  const extended = nextRound > t.configuracion.totalRounds;
+
+  if (extended) {
+    t.configuracion.totalRounds = nextRound;
+  }
+
+  if (canReplaceDraft) {
+    t.rondas = t.rondas.filter(r => r.id !== draft.id);
+    activeRoundId = null;
+  }
+
+  if (source === 'manual') {
+    $('lateParticipantForm').reset();
+  }
+
+  const detail = canReplaceDraft
+    ? `Se regenerará la ronda ${nextRound} para incluirlos.`
+    : `Participarán desde la ronda ${nextRound}; las partidas y resultados existentes permanecen intactos.`;
+
+  save(
+    `${unique.length} participante(s) agregado(s) a ${t.categoria}. ` +
+    `${detail}${extended ? ' Se amplió el torneo una ronda.' : ''} ` +
+    `${skipped ? `${skipped} registro(s) omitidos por ID duplicado.` : ''}`
+  );
+
+  if (canReplaceDraft) generateRound();
+}
+
   function generateRound(){
     const t=tournament();if(!t)return;
     if(t.estado!=='en_curso')return say('Primero debes iniciar esta categoría.');
@@ -338,6 +466,51 @@ function parseCSV(text) {
     if(!validation.ok)return say('El motor rechazó la ronda: '+validation.errors.map(x=>x.message).join(' '));
     t.rondas.push(round); activeRoundId=round.id; save(`Ronda ${no} generada como borrador. Revisa mesas y colores antes de confirmarla.`);
   }
+  
+$('lateParticipantForm').addEventListener('submit', e => {
+  e.preventDefault();
+  addLateParticipant();
+});
+
+$('lateImportCsvBtn').addEventListener('click', () => {
+  $('lateCsvFile').click();
+});
+
+$('lateCsvFile').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  try {
+    const rows = parseCSV(await file.text());
+
+    if (rows.length < 2) {
+      throw new Error('El CSV no contiene filas de participantes.');
+    }
+
+    const headers = rows[0].map(norm);
+    const col = (...names) => headers.findIndex(h => names.includes(h));
+
+    const idCol = col('id', 'clave', 'matricula', 'participante_id');
+    const nameCol = col('nombre', 'name', 'participante');
+
+    if (idCol < 0 || nameCol < 0) {
+      throw new Error('El CSV debe incluir encabezados id y nombre.');
+    }
+
+    const records = rows.slice(1).map(row => ({
+      id: (row[idCol] || '').trim(),
+      name: (row[nameCol] || '').trim()
+    }));
+
+    addLateParticipants(records, 'CSV');
+
+  } catch (err) {
+    say('No se pudo importar el CSV: ' + err.message);
+  }
+
+  e.target.value = '';
+});
+
   function confirmRound(){
     const t=tournament(),r=t?.rondas.find(x=>x.id===activeRoundId);if(!t||!r)return;
     const check=M.validarEmparejamientos({torneo:t,ronda:r});
