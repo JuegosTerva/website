@@ -1,0 +1,29 @@
+# Gestor de torneos de ajedrez · Juegos Terva
+## Versión 0.3.3 — listas extensas, búsqueda por ID y clasificación completa
+
+### Archivos
+- `gestor_torneo_0.3.2.html`: interfaz del gestor.
+- `gestor_app_0.3.2.js`: lógica de la interfaz, búsqueda y exportaciones CSV.
+- `motor_suizo.js`: motor de datos, emparejamientos y desempates.
+- `styles.css`: hoja de estilos.
+
+### Instalación
+1. Descomprime todos los archivos en una misma carpeta.
+2. Abre `gestor_torneo_0.3.2.html` en un navegador moderno.
+3. Conserva juntos el HTML, CSS y los dos archivos JavaScript.
+
+### Cambios de esta entrega
+- El padrón de participantes tiene una altura máxima y scroll interno.
+- La lista de rondas tiene scroll propio, sin alargar toda la página.
+- La tabla de partidas tiene scroll interno y encabezado fijo.
+- El buscador de ronda filtra por ID o nombre y muestra los IDs de ambos jugadores, sus nombres, la mesa y el resultado. También contempla participantes con BYE.
+- La clasificación muestra el total de participantes calculados y conserva todas las filas.
+- El botón **Exportar clasificación** descarga el CSV completo de la categoría, con posición, ID, participante, puntos, Buchholz, Buchholz −1, Sonneborn-Berger, progresivo y victorias.
+- Se conserva la exportación CSV por ronda.
+
+### Exportar una ronda
+Entra a una categoría, abre la ronda y pulsa **Exportar ronda CSV**. El archivo incluye una fila por participante y los datos de mesa, ID, nombre, color, rival y resultado. Los BYE se incluyen como fila especial.
+
+### Consideraciones
+- Los datos se guardan en `localStorage` del navegador. Descarga respaldos JSON periódicamente.
+- El emparejamiento sigue siendo un suizo simplificado; no es un emparejador oficial certificado FIDE.

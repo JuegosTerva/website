@@ -16,7 +16,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  const VERSION = '0.2.0';
+  const VERSION = '0.3.0';
   const SCHEMA_VERSION = '1.0.0';
   const DEFAULT_CONFIG = Object.freeze({
     pairingSystem: 'SIMPLE_SWISS',
@@ -24,10 +24,10 @@
     initialOrder: 'alphabetical',
     initialColour: null,
     points: Object.freeze({ win: 1, draw: 0.5, loss: 0, bye: 1, forfeitWin: 1, forfeitLoss: 0, doubleForfeit: 0 }),
-    tieBreaks: Object.freeze([])
+    tieBreaks: Object.freeze(['buchholz', 'buchholzCut1', 'sonnebornBerger', 'progressive', 'wins'])
   });
 
-  const SUPPORTED_TIEBREAKS = Object.freeze([]); // Se habilitan solo al implementar fórmula y rondas no jugadas.
+  const SUPPORTED_TIEBREAKS = Object.freeze(['buchholz', 'buchholzCut1', 'sonnebornBerger', 'progressive', 'wins']);
   const clone = value => value == null ? value : JSON.parse(JSON.stringify(value));
   const now = () => new Date().toISOString();
   const asText = value => String(value == null ? '' : value).trim();
@@ -147,24 +147,31 @@
 
   function construirClasificacion(torneo) {
     const points = torneo.configuracion.points;
+    const rounds = (torneo.rondas || []).filter(r => r.estado !== 'draft').slice().sort((a,b) => a.numero-b.numero);
     const rows = torneo.participantes.map(p => ({
       playerId: p.playerId, nombre: p.name, categoria: p.category,
       numeroEmparejamiento: p.numeroEmparejamiento,
       estado: p.estado, puntos: 0, partidasJugadas: 0,
       victorias: 0, tablas: 0, derrotas: 0,
       victoriasBlancas: 0, victoriasNegras: 0,
-      byes: 0, resultadosAdministrativos: 0, doblesIncomparecencias: 0
+      byes: 0, resultadosAdministrativos: 0, doblesIncomparecencias: 0,
+      buchholz: 0, buchholzCut1: 0, sonnebornBerger: 0, progressive: 0, wins: 0
     }));
     const byId = new Map(rows.map(r => [r.playerId, r]));
-    for (const ronda of torneo.rondas) {
-      if (ronda.estado === 'draft') continue;
-      for (const partida of ronda.emparejamientos) {
+    const opponents = new Map(rows.map(r => [r.playerId, []]));
+    const running = new Map(rows.map(r => [r.playerId, 0]));
+    const progressive = new Map(rows.map(r => [r.playerId, 0]));
+
+    for (const ronda of rounds) {
+      for (const partida of (ronda.emparejamientos || [])) {
         if (!partida.resultado) continue;
         const w = byId.get(partida.blancas), b = byId.get(partida.negras);
         if (!w || !b) continue;
         const scored = puntuarResultado(partida.resultado, points, partida.tipoResultado);
         if (!scored) continue;
         w.puntos += scored.white; b.puntos += scored.black;
+        running.set(w.playerId, (running.get(w.playerId) || 0) + scored.white);
+        running.set(b.playerId, (running.get(b.playerId) || 0) + scored.black);
         if (partida.jugado === true) {
           w.partidasJugadas++; b.partidasJugadas++;
         } else {
@@ -177,19 +184,68 @@
         if (scored.blackOutcome === 'win') { b.victorias++; b.victoriasNegras++; }
         if (scored.blackOutcome === 'draw') b.tablas++;
         if (scored.blackOutcome === 'loss') b.derrotas++;
+
+        // Los rivales cuentan para Buchholz incluso si el resultado fue administrativo.
+        opponents.get(w.playerId).push(b.playerId);
+        opponents.get(b.playerId).push(w.playerId);
+        // Sonneborn-Berger: puntos finales del rival multiplicados por los puntos obtenidos.
       }
-      for (const bye of ronda.byes) {
+      for (const bye of (ronda.byes || [])) {
         const p = byId.get(bye.jugadorId);
-        if (p) { p.puntos += bye.puntos; p.byes++; }
+        if (p) {
+          p.puntos += bye.puntos;
+          p.byes++;
+          running.set(p.playerId, (running.get(p.playerId) || 0) + bye.puntos);
+        }
+      }
+      for (const row of rows) {
+        progressive.set(row.playerId, (progressive.get(row.playerId) || 0) + (running.get(row.playerId) || 0));
       }
     }
-    rows.sort((a, b) => b.puntos - a.puntos || a.numeroEmparejamiento - b.numeroEmparejamiento);
+
+    // Calcula los desempates que dependen de la puntuación final de los oponentes.
+    for (const row of rows) {
+      const oppScores = (opponents.get(row.playerId) || []).map(id => byId.get(id)?.puntos || 0);
+      row.buchholz = oppScores.reduce((sum, n) => sum + n, 0);
+      row.buchholzCut1 = oppScores.length > 1
+        ? oppScores.reduce((sum, n) => sum + n, 0) - Math.min(...oppScores)
+        : row.buchholz;
+      row.progressive = progressive.get(row.playerId) || 0;
+      row.wins = row.victorias;
+    }
+    // Sonneborn-Berger necesita la puntuación final del oponente; los BYE no generan contribución.
+    for (const ronda of rounds) {
+      for (const partida of (ronda.emparejamientos || [])) {
+        if (!partida.resultado) continue;
+        const w = byId.get(partida.blancas), b = byId.get(partida.negras);
+        if (!w || !b) continue;
+        const scored = puntuarResultado(partida.resultado, points, partida.tipoResultado);
+        if (!scored) continue;
+        w.sonnebornBerger += (b.puntos || 0) * scored.white;
+        b.sonnebornBerger += (w.puntos || 0) * scored.black;
+      }
+    }
+
+    const configuredCriteria = Array.isArray(torneo.configuracion.tieBreaks)
+      ? torneo.configuracion.tieBreaks.filter(x => SUPPORTED_TIEBREAKS.includes(x))
+      : [];
+    // Compatibilidad con torneos guardados antes de que existieran los desempates.
+    const criteria = configuredCriteria.length ? configuredCriteria : [...SUPPORTED_TIEBREAKS];
+    rows.sort((a, b) => {
+      if (b.puntos !== a.puntos) return b.puntos - a.puntos;
+      for (const key of criteria) {
+        const delta = (Number(b[key]) || 0) - (Number(a[key]) || 0);
+        if (delta) return delta;
+      }
+      return (a.numeroEmparejamiento || 0) - (b.numeroEmparejamiento || 0);
+    });
     let position = 0;
-    let lastScore = null;
-    rows.forEach((r, i) => {
-      if (lastScore === null || r.puntos !== lastScore) position = i + 1;
-      r.posicion = position;
-      lastScore = r.puntos;
+    let previous = null;
+    rows.forEach((row, i) => {
+      const signature = [row.puntos, ...criteria.map(key => row[key])].join('|');
+      if (signature !== previous) position = i + 1;
+      row.posicion = position;
+      previous = signature;
     });
     return rows;
   }
@@ -197,7 +253,7 @@
   const MotorSuizo = {
     version: VERSION,
     schemaVersion: SCHEMA_VERSION,
-    estadoEmparejador: 'PENDIENTE_IMPLEMENTACION_SISTEMA_SUIZO_SIMPLIFICADO',
+    estadoEmparejador: 'SUIZO_SIMPLIFICADO_EN_DESARROLLO',
 
     obtenerConfiguracionPredeterminada() { return ok(clone(DEFAULT_CONFIG)); },
 
@@ -672,8 +728,12 @@
 
     calcularDesempates({ torneo, playerId } = {}) {
       if (!torneo) return fail('INVALID_TOURNAMENT', 'Torneo inválido.');
-      if (!torneo.configuracion.tieBreaks.length) return ok({ playerId, criterios: [], valores: {} });
-      return fail('INVALID_TIEBREAK', 'La configuración contiene desempates no disponibles en esta versión.');
+      const row = construirClasificacion(torneo).find(p => p.playerId === playerId);
+      if (!row) return fail('PLAYER_NOT_FOUND', 'No se encontró el participante solicitado.');
+      const criterios = Array.isArray(torneo.configuracion.tieBreaks) ? torneo.configuracion.tieBreaks.slice() : [];
+      const valores = {};
+      criterios.forEach(key => { if (SUPPORTED_TIEBREAKS.includes(key)) valores[key] = row[key]; });
+      return ok({ playerId, criterios, valores });
     },
 
     obtenerDesempatesDisponibles() { return ok(clone(SUPPORTED_TIEBREAKS)); },
