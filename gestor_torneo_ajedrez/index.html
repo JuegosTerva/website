@@ -119,6 +119,39 @@
           <div id="byeList"></div>
           <p id="pairingNotice" class="muted"></p>
         </div>
+        
+<div class="late-player-panel">
+  <div class="subsection-heading">
+    <div>
+      <h3>＋ Inscribir participante durante el torneo</h3>
+      <p>El nuevo participante se incorporará a partir de la siguiente ronda disponible.</p>
+    </div>
+  </div>
+
+  <form id="lateParticipantForm" class="form-grid two-columns">
+    <label class="field">
+      <span>ID / matrícula</span>
+      <input id="latePlayerId" type="text" required maxlength="40" placeholder="Ej. AJ-221">
+    </label>
+
+    <label class="field">
+      <span>Nombre del participante</span>
+      <input id="latePlayerName" type="text" required maxlength="100" placeholder="Nombre completo">
+    </label>
+
+    <div class="field field-wide">
+      <button class="button button-primary" type="submit">Agregar al torneo</button>
+      <small class="muted" id="latePlayerHelp">La categoría se asigna automáticamente.</small>
+    </div>
+  </form>
+
+  <div class="late-import-row">
+    <button class="button button-secondary" id="lateImportCsvBtn" type="button">＋ Importar varios desde CSV</button>
+    <input id="lateCsvFile" type="file" accept=".csv,text/csv" hidden>
+    <small class="muted">Columnas requeridas: id, nombre. La categoría actual se asigna automáticamente.</small>
+  </div>
+</div>
+
       </div>
       <div id="standingsPanel" class="surface-card">
         <div class="subsection-heading"><div><h3>Clasificación</h3><p id="standingsCount">Clasificación completa, ordenada por puntos y criterios de desempate.</p></div><button class="button button-secondary" id="exportStandings" type="button">Exportar clasificación</button></div>
