@@ -83,17 +83,74 @@
     }
     e.target.value=''; save(`Importación terminada: ${added} agregados, ${skipped} omitidos.`);
   });
-  function parseCSV(text) {
-    const out=[]; let row=[], field='', quoted=false;
-    for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];
-      if(c==='"'&&quoted&&n==='"'){field+='"';i++;}
-      else if(c==='"') quoted=!quoted;
-      else if(c===','&&!quoted){row.push(field);field='';}
-      else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(field);if(row.some(x=>x.trim()))out.push(row);row=[];field='';}
-      else field+=c;
+  
+function parseCSV(text) {
+  let source = String(text || '').replace(/^\uFEFF/, '');
+
+  // Detectar si Excel indicó el separador en la primera línea
+  const separatorMatch = source.match(/^sep=([,;\t])\r?\n/i);
+  let delimiter = separatorMatch ? separatorMatch[1] : ',';
+
+  if (separatorMatch) {
+    source = source.slice(separatorMatch[0].length);
+  } else {
+    // Detectar automáticamente coma, punto y coma o tabulador
+    const counts = { ',': 0, ';': 0, '\t': 0 };
+    let quoted = false;
+
+    for (let i = 0; i < source.length; i++) {
+      const c = source[i];
+
+      if (c === '"' && quoted && source[i + 1] === '"') {
+        i++;
+      } else if (c === '"') {
+        quoted = !quoted;
+      } else if (!quoted && (c === '\n' || c === '\r')) {
+        break;
+      } else if (!quoted && c in counts) {
+        counts[c]++;
+      }
     }
-    row.push(field);if(row.some(x=>x.trim()))out.push(row);return out;
+
+    delimiter = Object.keys(counts).sort(
+      (a, b) => counts[b] - counts[a]
+    )[0];
   }
+
+  const out = [];
+  let row = [];
+  let field = '';
+  let quoted = false;
+
+  for (let i = 0; i < source.length; i++) {
+    const c = source[i];
+    const n = source[i + 1];
+
+    if (c === '"' && quoted && n === '"') {
+      field += '"';
+      i++;
+    } else if (c === '"') {
+      quoted = !quoted;
+    } else if (c === delimiter && !quoted) {
+      row.push(field);
+      field = '';
+    } else if ((c === '\n' || c === '\r') && !quoted) {
+      if (c === '\r' && n === '\n') i++;
+      row.push(field);
+      if (row.some(x => x.trim())) out.push(row);
+      row = [];
+      field = '';
+    } else {
+      field += c;
+    }
+  }
+
+  row.push(field);
+  if (row.some(x => x.trim())) out.push(row);
+
+  return out;
+}
+
   $('templateCsv').addEventListener('click',e=>{e.preventDefault();download('plantilla_participantes.csv','id,nombre,categoria\nAJ-001,Ana López,Infantil\nAJ-002,Luis Pérez,Infantil\n','text/csv;charset=utf-8');});
   $('exportCsv').addEventListener('click',()=>download('padron_participantes.csv','id,nombre,categoria\n'+state.players.map(p=>[p.id,p.name,p.category].map(csvCell).join(',')).join('\n'),'text/csv;charset=utf-8'));
   $('roundPlayerSearch').addEventListener('input',()=>{if(activeTournamentId&&tournament())renderAdmin();});
