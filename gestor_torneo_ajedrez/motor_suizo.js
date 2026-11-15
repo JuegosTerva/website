@@ -1,6 +1,6 @@
 /*
  * MotorSuizo - nucleo independiente para gestion de torneos suizos.
- * Versión de desarrollo: 0.2.0
+ * Versión de desarrollo: 0.4.0
  *
  * IMPORTANTE:
  * - No accede al DOM ni a almacenamiento del navegador.
@@ -16,7 +16,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  const VERSION = '0.3.0';
+  const VERSION = '0.4.0';
   const SCHEMA_VERSION = '1.0.0';
   const DEFAULT_CONFIG = Object.freeze({
     pairingSystem: 'SIMPLE_SWISS',

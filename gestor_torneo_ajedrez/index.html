@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#00ADE9">
   <meta name="description" content="Gestor local de torneos de ajedrez de Juegos Terva.">
-  <title>Gestor de torneos | Juegos Terva</title>
+  <title>Gestor de torneos 0.4.0 | Juegos Terva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=0.4.0">
 </head>
 
 <body>
@@ -107,6 +107,14 @@
     </div>
     <div class="subsection-heading"><div><h3>Categorías</h3><p>Selecciona una categoría para administrarla.</p></div></div>
     <div id="tournamentCards" class="category-grid"><p class="muted">Todavía no hay categorías para mostrar.</p></div>
+    <section id="physicalDistributionPanel" class="surface-card physical-distribution" hidden>
+      <div class="section-heading"><div><p class="eyebrow">ORGANIZACIÓN DEL ESPACIO</p><h2>Distribución general de mesas</h2><p class="section-description">Mezcla las partidas de las categorías sin mezclar sus torneos ni puntuaciones.</p></div><span class="state-pill state-neutral">25 mesas · 4 tableros</span></div>
+      <div id="physicalRoundSelections" class="physical-round-selections"></div>
+      <div class="physical-actions"><button class="button button-primary" id="generatePhysicalDistribution" type="button">Generar distribución mixta</button><button class="button button-secondary" id="exportPhysicalDistribution" type="button" disabled>Exportar ubicaciones CSV ↓</button></div>
+      <div id="physicalDistributionSummary" class="muted" aria-live="polite">Selecciona una ronda confirmada o cerrada de cada categoría que jugará en esta jornada.</div>
+      <div class="toolbar physical-search-toolbar"><label class="search-field"><span>⌕</span><input id="physicalSearch" type="search" placeholder="Buscar ID o nombre para saber dónde juega" autocomplete="off"></label></div>
+      <div id="physicalDistributionResult" class="table-scroll"><p class="muted">Todavía no hay una distribución generada.</p></div>
+    </section>
     <div id="categoryAdmin" class="surface-card" hidden>
       <div class="section-heading"><div><p class="eyebrow">ADMINISTRACIÓN DE CATEGORÍA</p><h2 id="adminCategoryName">Categoría</h2><p class="section-description" id="adminCategoryMeta"></p></div><button class="button button-secondary" id="backToCategories" type="button">← Categorías</button></div>
       <div class="secondary-nav"><a class="secondary-nav-link is-active" href="#roundManagement">Rondas y resultados</a><a class="secondary-nav-link" href="#standingsPanel">Clasificación</a></div>
@@ -115,7 +123,13 @@
         <div id="roundList" class="round-card-grid"></div>
         <div id="currentRoundPanel" class="surface-card" hidden>
           <div class="subsection-heading"><div><h3 id="currentRoundTitle">Ronda</h3><p id="currentRoundStatus"></p></div><div id="roundActions"></div></div>
-          <div class="toolbar round-search-toolbar"><label class="search-field"><span>⌕</span><input id="roundPlayerSearch" type="search" placeholder="Buscar participante por ID en esta ronda" autocomplete="off"></label><span class="helper-tag" id="roundSearchStatus">Todas las mesas</span></div><div class="table-scroll"><table><thead><tr><th>Mesa</th><th>ID blancas</th><th>Blancas</th><th>ID negras</th><th>Negras</th><th>Resultado</th><th>Captura</th></tr></thead><tbody id="matchesTable"></tbody></table></div>
+          <div class="toolbar round-search-toolbar">
+            <label class="search-field"><span>⌕</span><input id="roundPlayerSearch" type="search" placeholder="Buscar participante por ID en esta ronda" autocomplete="off"></label>
+            <select id="roundCaptureFilter" aria-label="Filtrar estado de captura"><option value="all">Todas las partidas</option><option value="pending">Pendientes de capturar</option><option value="captured">Capturadas</option></select>
+            <span class="helper-tag" id="roundSearchStatus">Todas las mesas</span>
+          </div>
+          <div id="pairingReviewPanel" class="pairing-review-panel" hidden></div>
+          <div class="table-scroll"><table><thead><tr><th>Partida</th><th>ID blancas</th><th>Blancas</th><th>ID negras</th><th>Negras</th><th>Resultado</th><th>Captura</th></tr></thead><tbody id="matchesTable"></tbody></table></div>
           <div id="byeList"></div>
           <p id="pairingNotice" class="muted"></p>
         </div>
@@ -162,8 +176,8 @@
     <p id="appStatus" role="status" class="muted" aria-live="polite"></p>
   </section>
 </main>
-<script src="./motor_suizo.js"></script>
-<script src="./gestor_app_0.3.2.js"></script>
+<script src="./motor_suizo.js?v=0.4.0"></script>
+<script src="./gestor_app_0.3.2.js?v=0.4.0"></script>
 <footer class="site-footer">
   <div class="footer-inner">
     <p>© 2026 Juegos Terva. Todos los derechos reservados.</p>

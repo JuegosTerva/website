@@ -1,4 +1,4 @@
-/* Juegos Terva · Gestor de torneos · interfaz 0.3.0 */
+/* Juegos Terva · Gestor de torneos · interfaz 0.4.0 */
 (() => {
   'use strict';
   const M = window.MotorSuizo;
@@ -154,6 +154,11 @@ function parseCSV(text) {
   $('templateCsv').addEventListener('click',e=>{e.preventDefault();download('plantilla_participantes.csv','id,nombre,categoria\nAJ-001,Ana López,Infantil\nAJ-002,Luis Pérez,Infantil\n','text/csv;charset=utf-8');});
   $('exportCsv').addEventListener('click',()=>download('padron_participantes.csv','id,nombre,categoria\n'+state.players.map(p=>[p.id,p.name,p.category].map(csvCell).join(',')).join('\n'),'text/csv;charset=utf-8'));
   $('roundPlayerSearch').addEventListener('input',()=>{if(activeTournamentId&&tournament())renderAdmin();});
+  $('roundCaptureFilter').addEventListener('change',()=>{if(activeTournamentId&&tournament())renderAdmin();});
+  $('pairingReviewPanel').addEventListener('click',e=>{const b=e.target.closest('[data-pair-review]');if(b)handlePairReview(b.dataset.pairReview);});
+  $('generatePhysicalDistribution').addEventListener('click',buildPhysicalDistribution);
+  $('exportPhysicalDistribution').addEventListener('click',exportPhysicalDistributionCsv);
+  $('physicalSearch').addEventListener('input',renderPhysicalDistribution);
   $('exportStandings').addEventListener('click',exportStandingsCsv);
 
   // Preparación del evento
@@ -174,6 +179,7 @@ function parseCSV(text) {
       if(!r.ok) return say(r.errors.map(x=>x.message).join(' '));
       ev=r.data;
     }
+    ev.distribucionFisica = null;
     state.event=ev; save('Evento creado. Ya puedes iniciar cada categoría desde el panel del torneo.');
     show('#torneo');
   });
@@ -222,6 +228,9 @@ function parseCSV(text) {
       const standings=M.calcularClasificacion({torneo:t}).data||[];
       return `<article class="category-card"><div class="category-card-top"><span class="category-symbol symbol-blue">♟</span><span class="state-pill ${t.estado==='finalizado'?'state-final':t.estado==='en_curso'?'state-success':'state-neutral'}">${statusLabel(t)}</span></div><h3>${esc(t.categoria)}</h3><p>${t.participantes.length} participantes · ${closed}/${t.configuracion.totalRounds} rondas cerradas</p><div class="progress-track"><span style="width:${t.estado==='finalizado'?100:pct}%"></span></div><div class="progress-meta"><span>${current?`${done} de ${totalMatches} resultados`:'Sin rondas'}</span><strong>${current?pct+'%':'—'}</strong></div><button class="button button-primary button-full" type="button" data-open-tournament="${esc(t.id)}">${t.estado==='configuracion'?'Preparar categoría':'Administrar categoría'} →</button></article>`;
     }).join(''):'<p class="muted">Todavía no hay categorías para mostrar.</p>';
+    $('physicalDistributionPanel').hidden=!ev;
+    renderPhysicalControls();
+    renderPhysicalDistribution();
   }
   $('tournamentCards').addEventListener('click',e=>{const b=e.target.closest('[data-open-tournament]');if(!b)return;activeTournamentId=b.dataset.openTournament;activeRoundId=null;renderAdmin();$('categoryAdmin').hidden=false;show('#categoryAdmin');});
   $('backToCategories').addEventListener('click',()=>{$('categoryAdmin').hidden=true;activeTournamentId=null;});
@@ -237,11 +246,6 @@ function parseCSV(text) {
     if(b.dataset.roundAction==='close')closeRound();
     if(b.dataset.roundAction==='export')exportRoundCsv();
   });
-  $('exportStandings').addEventListener('click',()=>{
-    const t=tournament();if(!t)return;
-    const rows=M.calcularClasificacion({torneo:t}).data||[];
-    download(`clasificacion_${slug(t.categoria)}.csv`,'posicion,id,nombre,puntos,buchholz,buchholz_corte_1,sonneborn_berger,progresivo,victorias\n'+rows.map(p=>[p.posicion,p.playerId,p.nombre,p.puntos,p.buchholz,p.buchholzCut1,p.sonnebornBerger,p.progressive,p.wins].map(csvCell).join(',')).join('\n'),'text/csv;charset=utf-8');
-  });
   function exportRoundCsv(){
     const t=tournament();
     if(!t)return say('No hay una categoría seleccionada.');
@@ -251,14 +255,14 @@ function parseCSV(text) {
     const rows=[];
     (r.emparejamientos||[]).forEach((m,i)=>{
       const white=participant(m.blancas), black=participant(m.negras);
-      rows.push([i+1,white.playerId,white.name,'Blancas',black.playerId,black.name,m.resultado||'Pendiente']);
-      rows.push([i+1,black.playerId,black.name,'Negras',white.playerId,white.name,m.resultado||'Pendiente']);
+      rows.push([i+1,white.playerId,white.name,'Blancas',black.playerId,black.name,resultText(m.resultado)]);
+      rows.push([i+1,black.playerId,black.name,'Negras',white.playerId,white.name,resultText(m.resultado)]);
     });
     (r.byes||[]).forEach(b=>{
       const p=participant(b.jugadorId);
       rows.push(['BYE',p.playerId,p.name,'BYE','','',`BYE (${b.puntos} punto${Number(b.puntos)===1?'':'s'})`]);
     });
-    const header=['Mesa','ID','Participante','Color','ID rival','Rival','Resultado'];
+    const header=['Partida','ID','Participante','Color','ID rival','Rival','Resultado'];
     const csv='\uFEFF'+[header,...rows].map(row=>row.map(csvCell).join(',')).join('\r\n');
     download(`ronda_${String(r.numero).padStart(2,'0')}_${slug(t.categoria)}.csv`,csv,'text/csv;charset=utf-8');
     say(`Se exportó la ronda ${r.numero} de ${t.categoria}.`);
@@ -452,21 +456,57 @@ function addLateParticipants(records, source = 'manual') {
       if(!found)return say('No se encontró un emparejamiento completo sin repetir rivales ni asignar un BYE repetido. Revisa manualmente la ronda; no se generó nada.');
       bye=found.candidate; pool=pool.filter(p=>p.playerId!==bye.playerId);
     }
-    let pairs;
+    let pairs=[];
+    let review=null;
     if(no===1){
       const sorted=pool.slice().sort((a,b)=>a.numeroEmparejamiento-b.numeroEmparejamiento);
       const half=sorted.length/2;
-      pairs=Array.from({length:half},(_,i)=>({a:sorted[i],b:sorted[i+half]}));
+      // Conserva el criterio de la primera ronda actual: primera mitad contra segunda mitad.
+      // La cola se organiza en el mismo orden en que se revisarán esas parejas.
+      const reviewQueue=Array.from({length:half},(_,i)=>[sorted[i].playerId,sorted[i+half].playerId]).flat();
+      review={activa:true,completa:false,pendientes:reviewQueue,omitidos:[],confirmadas:0,creadaEn:new Date().toISOString()};
     } else {
       pairs=pairRemaining(pool.slice().sort((a,b)=>(scores.get(b.playerId)||0)-(scores.get(a.playerId)||0)||a.numeroEmparejamiento-b.numeroEmparejamiento),scores,t);
       if(!pairs)return say('No se encontró una combinación completa sin repetir rivales. La ronda no fue creada; será necesaria una revisión manual.');
     }
-    const round={id:uid('ronda'),numero:no,estado:'draft',emparejamientos:pairs.map((pair,i)=>({id:uid('partida'),mesa:i+1,...chooseColors(t,pair.a.playerId,pair.b.playerId,no),resultado:null,tipoResultado:null,jugado:null})),byes:bye?[{id:uid('bye'),jugadorId:bye.playerId,puntos:t.configuracion.points.bye}]:[],creadaEn:new Date().toISOString()};
-    const validation=M.validarEmparejamientos({torneo:t,ronda:round});
-    if(!validation.ok)return say('El motor rechazó la ronda: '+validation.errors.map(x=>x.message).join(' '));
-    t.rondas.push(round); activeRoundId=round.id; save(`Ronda ${no} generada como borrador. Revisa mesas y colores antes de confirmarla.`);
+    const round={
+      id:uid('ronda'),numero:no,estado:'draft',
+      emparejamientos:pairs.map((pair,i)=>({id:uid('partida'),mesa:i+1,...chooseColors(t,pair.a.playerId,pair.b.playerId,no),resultado:null,tipoResultado:null,jugado:null})),
+      byes:bye?[{id:uid('bye'),jugadorId:bye.playerId,puntos:t.configuracion.points.bye}]:[],
+      ...(review?{revisionPareos:review}:{}),
+      creadaEn:new Date().toISOString()
+    };
+    if(!review){
+      const validation=M.validarEmparejamientos({torneo:t,ronda:round});
+      if(!validation.ok)return say('El motor rechazó la ronda: '+validation.errors.map(x=>x.message).join(' '));
+    }
+    t.rondas.push(round); activeRoundId=round.id;
+    save(no===1?'Primera ronda generada. Confirma las parejas una por una; las confirmadas quedarán bloqueadas.':`Ronda ${no} generada como borrador. Revisa los emparejamientos antes de confirmar.`);
   }
-  
+
+  function handlePairReview(action){
+    const t=tournament(),r=t?.rondas.find(x=>x.id===activeRoundId);
+    if(!t||!r||r.estado!=='draft'||!r.revisionPareos?.activa)return;
+    const review=r.revisionPareos, queue=review.pendientes;
+    if(queue.length<2)return say('No hay una pareja pendiente para revisar.');
+    const colors=chooseColors(t,queue[0],queue[1],r.numero);
+    if(action==='confirm'){
+      const match={id:uid('partida'),mesa:r.emparejamientos.length+1,blancas:colors.blancas,negras:colors.negras,resultado:null,tipoResultado:null,jugado:null};
+      r.emparejamientos.push(match);
+      review.pendientes=queue.slice(2);
+      review.confirmadas=(review.confirmadas||0)+1;
+    } else if(action==='skip-white'||action==='skip-black'){
+      if(queue.length<=2)return say('Ya no hay otro contrincante disponible. Confirma esta última pareja.');
+      const skippedId=action==='skip-white'?colors.blancas:colors.negras;
+      review.omitidos=review.omitidos||[];
+      if(review.omitidos.includes(skippedId))return say('Este jugador ya fue pasado una vez durante la revisión. Confirma la pareja disponible.');
+      review.omitidos.push(skippedId);
+      review.pendientes=queue.filter(id=>id!==skippedId).concat(skippedId);
+    }
+    if(review.pendientes.length===0)review.completa=true;
+    save(action==='confirm'?'Pareja confirmada y bloqueada.':`Jugador ${action==='skip-white'?'de blancas':'de negras'} pasó al final de la fila.`);
+  }
+
 $('lateParticipantForm').addEventListener('submit', e => {
   e.preventDefault();
   addLateParticipant();
@@ -513,6 +553,7 @@ $('lateCsvFile').addEventListener('change', async e => {
 
   function confirmRound(){
     const t=tournament(),r=t?.rondas.find(x=>x.id===activeRoundId);if(!t||!r)return;
+    if(r.revisionPareos?.activa && (r.revisionPareos.pendientes||[]).length) return say('Termina de revisar todas las parejas antes de confirmar la ronda.');
     const check=M.validarEmparejamientos({torneo:t,ronda:r});
     if(!check.ok)return say(check.errors.map(x=>x.message).join(' '));
     if(!confirm(`¿Confirmar la ronda ${r.numero}? Después podrás capturar resultados.`))return;
@@ -522,9 +563,11 @@ $('lateCsvFile').addEventListener('change', async e => {
   function recordResult(matchId,value){
     if(!value)return;
     const t=tournament(),r=t?.rondas.find(x=>x.id===activeRoundId);if(!t||!r)return;
-    const res=M.registrarResultado({torneo:t,rondaId:r.id,partidaId:matchId,resultado:value});
+    const res=value==='double-forfeit'
+      ? M.registrarDobleIncomparecencia({torneo:t,rondaId:r.id,partidaId:matchId})
+      : M.registrarResultado({torneo:t,rondaId:r.id,partidaId:matchId,resultado:value});
     if(!res.ok)return say(res.errors.map(x=>x.message).join(' '));
-    replaceTournament(res.data);save('Resultado registrado.');
+    replaceTournament(res.data);save(value==='double-forfeit'?'Doble incomparecencia registrada: 0–0.':'Resultado registrado.');
   }
   function closeRound(){
     const t=tournament(),r=t?.rondas.find(x=>x.id===activeRoundId);if(!t||!r)return;
@@ -555,29 +598,153 @@ $('lateCsvFile').addEventListener('change', async e => {
       const last=t.rondas[t.rondas.length-1];
       $('roundHint').textContent=last?`Última ronda: ${last.numero} · ${last.estado==='closed'?'cerrada':last.estado==='confirmed'?'en captura':'borrador'}`:'Genera la primera ronda.';
     }
-    $('roundList').innerHTML=t.rondas.length?t.rondas.map(r=>`<article class="round-card ${r.id===activeRoundId?'round-card-current':''}"><div class="round-card-heading"><h4>Ronda ${r.numero}</h4><span class="state-pill ${r.estado==='closed'?'state-success':r.estado==='confirmed'?'state-warning':'state-neutral'}">${r.estado==='closed'?'Cerrada':r.estado==='confirmed'?'En captura':'Borrador'}</span></div><div class="round-card-stats"><div><strong>${r.emparejamientos.length}</strong><span>Mesas</span></div><div><strong>${r.emparejamientos.filter(m=>m.resultado!=null).length}/${r.emparejamientos.length}</strong><span>Resultados</span></div></div><button class="button button-secondary" type="button" data-round="${r.id}">Ver ronda →</button></article>`).join(''):'<p class="muted">Aún no se han generado rondas.</p>';
+    $('roundList').innerHTML=t.rondas.length?t.rondas.map(r=>`<article class="round-card ${r.id===activeRoundId?'round-card-current':''}"><div class="round-card-heading"><h4>Ronda ${r.numero}</h4><span class="state-pill ${r.estado==='closed'?'state-success':r.estado==='confirmed'?'state-warning':'state-neutral'}">${r.estado==='closed'?'Cerrada':r.estado==='confirmed'?'En captura':'Borrador'}</span></div><div class="round-card-stats"><div><strong>${r.emparejamientos.length}</strong><span>Parejas</span></div><div><strong>${r.emparejamientos.filter(m=>m.resultado!=null).length}/${r.emparejamientos.length}</strong><span>Resultados</span></div></div><button class="button button-secondary" type="button" data-round="${r.id}">Ver ronda →</button></article>`).join(''):'<p class="muted">Aún no se han generado rondas.</p>';
     const r=t.rondas.find(x=>x.id===activeRoundId)||t.rondas[t.rondas.length-1]||null;
-    if(r){activeRoundId=r.id;$('currentRoundPanel').hidden=false;$('currentRoundTitle').textContent=`Ronda ${r.numero}`;$('currentRoundStatus').textContent=r.estado==='draft'?'Borrador: revisa los emparejamientos y confirma la ronda.':r.estado==='confirmed'?'Captura los resultados de todas las mesas.':'Ronda cerrada.';
-      $('roundActions').innerHTML=(r.estado==='draft'?'<button class="button button-primary" type="button" data-round-action="confirm">Confirmar ronda</button>':r.estado==='confirmed'?'<button class="button button-primary" type="button" data-round-action="close">Cerrar ronda</button>':'<span class="state-pill state-success">Cerrada</span>')+' <button class="button button-secondary" type="button" data-round-action="export">Exportar ronda CSV ↓</button>';
+    if(r){
+      activeRoundId=r.id;
+      $('currentRoundPanel').hidden=false;
+      $('currentRoundTitle').textContent=`Ronda ${r.numero}`;
+      $('currentRoundStatus').textContent=r.estado==='draft'?'Borrador: revisa los emparejamientos y confirma la ronda.':r.estado==='confirmed'?'Captura los resultados de todas las mesas.':'Ronda cerrada.';
+      const reviewPending=(r.revisionPareos?.pendientes||[]).length;
+      const reviewDone=!r.revisionPareos?.activa || reviewPending===0;
+      $('roundActions').innerHTML=(r.estado==='draft'?`<button class="button button-primary" type="button" data-round-action="confirm" ${reviewDone?'':'disabled'}>Confirmar ronda</button>`:r.estado==='confirmed'?'<button class="button button-primary" type="button" data-round-action="close">Cerrar ronda</button>':'<span class="state-pill state-success">Cerrada</span>')+' <button class="button button-secondary" type="button" data-round-action="export">Exportar ronda CSV ↓</button>';
+      renderPairingReview(t,r);
       const roundQuery=norm($('roundPlayerSearch')?.value||'');
+      const captureFilter=$('roundCaptureFilter')?.value||'all';
       const allMatches=r.emparejamientos.map((m,i)=>{
-        const white=playerById(m.blancas)||{id:m.blancas,name:m.blancas};
-        const black=playerById(m.negras)||{id:m.negras,name:m.negras};
-        const found=!roundQuery||norm(`${white.id} ${white.name} ${black.id} ${black.name}`).includes(roundQuery);
+        const white=t.participantes.find(p=>p.playerId===m.blancas)||{playerId:m.blancas,name:m.blancas};
+        const black=t.participantes.find(p=>p.playerId===m.negras)||{playerId:m.negras,name:m.negras};
+        const found=(!roundQuery||norm(`${white.playerId} ${white.name} ${black.playerId} ${black.name}`).includes(roundQuery)) &&
+          (captureFilter==='all'||(captureFilter==='pending'?m.resultado==null:m.resultado!=null));
         return {m,i,white,black,found};
       });
       const visibleMatches=allMatches.filter(x=>x.found);
-      $('matchesTable').innerHTML=visibleMatches.map(({m,i,white,black})=>`<tr class="${roundQuery?'is-search-match':''}"><td>${i+1}</td><td><strong>${esc(white.id)}</strong></td><td>${esc(white.name)}</td><td><strong>${esc(black.id)}</strong></td><td>${esc(black.name)}</td><td><strong>${resultText(m.resultado)}</strong></td><td>${r.estado==='confirmed'&&m.resultado==null?`<select data-match="${m.id}"><option value="">Seleccionar</option><option value="1-0">1–0</option><option value="0-1">0–1</option><option value="0.5-0.5">½–½</option></select>`:m.resultado==null?'Pendiente':'Capturado'}</td></tr>`).join('')||`<tr><td colspan="7" class="empty-cell">${roundQuery?'No se encontró ese ID en las partidas de esta ronda.':'Sin partidas.'}</td></tr>`;
-      const visibleByes=(r.byes||[]).filter(b=>{const p=playerById(b.jugadorId)||{id:b.jugadorId,name:b.jugadorId};return !roundQuery||norm(`${p.id} ${p.name}`).includes(roundQuery);});
-      $('byeList').innerHTML=visibleByes.length?`<p class="notice notice-info">BYE: ${visibleByes.map(b=>{const p=playerById(b.jugadorId)||{id:b.jugadorId,name:b.jugadorId};return `${esc(p.id)} · ${esc(p.name)}`}).join(', ')} · ${visibleByes[0].puntos} punto(s)</p>`:'';
-      $('roundSearchStatus').textContent=roundQuery?`${visibleMatches.length} mesa(s) coincidente(s)${visibleByes.length?' · BYE encontrado':''}`:`${r.emparejamientos.length} mesas`;
-
-      $('pairingNotice').textContent='Los emparejamientos son orientativos del suizo simplificado. Verifica la lista antes de confirmar.';
-    } else {$('currentRoundPanel').hidden=true;}
+      $('matchesTable').innerHTML=visibleMatches.map(({m,i,white,black})=>`<tr class="${roundQuery?'is-search-match':''}"><td>${i+1}</td><td><strong>${esc(white.playerId)}</strong></td><td>${esc(white.name)}</td><td><strong>${esc(black.playerId)}</strong></td><td>${esc(black.name)}</td><td><strong>${resultText(m.resultado)}</strong></td><td>${r.estado==='confirmed'&&m.resultado==null?`<select data-match="${m.id}"><option value="">Seleccionar</option><option value="1-0">1–0</option><option value="0-1">0–1</option><option value="0.5-0.5">½–½</option><option value="double-forfeit">0–0 · Ambos ausentes</option></select>`:m.resultado==null?'Pendiente':'Capturado'}</td></tr>`).join('')||`<tr><td colspan="7" class="empty-cell">${roundQuery?'No se encontró ese ID o resultado en esta ronda.':'No hay partidas que coincidan con el filtro.'}</td></tr>`;
+      const visibleByes=(r.byes||[]).filter(b=>{const p=t.participantes.find(x=>x.playerId===b.jugadorId)||{playerId:b.jugadorId,name:b.jugadorId};return !roundQuery||norm(`${p.playerId} ${p.name}`).includes(roundQuery);});
+      $('byeList').innerHTML=visibleByes.length?`<p class="notice notice-info">BYE: ${visibleByes.map(b=>{const p=t.participantes.find(x=>x.playerId===b.jugadorId)||{playerId:b.jugadorId,name:b.jugadorId};return `${esc(p.playerId)} · ${esc(p.name)}`}).join(', ')} · ${visibleByes[0].puntos} punto(s)</p>`:'';
+      const captured=r.emparejamientos.filter(m=>m.resultado!=null).length;
+      const pending=r.emparejamientos.length-captured;
+      $('roundSearchStatus').textContent=`${captured} capturadas · ${pending} pendientes · ${visibleMatches.length} visibles`;
+      $('pairingNotice').textContent=r.revisionPareos?.activa
+        ? `Primera ronda: ${r.emparejamientos.length} parejas confirmadas y bloqueadas; ${reviewPending} participantes por revisar.`
+        : 'Los emparejamientos son orientativos del suizo simplificado. Verifica la lista antes de confirmar.';
+    } else {
+      $('currentRoundPanel').hidden=true;
+      $('pairingReviewPanel').hidden=true;
+    }
     const standings=M.calcularClasificacion({torneo:t}).data||[];
     $('standingsCount').textContent=`${standings.length} participantes en la clasificación`;
     $('standingsTable').innerHTML=standings.map(p=>`<tr><td><strong>${p.posicion}</strong></td><td>${esc(p.playerId)}</td><td>${esc(p.nombre)}</td><td><strong>${fmt(p.puntos)}</strong></td><td>${fmt(p.buchholz)}</td><td>${fmt(p.buchholzCut1)}</td><td>${fmt(p.sonnebornBerger)}</td><td>${fmt(p.progressive)}</td><td>${p.wins}</td></tr>`).join('')||'<tr><td colspan="9">La clasificación aparecerá aquí.</td></tr>';
   }
+  function renderPairingReview(t,r){
+    const panel=$('pairingReviewPanel');
+    const review=r.revisionPareos;
+    if(r.numero!==1 || !review?.activa || r.estado!=='draft'){
+      panel.hidden=true;panel.innerHTML='';return;
+    }
+    panel.hidden=false;
+    const q=review.pendientes||[];
+    if(q.length===0){
+      panel.innerHTML=`<div class="pairing-review-head"><div><h3>Revisión de primera ronda</h3><p>La revisión de parejas terminó. Confirma la ronda para habilitar la captura.</p></div><span class="state-pill state-success">Completa</span></div><p class="muted">${r.emparejamientos.length} parejas confirmadas y bloqueadas.</p>`;
+      return;
+    }
+    if(q.length===1){
+      panel.innerHTML='<div class="notice notice-warning"><strong>Revisión incompleta:</strong> quedó un participante sin pareja. No confirmes esta ronda; revisa el BYE y el padrón.</div>';
+      return;
+    }
+    const colors=chooseColors(t,q[0],q[1],r.numero);
+    const white=t.participantes.find(p=>p.playerId===colors.blancas)||{playerId:colors.blancas,name:colors.blancas};
+    const black=t.participantes.find(p=>p.playerId===colors.negras)||{playerId:colors.negras,name:colors.negras};
+    const skipped=review.omitidos||[];
+    const skippedNames=skipped.map(id=>{const p=t.participantes.find(x=>x.playerId===id);return p?`${p.name} (${p.playerId})`:id;});
+    const canSkip=q.length>2;
+    panel.innerHTML=`
+      <div class="pairing-review-head"><div><p class="eyebrow">REVISIÓN MANUAL · PRIMERA RONDA</p><h3>Pareja ${r.emparejamientos.length+1}</h3><p>${r.emparejamientos.length} parejas confirmadas · ${q.length} participantes en fila</p></div><span class="state-pill state-warning">Sin confirmar</span></div>
+      <div class="pairing-review-players">
+        <div class="pairing-player"><span class="piece-label">♔ Blancas</span><strong>${esc(white.name)}</strong><small>${esc(white.playerId)}</small></div>
+        <div class="pairing-player"><span class="piece-label">♚ Negras</span><strong>${esc(black.name)}</strong><small>${esc(black.playerId)}</small></div>
+      </div>
+      <div class="pairing-review-actions">
+        <button class="button button-primary" type="button" data-pair-review="confirm">✓ Confirmar pareja</button>
+        <button class="button button-secondary" type="button" data-pair-review="skip-white" ${!canSkip||skipped.includes(colors.blancas)?'disabled':''}>Pasar blancas al final</button>
+        <button class="button button-secondary" type="button" data-pair-review="skip-black" ${!canSkip||skipped.includes(colors.negras)?'disabled':''}>Pasar negras al final</button>
+      </div>
+      <p class="muted">Al confirmar, esta pareja queda bloqueada. Si pasas a un jugador, irá al final de la fila y no podrá volver a pasarse durante esta revisión. ${canSkip?'':'Solo quedan estos dos jugadores: debes confirmar esta pareja.'}</p>
+      ${skippedNames.length?`<p class="pairing-skipped-list"><strong>Pasados al final:</strong> ${skippedNames.map(esc).join(' · ')}</p>`:''}`;
+  }
+
+  function renderPhysicalControls(){
+    const ev=state.event,host=$('physicalRoundSelections');
+    if(!ev){host.innerHTML='<p class="muted">No hay evento activo.</p>';return;}
+    const saved=ev.distribucionFisica?.seleccion||{};
+    host.innerHTML=(ev.torneos||[]).map(t=>{
+      const available=(t.rondas||[]).filter(r=>r.estado==='confirmed'||r.estado==='closed');
+      if(!available.length)return `<label class="physical-round-choice"><strong>${esc(t.categoria)}</strong><span class="muted">Sin ronda confirmada o cerrada</span></label>`;
+      const hasSaved=Object.prototype.hasOwnProperty.call(saved,t.id);
+      const selected=hasSaved?saved[t.id]:available[available.length-1].id;
+      return `<label class="physical-round-choice"><strong>${esc(t.categoria)}</strong><select data-physical-tournament="${esc(t.id)}"><option value="" ${selected===''?'selected':''}>No incluir esta categoría</option>${available.map(r=>`<option value="${esc(r.id)}" ${r.id===selected?'selected':''}>Ronda ${r.numero} · ${r.estado==='closed'?'Cerrada':'En captura'}</option>`).join('')}</select></label>`;
+    }).join('')||'<p class="muted">No hay categorías en este evento.</p>';
+  }
+
+  function buildPhysicalDistribution(){
+    const ev=state.event;if(!ev)return say('No hay evento activo.');
+    const selects=[...$('physicalRoundSelections').querySelectorAll('select[data-physical-tournament]')];
+    const groups=[];const selection={};const byes=[];
+    for(const select of selects){
+      const t=ev.torneos.find(x=>x.id===select.dataset.physicalTournament);if(!t)continue;
+      selection[t.id]=select.value||'';
+      if(!select.value)continue;
+      const r=t.rondas.find(x=>x.id===select.value);if(!r)continue;
+      groups.push({t,r,matches:r.emparejamientos||[]});
+      (r.byes||[]).forEach(b=>{
+        const p=t.participantes.find(x=>x.playerId===b.jugadorId);
+        byes.push({categoria:t.categoria,ronda:r.numero,playerId:b.jugadorId,nombre:p?.name||b.jugadorId,puntos:b.puntos});
+      });
+    }
+    if(!groups.length)return say('Selecciona al menos una ronda confirmada o cerrada.');
+    const ordered=[];const max=Math.max(0,...groups.map(g=>g.matches.length));
+    for(let i=0;i<max;i++)for(const g of groups){
+      const m=g.matches[i];if(!m)continue;
+      const white=g.t.participantes.find(p=>p.playerId===m.blancas)||{playerId:m.blancas,name:m.blancas};
+      const black=g.t.participantes.find(p=>p.playerId===m.negras)||{playerId:m.negras,name:m.negras};
+      ordered.push({categoria:g.t.categoria,torneoId:g.t.id,rondaId:g.r.id,ronda:g.r.numero,partidaId:m.id,blancas:m.blancas,blancasNombre:white.name,negras:m.negras,negrasNombre:black.name,resultado:m.resultado||null});
+    }
+    const assignments=ordered.map((m,i)=>({...m,mesa:i<100?Math.floor(i/4)+1:null,tablero:i<100?(i%4)+1:null}));
+    ev.distribucionFisica={version:1,creadaEn:new Date().toISOString(),capacidadMesas:25,tablerosPorMesa:4,seleccion:selection,asignaciones:assignments,byes};
+    save(`Distribución mixta generada: ${Math.min(100,assignments.length)} de ${assignments.length} partidas ubicadas en las 25 mesas.`);
+  }
+
+  function renderPhysicalDistribution(){
+    const ev=state.event,dist=ev?.distribucionFisica;
+    const result=$('physicalDistributionResult'),summary=$('physicalDistributionSummary'),exportBtn=$('exportPhysicalDistribution');
+    if(!dist){result.innerHTML='<p class="muted">Todavía no hay una distribución generada.</p>';summary.textContent='Selecciona una ronda confirmada o cerrada de cada categoría que jugará en esta jornada.';exportBtn.disabled=true;return;}
+    exportBtn.disabled=!(dist.asignaciones||[]).length;
+    const q=norm($('physicalSearch')?.value||'');
+    const assigned=(dist.asignaciones||[]).filter(x=>x.mesa!=null).length;
+    const overflow=(dist.asignaciones||[]).length-assigned;
+    const byeList=dist.byes||[];
+    summary.textContent=`${assigned} partidas ubicadas de ${dist.asignaciones.length} · ${overflow} sin mesa por superar la capacidad de 100 tableros · ${byeList.length} BYE(s) fuera de la distribución. Generada: ${new Date(dist.creadaEn).toLocaleString('es-MX')}.`;
+    const visible=(dist.asignaciones||[]).filter(m=>!q||norm([m.categoria,m.ronda,m.blancas,m.blancasNombre,m.negras,m.negrasNombre].join(' ')).includes(q));
+    result.innerHTML=`<table><thead><tr><th>Mesa</th><th>Tablero</th><th>Categoría</th><th>Ronda</th><th>ID blancas</th><th>Blancas</th><th>ID negras</th><th>Negras</th></tr></thead><tbody>${visible.map(m=>`<tr><td>${m.mesa??'Sin asignar'}</td><td>${m.tablero??'—'}</td><td>${esc(m.categoria)}</td><td>${m.ronda}</td><td><strong>${esc(m.blancas)}</strong></td><td>${esc(m.blancasNombre)}</td><td><strong>${esc(m.negras)}</strong></td><td>${esc(m.negrasNombre)}</td></tr>`).join('')||'<tr><td colspan="8" class="empty-cell">No hay partidas que coincidan con la búsqueda.</td></tr>'}</tbody></table>`+
+      (byeList.length?`<div class="physical-byes"><strong>BYE (sin tablero)</strong><p>${byeList.map(b=>`${esc(b.categoria)} · R${b.ronda} · ${esc(b.playerId)} ${esc(b.nombre)} (${fmt(b.puntos)} pts)`).join(' | ')}</p></div>`:'');
+  }
+
+  function exportPhysicalDistributionCsv(){
+    const dist=state.event?.distribucionFisica;if(!dist)return say('Primero genera una distribución.');
+    const header=['Mesa','Tablero','Categoría','Ronda','ID','Participante','Color','ID rival','Rival','Resultado'];
+    const rows=[];
+    dist.asignaciones.forEach(m=>{
+      const location=m.mesa==null?'Sin asignar':m.mesa;
+      const board=m.tablero==null?'':m.tablero;
+      rows.push([location,board,m.categoria,m.ronda,m.blancas,m.blancasNombre,'Blancas',m.negras,m.negrasNombre,resultText(m.resultado)]);
+      rows.push([location,board,m.categoria,m.ronda,m.negras,m.negrasNombre,'Negras',m.blancas,m.blancasNombre,resultText(m.resultado)]);
+    });
+    dist.byes.forEach(b=>rows.push(['','',b.categoria,b.ronda,b.playerId,b.nombre,'BYE','','',`BYE (${b.puntos})`]));
+    const csv='\uFEFF'+[header,...rows].map(row=>row.map(csvCell).join(',')).join('\r\n');
+    download(`distribucion_mesas_${new Date().toISOString().slice(0,10)}.csv`,csv,'text/csv;charset=utf-8');
+    say('Se exportó la distribución general de mesas.');
+  }
+
   function startTournament(id){
     const ev=state.event;const r=M.iniciarTorneo({evento:ev,torneoId:id});
     if(!r.ok)return say(r.errors.map(x=>x.message).join(' '));

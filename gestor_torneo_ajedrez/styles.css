@@ -355,3 +355,42 @@ h1 span { color: var(--terva-blue); }
     width: 100%;
   }
 }
+
+
+/* Versión 0.4.0: revisión de primera ronda y distribución física */
+.pairing-review-panel {
+  margin: 14px 0 18px;
+  padding: 18px;
+  border: 1px solid #BDEBFA;
+  border-radius: 15px;
+  background: linear-gradient(110deg, #F0FAFF, #FFFFFF);
+}
+.pairing-review-head { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:14px; }
+.pairing-review-head h3 { margin:3px 0; color:var(--navy); }
+.pairing-review-head p { margin:0; color:var(--muted); font-size:.82rem; }
+.pairing-review-players { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.pairing-player { display:grid; gap:5px; padding:15px; border:1px solid var(--line); border-radius:12px; background:#fff; min-width:0; }
+.pairing-player strong { overflow-wrap:anywhere; color:var(--navy); }
+.pairing-player small,.piece-label { color:var(--muted); font-size:.78rem; }
+.pairing-review-actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:14px; }
+.pairing-review-actions button:disabled { opacity:.45; cursor:not-allowed; }
+.physical-distribution { margin-top:20px; }
+.physical-round-selections { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:16px 0; }
+.physical-round-choice { display:grid; gap:7px; min-width:0; padding:12px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink); font-size:.84rem; }
+.physical-round-choice select { width:100%; min-width:0; height:40px; padding:7px 9px; border:1px solid #D5DFED; border-radius:9px; background:white; color:var(--ink); }
+.physical-actions { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+.physical-search-toolbar { margin-top:14px; }
+.physical-search-toolbar .search-field { max-width:520px; }
+.physical-byes { padding:13px; margin-top:12px; border-radius:12px; background:#F7FAFE; color:var(--ink); font-size:.82rem; }
+.physical-byes p { margin:5px 0 0; color:var(--muted); }
+@media(max-width:760px) { .physical-round-selections { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:640px) {
+  .pairing-review-players,.physical-round-selections { grid-template-columns:1fr; }
+  .pairing-review-actions { flex-direction:column; }
+  .pairing-review-actions .button,.physical-actions .button { width:100%; }
+  .pairing-review-head { flex-direction:column; }
+}
+
+#physicalDistributionResult { max-height: 560px; overflow: auto; overscroll-behavior: contain; }
+
+.pairing-skipped-list { margin:10px 0 0; padding-top:10px; border-top:1px solid var(--line); color:var(--muted); font-size:.78rem; }
