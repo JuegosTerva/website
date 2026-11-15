@@ -245,7 +245,52 @@ function parseCSV(text) {
     if(b.dataset.roundAction==='confirm')confirmRound();
     if(b.dataset.roundAction==='close')closeRound();
     if(b.dataset.roundAction==='export')exportRoundCsv();
+    if(b.dataset.roundAction==='delete')deleteActiveRound();
+    if(b.dataset.roundAction==='regenerate')regenerateDraftRound();
   });
+  function deleteActiveRound(){
+    const t=tournament();
+    if(!t)return;
+    const r=t.rondas.find(x=>x.id===activeRoundId);
+    if(!r)return say('Selecciona una ronda.');
+    const last=t.rondas[t.rondas.length-1];
+    if(last?.id!==r.id)return say('Por seguridad, solo se puede eliminar la última ronda.');
+    const warning=`Vas a eliminar la ronda ${r.numero} de ${t.categoria}, incluidos sus emparejamientos y resultados. Las rondas anteriores se conservarán. Antes se descargará un respaldo completo. ¿Continuar?`;
+    if(!confirm(warning))return;
+    const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+    download(`respaldo_antes_de_eliminar_ronda_${r.numero}_${stamp}.json`,JSON.stringify({version:1,exportedAt:new Date().toISOString(),...state},null,2),'application/json');
+    t.rondas=t.rondas.filter(x=>x.id!==r.id);
+    activeRoundId=t.rondas.length?t.rondas[t.rondas.length-1].id:null;
+    save(`Ronda ${r.numero} eliminada. Las rondas anteriores permanecen intactas; ya puedes generar nuevamente la ronda ${r.numero}.`);
+  }
+
+  function regenerateDraftRound(){
+    const t=tournament();
+    if(!t)return;
+    const r=t.rondas.find(x=>x.id===activeRoundId);
+    if(!r||r.estado!=='draft')return say('Solo puedes volver a emparejar una ronda que siga en borrador.');
+    if((r.emparejamientos||[]).some(m=>m.resultado!=null))return say('No se puede volver a emparejar: la ronda ya tiene resultados.');
+    if(!confirm(`¿Generar otra propuesta para la ronda ${r.numero}? Se sustituirán únicamente los emparejamientos de este borrador.`))return;
+    const old=clone(r);
+    t.rondas=t.rondas.filter(x=>x.id!==r.id);
+    activeRoundId=null;
+    const before=t.rondas.length;
+    generateRound();
+    const replacement=t.rondas[t.rondas.length-1];
+    if(t.rondas.length===before){
+      t.rondas.push(old);
+      activeRoundId=old.id;
+      renderAdmin();
+      return;
+    }
+    if(!replacement||replacement.numero!==old.numero){
+      t.rondas=t.rondas.filter(x=>x.id!==replacement?.id);
+      t.rondas.push(old);
+      activeRoundId=old.id;
+      save('No se pudo sustituir el borrador; se restauró la propuesta anterior.');
+    }
+  }
+
   function exportRoundCsv(){
     const t=tournament();
     if(!t)return say('No hay una categoría seleccionada.');
@@ -288,16 +333,12 @@ function parseCSV(text) {
   );
   }
   function scoreMap(t){const rows=M.calcularClasificacion({torneo:t}).data||[];return new Map(rows.map(r=>[r.playerId,Number(r.puntos)||0]));}
-  // Una pareja queda registrada desde que se confirma la ronda.
-function hasPlayed(t, a, b) {
-  return t.rondas.some(r =>
-    r.estado !== 'draft' &&
-    r.emparejamientos.some(m =>
-      (m.blancas === a && m.negras === b) ||
-      (m.blancas === b && m.negras === a)
-    )
-  );
-}
+  // Una pareja queda consumida desde que la ronda se confirma, aunque el resultado sea administrativo.
+  function hasPlayed(t,a,b){
+    return t.rondas.some(r => r.estado !== 'draft' && r.emparejamientos.some(m =>
+      (m.blancas === a && m.negras === b) || (m.blancas === b && m.negras === a)
+    ));
+  }
   function chooseColors(t,a,b,roundNo){
     const history=id=>M.obtenerHistorialColores({torneo:t,playerId:id}).data||[];
     const ha=history(a), hb=history(b);
@@ -616,7 +657,7 @@ $('lateCsvFile').addEventListener('change', async e => {
       $('currentRoundStatus').textContent=r.estado==='draft'?'Borrador: revisa los emparejamientos y confirma la ronda.':r.estado==='confirmed'?'Captura los resultados de todas las mesas.':'Ronda cerrada.';
       const reviewPending=(r.revisionPareos?.pendientes||[]).length;
       const reviewDone=!r.revisionPareos?.activa || reviewPending===0;
-      $('roundActions').innerHTML=(r.estado==='draft'?`<button class="button button-primary" type="button" data-round-action="confirm" ${reviewDone?'':'disabled'}>Confirmar ronda</button>`:r.estado==='confirmed'?'<button class="button button-primary" type="button" data-round-action="close">Cerrar ronda</button>':'<span class="state-pill state-success">Cerrada</span>')+' <button class="button button-secondary" type="button" data-round-action="export">Exportar ronda CSV ↓</button>';
+      $('roundActions').innerHTML=(r.estado==='draft'?`<button class="button button-primary" type="button" data-round-action="confirm" ${reviewDone?'':'disabled'}>Confirmar ronda</button> <button class="button button-secondary" type="button" data-round-action="regenerate">↻ Volver a emparejar</button>`:r.estado==='confirmed'?'<button class="button button-primary" type="button" data-round-action="close">Cerrar ronda</button>':'<span class="state-pill state-success">Cerrada</span>')+' <button class="button button-secondary" type="button" data-round-action="export">Exportar ronda CSV ↓</button>'+(t.rondas[t.rondas.length-1]?.id===r.id?' <button class="button button-secondary" type="button" data-round-action="delete">Eliminar ronda</button>':'');
       renderPairingReview(t,r);
       const roundQuery=norm($('roundPlayerSearch')?.value||'');
       const captureFilter=$('roundCaptureFilter')?.value||'all';
