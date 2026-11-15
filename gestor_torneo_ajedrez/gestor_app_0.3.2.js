@@ -288,7 +288,16 @@ function parseCSV(text) {
   );
   }
   function scoreMap(t){const rows=M.calcularClasificacion({torneo:t}).data||[];return new Map(rows.map(r=>[r.playerId,Number(r.puntos)||0]));}
-  function hasPlayed(t,a,b){return t.rondas.some(r=>r.estado!=='draft'&&r.emparejamientos.some(m=>m.jugado===true&&((m.blancas===a&&m.negras===b)||(m.blancas===b&&m.negras===a))));}
+  // Una pareja queda registrada desde que se confirma la ronda.
+function hasPlayed(t, a, b) {
+  return t.rondas.some(r =>
+    r.estado !== 'draft' &&
+    r.emparejamientos.some(m =>
+      (m.blancas === a && m.negras === b) ||
+      (m.blancas === b && m.negras === a)
+    )
+  );
+}
   function chooseColors(t,a,b,roundNo){
     const history=id=>M.obtenerHistorialColores({torneo:t,playerId:id}).data||[];
     const ha=history(a), hb=history(b);
