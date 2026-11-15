@@ -476,14 +476,21 @@
       for (const id of seen) if (!activeIds.has(id)) errors.push({ code: 'INACTIVE_PLAYER_PAIRED', message: `El participante ${id} no debe emparejarse en la ronda ${ronda.numero}.` });
       const expectedByes = active.length % 2;
       if ((ronda.byes || []).length !== expectedByes) errors.push({ code: 'INVALID_BYE_COUNT', message: `Se esperaba ${expectedByes} BYE(s) para ${active.length} participantes activos.` });
-      const previousOpponents = new Set();
-      for (const old of torneo.rondas) if (old.numero < ronda.numero) for (const match of old.emparejamientos) {
-        if (match.jugado === true) previousOpponents.add([match.blancas, match.negras].sort().join('|'));
-      }
-      for (const match of ronda.emparejamientos || []) {
-        const key = [match.blancas, match.negras].sort().join('|');
-        if (previousOpponents.has(key)) errors.push({ code: 'REPEATED_OPPONENT', message: `Los jugadores ${match.blancas} y ${match.negras} ya disputaron una partida.` });
-      }
+      // No repetir parejas de rondas confirmadas o cerradas,
+// independientemente del resultado o de si se jugó.
+const previousOpponents = new Set();
+
+for (const old of torneo.rondas) {
+  if (old.estado === 'draft' || !(old.numero < ronda.numero)) continue;
+
+  for (const match of (old.emparejamientos || [])) {
+    if (match.blancas && match.negras) {
+      previousOpponents.add(
+        [match.blancas, match.negras].sort().join('|')
+      );
+    }
+  }
+}
       return errors.length ? { ok: false, data: null, errors, warnings: [] } : ok({ valido: true, participantesAsignados: seen.size });
     },
 
